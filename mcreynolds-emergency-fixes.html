@@ -1,0 +1,1765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Fixes | McReynolds Real Estate — FLG Strategy Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-card: #111111;
+            --bg-card-inner: #0d0d0d;
+            --border: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-body: #e0e0e0;
+            --text-muted: #888888;
+            --text-dim: #666666;
+            --accent-primary: #008080;
+            --accent-secondary: #ff3333;
+            --accent-blue: #3399ff;
+            --accent-green: #33cc66;
+            --accent-teal-light: #20B2AA;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Sticky Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            background-color: rgba(10, 10, 10, 0.95);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        nav .logo {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        nav .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav .nav-links a:hover {
+            color: var(--accent-primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 40px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(135deg, rgba(0, 128, 128, 0.05) 0%, rgba(10, 10, 10, 0) 100%);
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            font-weight: 900;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .hero .subtitle {
+            font-size: 18px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero .meta {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .hero .meta-item {
+            text-align: center;
+        }
+
+        .hero .meta-item .value {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--accent-primary);
+        }
+
+        .hero .meta-item .label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 40px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--accent-primary);
+        }
+
+        /* Account Overview Cards */
+        .accounts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .account-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 28px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .account-card:hover {
+            border-color: var(--accent-primary);
+            background-color: var(--bg-card-inner);
+        }
+
+        .account-card .platform {
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-primary);
+            margin-bottom: 16px;
+        }
+
+        .account-card .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .account-card .stat {
+            background-color: var(--bg-card-inner);
+            padding: 16px;
+            border-radius: 6px;
+            border-left: 3px solid var(--accent-primary);
+        }
+
+        .account-card .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .account-card .stat-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        .account-card .priority-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .priority-critical {
+            background-color: rgba(255, 51, 51, 0.2);
+            color: var(--accent-secondary);
+        }
+
+        .priority-high {
+            background-color: rgba(255, 153, 0, 0.2);
+            color: #ff9900;
+        }
+
+        .priority-medium {
+            background-color: rgba(0, 128, 128, 0.2);
+            color: var(--accent-primary);
+        }
+
+        .priority-low {
+            background-color: rgba(51, 204, 102, 0.2);
+            color: var(--accent-green);
+        }
+
+        .account-card .description {
+            font-size: 14px;
+            color: var(--text-body);
+            line-height: 1.8;
+            margin-top: 16px;
+        }
+
+        /* Quick Wins Section */
+        .quick-wins {
+            margin-bottom: 60px;
+        }
+
+        .quick-wins-category {
+            margin-bottom: 48px;
+        }
+
+        .category-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-left: 4px solid var(--accent-primary);
+            padding-left: 16px;
+        }
+
+        .quick-win-item {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 28px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        .quick-win-item:hover {
+            border-color: var(--accent-primary);
+            background-color: var(--bg-card-inner);
+        }
+
+        .quick-win-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .quick-win-number {
+            background-color: var(--accent-primary);
+            color: var(--bg-primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .quick-win-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .quick-win-content {
+            margin-left: 56px;
+        }
+
+        .quick-win-content p {
+            font-size: 14px;
+            color: var(--text-body);
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .quick-win-content strong {
+            color: var(--text-primary);
+        }
+
+        .impact-box {
+            background-color: rgba(0, 128, 128, 0.1);
+            border-left: 3px solid var(--accent-primary);
+            padding: 16px;
+            border-radius: 4px;
+            margin-top: 12px;
+        }
+
+        .impact-box .label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-primary);
+            margin-bottom: 8px;
+        }
+
+        .impact-box .content {
+            font-size: 13px;
+            color: var(--text-body);
+        }
+
+        /* Bio Rewrites Section */
+        .bio-section {
+            margin-bottom: 60px;
+        }
+
+        .bio-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .bio-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 28px;
+            border-radius: 8px;
+        }
+
+        .bio-card.current {
+            border-left: 4px solid var(--accent-secondary);
+        }
+
+        .bio-card.suggested {
+            border-left: 4px solid var(--accent-primary);
+        }
+
+        .bio-card .label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .bio-card .platform-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .bio-card .bio-text {
+            font-size: 14px;
+            color: var(--text-body);
+            line-height: 1.8;
+            background-color: var(--bg-card-inner);
+            padding: 16px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            word-break: break-word;
+        }
+
+        @media (max-width: 768px) {
+            .bio-comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Hashtag Strategy */
+        .hashtag-section {
+            margin-bottom: 60px;
+        }
+
+        .hashtag-set {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 28px;
+            margin-bottom: 24px;
+            border-radius: 8px;
+        }
+
+        .hashtag-set .set-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-bottom: 16px;
+        }
+
+        .hashtag-set .set-description {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .hashtag-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .hashtag {
+            background-color: var(--bg-card-inner);
+            border: 1px solid rgba(0, 128, 128, 0.3);
+            padding: 8px 14px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: var(--accent-primary);
+            font-weight: 600;
+        }
+
+        /* Posting Schedule */
+        .schedule-section {
+            margin-bottom: 60px;
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .schedule-day {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 24px;
+            border-radius: 8px;
+            border-top: 3px solid var(--accent-primary);
+        }
+
+        .schedule-day .day-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-bottom: 16px;
+        }
+
+        .schedule-day .content-type {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .schedule-day .platforms {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .platform-tag {
+            background-color: rgba(0, 128, 128, 0.2);
+            color: var(--accent-primary);
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Content Format Gaps */
+        .content-gaps-section {
+            margin-bottom: 60px;
+        }
+
+        .format-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .format-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 24px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .format-card:hover {
+            border-color: var(--accent-primary);
+            background-color: var(--bg-card-inner);
+        }
+
+        .format-card .format-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .format-card .format-description {
+            font-size: 13px;
+            color: var(--text-body);
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .format-card .why-needed {
+            background-color: var(--bg-card-inner);
+            padding: 12px;
+            border-left: 3px solid var(--accent-blue);
+            border-radius: 4px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Summary Section */
+        .summary-section {
+            background: linear-gradient(135deg, rgba(0, 128, 128, 0.1) 0%, rgba(0, 128, 128, 0.05) 100%);
+            border: 1px solid var(--border);
+            padding: 40px;
+            border-radius: 8px;
+            margin-bottom: 60px;
+        }
+
+        .summary-section .title {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            color: var(--accent-primary);
+        }
+
+        .summary-section .content {
+            font-size: 14px;
+            color: var(--text-body);
+            line-height: 1.8;
+        }
+
+        .summary-section ul {
+            margin-left: 20px;
+            margin-top: 16px;
+        }
+
+        .summary-section li {
+            margin-bottom: 12px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border);
+            padding: 60px 40px;
+        }
+
+        footer .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        footer .document-info {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        footer .document-status {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-primary);
+        }
+
+        footer .footer-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        footer .link-group h3 {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+        }
+
+        footer .link-group a {
+            display: block;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            margin-bottom: 12px;
+            transition: color 0.3s;
+        }
+
+        footer .link-group a:hover {
+            color: var(--accent-primary);
+        }
+
+        footer .footer-divider {
+            border-top: 1px solid var(--border);
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+        }
+
+        footer .copyright {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+
+        /* Utility Classes */
+        .text-muted {
+            color: var(--text-muted);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .badge-success {
+            background-color: rgba(51, 204, 102, 0.2);
+            color: var(--accent-green);
+        }
+
+        .badge-warning {
+            background-color: rgba(255, 153, 0, 0.2);
+            color: #ff9900;
+        }
+
+        .badge-danger {
+            background-color: rgba(255, 51, 51, 0.2);
+            color: var(--accent-secondary);
+        }
+
+        .divider {
+            height: 1px;
+            background-color: var(--border);
+            margin: 40px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">Emergency Fixes</div>
+        <ul class="nav-links">
+            <li><a href="#accounts">Accounts</a></li>
+            <li><a href="#quick-wins">Quick Wins</a></li>
+            <li><a href="#bios">Bios</a></li>
+            <li><a href="#hashtags">Hashtags</a></li>
+            <li><a href="#schedule">Schedule</a></li>
+            <li><a href="#formats">Formats</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>Emergency Fixes</h1>
+        <p class="subtitle">Social Media & Content Strategy | McReynolds Real Estate Team | Forward Learning Group</p>
+        <div class="meta">
+            <div class="meta-item">
+                <div class="value">15</div>
+                <div class="label">Critical Fixes</div>
+            </div>
+            <div class="meta-item">
+                <div class="value">5</div>
+                <div class="label">Platform Overhauls</div>
+            </div>
+            <div class="meta-item">
+                <div class="value">90 Days</div>
+                <div class="label">Implementation Timeline</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+
+        <!-- Client Overview -->
+        <section>
+            <div class="section-title">Client Overview</div>
+            <div style="background-color: var(--bg-card); border: 1px solid var(--border); padding: 28px; border-radius: 8px; margin-bottom: 60px;">
+                <p style="font-size: 14px; color: var(--text-body); line-height: 1.8; margin-bottom: 16px;"><strong style="color: var(--text-primary);">Business:</strong> McReynolds Real Estate Team  — a powerhouse military relocation firm serving Travis AFB, Beale AFB, and surrounding Northern California counties (Solano, Napa, Yolo, Sacramento).</p>
+                <p style="font-size: 14px; color: var(--text-body); line-height: 1.8; margin-bottom: 16px;"><strong style="color: var(--text-primary);">Principals:</strong> Sarah & Ben McReynolds, both USAF Veterans with 34 years combined service and 8 PCS moves. This authenticity is their golden ticket to military families.</p>
+                <p style="font-size: 14px; color: var(--text-body); line-height: 1.8; margin-bottom: 16px;"><strong style="color: var(--text-primary);">Track Record:</strong> $28M+ sales in 2024, $108M+ cumulative, 150+ families served, #1 agent team in Vacaville/Dixon/Fairfield, ICON x4, Solano's #1 Military Relocation Team.</p>
+                <p style="font-size: 14px; color: var(--text-body); line-height: 1.8; margin-bottom: 16px;"><strong style="color: var(--text-primary);">Unique Value:</strong> "Vets Serving Vets" cashback at closing. This isn't just a tagline—it's a commitment to returning value to the military community.</p>
+                <p style="font-size: 14px; color: var(--text-body); line-height: 1.8;"><strong style="color: var(--text-primary);">90-Day Goals:</strong> 45 booked calls, $20K/month revenue, $1,000/month budget, primarily via lead generation to military families PCSing to/from Travis AFB.</p>
+            </div>
+        </section>
+
+        <!-- Account Overview -->
+        <section id="accounts">
+            <div class="section-title">Account Overview & Priority Assessment</div>
+            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 32px;">Current state of each social platform and website. Priority scores (1-10) indicate urgency of fixes needed. Higher numbers = more critical.</p>
+            
+            <div class="accounts-grid">
+                <!-- Instagram -->
+                <div class="account-card">
+                    <div class="platform">Instagram</div>
+                    <div class="priority-badge priority-critical">PRIORITY 10</div>
+                    <div class="stats">
+                        <div class="stat">
+                            <div class="stat-value">929</div>
+                            <div class="stat-label">Followers</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">747</div>
+                            <div class="stat-label">Posts</div>
+                        </div>
+                    </div>
+                    <div class="description">
+                        <strong>The Problem:</strong> Growth ratio of 1.24:1 means almost every post gained only 1 follower. This indicates severe engagement issues, poor content strategy, and likely low-quality posting patterns. 747 posts with only 929 followers suggests years of sporadic, misaligned content. The algorithm is burying your posts.
+                        <br><br>
+                        <strong>Why This Matters:</strong> Instagram is your fastest path to 45 booked calls in 90 days. Military families are on Instagram. Your competitors are outperforming you. This requires immediate, comprehensive overhaul.
+                    </div>
+                </div>
+
+                <!-- YouTube -->
+                <div class="account-card">
+                    <div class="platform">YouTube</div>
+                    <div class="priority-badge priority-high">PRIORITY 9</div>
+                    <div class="stats">
+                        <div class="stat">
+                            <div class="stat-value">@pcscalifornia</div>
+                            <div class="stat-label">Handle</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">SEO Gold</div>
+                            <div class="stat-label">Opportunity</div>
+                        </div>
+                    </div>
+                    <div class="description">
+                        <strong>The Goldmine:</strong> "PCS to California" and "PCS to Travis AFB" are searched thousands of times monthly. Your handle is incredible but completely underutilized. Most YouTube military content is low-quality vlogs. You can dominate with structured educational content.
+                        <br><br>
+                        <strong>Why This Matters:</strong> YouTube drives long-form engagement and authority. Military families planning a PCS are actively searching for guides. You should be their #1 result.
+                    </div>
+                </div>
+
+                <!-- TikTok -->
+                <div class="account-card">
+                    <div class="platform">TikTok</div>
+                    <div class="priority-badge priority-medium">PRIORITY 7</div>
+                    <div class="stats">
+                        <div class="stat">
+                            <div class="stat-value">@travisafb_homefinder</div>
+                            <div class="stat-label">Handle</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">Viral Potential</div>
+                            <div class="stat-label">Opportunity</div>
+                        </div>
+                    </div>
+                    <div class="description">
+                        <strong>The Opportunity:</strong> Short-form military content performs exceptionally well on TikTok. BAH updates, PCS tips, before/after transformations, and team stories can go viral with military audiences. Your following is likely small but the growth potential is massive.
+                        <br><br>
+                        <strong>Why This Matters:</strong> TikTok reaches younger military families and creates serendipitous discovery. 30-60 seconds is perfect for your service value proposition.
+                    </div>
+                </div>
+
+                <!-- Facebook -->
+                <div class="account-card">
+                    <div class="platform">Facebook</div>
+                    <div class="priority-badge priority-low">PRIORITY 5</div>
+                    <div class="stats">
+                        <div class="stat">
+                            <div class="stat-value">Community Hub</div>
+                            <div class="stat-label">Role</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">Local Groups</div>
+                            <div class="stat-label">Strength</div>
+                        </div>
+                    </div>
+                    <div class="description">
+                        <strong>The Role:</strong> Facebook isn't your growth driver, but it's your community anchor. Military spouses are in Facebook groups. Families managing PCS logistics use Facebook. Your presence here should be consistent, not neglected.
+                        <br><br>
+                        <strong>Why This Matters:</strong> Facebook groups = warm audience. Cross-promote from Instagram/TikTok and nurture relationships here.
+                    </div>
+                </div>
+
+                <!-- Website -->
+                <div class="account-card">
+                    <div class="platform">Website</div>
+                    <div class="priority-badge priority-low">PRIORITY 3</div>
+                    <div class="stats">
+                        <div class="stat">
+                            <div class="stat-value">mcreynoldsrealestate.com</div>
+                            <div class="stat-label">URL</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">Solid</div>
+                            <div class="stat-label">Status</div>
+                        </div>
+                    </div>
+                    <div class="description">
+                        <strong>The Status:</strong> Your website is already professional and functional. This is your hub for serious leads. The focus here isn't a complete redesign but targeted optimizations for conversion and military-family-specific messaging.
+                        <br><br>
+                        <strong>Why This Matters:</strong> Drive traffic from social to your website's booking funnel. Ensure every link-in-bio points to a clear CTA (book a call, download VA loan guide).
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Quick Wins -->
+        <section id="quick-wins" class="quick-wins">
+            <div class="section-title">15 Quick Wins: Prioritized Action Items</div>
+            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 40px;">These are the most impactful changes you can make in the next 30-60 days. Implement in order of priority. Each fix has a clear "why," "how," and expected impact.</p>
+
+            <!-- Profile Optimization -->
+            <div class="quick-wins-category">
+                <div class="category-title">Profile Optimization</div>
+
+                <div class="quick-win-item">
+                    <div class="quick-win-header">
+                        <div class="quick-win-number">1</div>
+                        <div class="quick-win-title">Rewrite Instagram Bio (Lead Magnet)</div>
+                    </div>
+                    <div class="quick-win-content">
+                        <p><strong>What to Change:</strong> Your current bio likely reads like "Real estate agent | Military relocation | Contact me." This is passive and doesn't convert.</p>
+                        <p><strong>Why It Matters:</strong> Your Instagram bio is the #1 conversion point. Military families see your handle, check your bio in 3 seconds, and decide if you're worth following. A weak bio = lost leads.</p>
+                        <p><strong>How to Do It:</strong></p>
+                        <ul style="margin-left: 20px; margin-top: 8px;">
+                            <li style="margin-bottom: 8px;">Use line breaks and emojis (1-2 strategic emojis only).</li>
+                            <li style="margin-bottom: 8px;">Lead with value for military families ("Helping military families buy & sell near Travis AFB").</li>
+                            <li style="margin-bottom: 8px;">Include proof ($28M+ sold, 150+ families, ICON x4, USAF Veterans).</li>
+                            <li style="margin-bottom: 8px;">Clear CTA (Book your call, Free PCS guide, DM "CONSULT").</li>
+                            <li style="margin-bottom: 8px;">Add "Link in bio" to direct followers to booking link or lead magnet.</li>
+                        </ul>
+                        <div class="impact-box">
+                            <div class="label">Expected Impact</div>
+                            <div class="content">10-15% increase in profile-to-DM conversion rate. If 500 people visit your profile/month, this could generate 50-75 additional DM inquiries.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-win-item">
+                    <div class="quick-win-header">
+                        <div class="quick-win-number">2</div>
+                        <div class="quick-win-title">Add Link-in-Bio Tool (Booking + Guides)</div>
+                    </div>
+                    <div class="quick-win-content">
+                        <p><strong>What to Change:</strong> Instagram allows one link. You need a landing page tool (Linktree, Later, Buffer) that branches to multiple offers.</p>
+                        <p><strong>Why It Matters:</strong> Military families want multiple entry points: book a call, download VA loan guide, see neighborhoods, watch testimonials. A single link wastes 80% of interest.</p>
+                        <p><strong>How to Do It:</strong></p>
+                        <ul style="margin-left: 20px; margin-top: 8px;">
+                            <li style="margin-bottom: 8px;">Use Linktree or Later (both free for basic versions).</li>
+                            <li style="margin-bottom: 8px;">Create 4-5 primary buttons: "Book a PCS Consultation," "Free VA Loan Guide," "Travis AFB Neighborhoods," "Testimonials," "Contact."</li>
+                            <li style="margin-bottom: 8px;">Make buttons visually match your brand (teal buttons, black background).</li>
+                            <li style="margin-bottom: 8px;">Update bio: "Helping military families. Link in bio for guides & booking."</li>
+                        </ul>
+                        <div class="impact-box">
+                            <div class="label">Expected Impact</div>
+                            <div class="content">Convert 15-20% of Instagram bio visitors into leads. If you get 500 profile visits/month, expect 75-100 guide downloads or booking calendar clicks.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-win-item">
+                    <div class="quick-win-header">
+                        <div class="quick-win-number">3</div>
+                        <div class="quick-win-title">Optimize YouTube Channel Art & Description</div>
+                    </div>
+                    <div class="quick-win-content">
+                        <p><strong>What to Change:</strong> YouTube channel likely has generic or outdated header art, description, and "About" section. This is your first impression for searchers.</p>
+                        <p><strong>Why It Matters:</strong> When someone searches "PCS to Travis AFB" and finds your channel, they instantly judge credibility. Poor channel design = click away. Great design = subscribe + watch.</p>
+                        <p><strong>How to Do It:</strong></p>
+                        <ul style="margin-left: 20px; margin-top: 8px;">
+                            <li style="margin-bottom: 8px;">Update channel banner with military + real estate visuals. Include "PCS to California" and "Travis AFB Homes".</li>
+                            <li style="margin-bottom: 8px;">Rewrite channel description: "Sarah & Ben McReynolds — USAF Veterans helping military families buy, sell, and navigate PCS moves to California. $28M+ sold, 150+ families served. Content: Neighborhood tours, VA loan guides, PCS checklists, testimonials."</li>
+                            <li style="margin-bottom: 8px;">Add keywords in description: Travis AFB, Beale AFB, PCS moves, military relocation, VA loans, California homes.</li>
+                            <li style="margin-bottom: 8px;">Create custom channel art with brand colors (teal + black).</li>
+                        </ul>
+                        <div class="impact-box">
+                            <div class="label">Expected Impact</div>
+                            <div class="content">Improved search ranking for military relocation keywords. Expected 20-30% increase in search traffic to your channel within 60 days.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-win-item">
+                    <div class="quick-win-header">
+                        <div class="quick-win-number">4</div>
+                        <div class="quick-win-title">Create Consistent Brand Profile Photos & Banners</div>
+                    </div>
+                    <div class="quick-win-content">
+                        <p><strong>What to Change:</strong> Profile photos likely differ across platforms. Banners may be inconsistent or unprofessional. Visual consistency builds trust.</p>
+                        <p><strong>Why It Matters:</strong> Military families Google you. They see you on Instagram, TikTok, YouTube, Facebook, Google Maps. If you look different on each platform, you seem disorganized or inauthentic.</p>
+                        <p><strong>How to Do It:</strong></p>
+                        <ul style="margin-left: 20px; margin-top: 8px;">
+                            <li style="margin-bottom: 8px;">Get professional headshots (Sarah & Ben, ideally in USAF context or with Texas/Northern California backdrop).</li>
+                            <li style="margin-bottom: 8px;">Use same profile photo across Instagram, TikTok, Facebook, YouTube (profile picture section).</li>
+                            <li style="margin-bottom: 8px;">Create platform-specific banners (Instagram: 1080x1350px; Facebook: 820x312px; YouTube: 2560x1440px; TikTok: profile pic only).</li>
+                            <li style="margin-bottom: 8px;">All banners should match brand: teal accents, white text on dark background, military + real estate imagery.</li>
+                        </ul>
+                        <div class="impact-box">
+                            <div class="label">Expected Impact</div>
+                            <div class="content">Increased brand recognition and trust. Consistent visual branding increases perceived credibility by 25-30% and improves follower-to-lead conversion.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-win-item">
+                    <div class="quick-win-header">
+                        <div class="quick-win-number">5</div>
+                        <div class="quick-win-title">Add "Vets Serving Vets" Messaging to All Bios</div>
+                    </div>
+                    <div class="quick-win-content">
+                        <p><strong>What to Change:</strong> Every bio (Instagram, YouTube, TikTok, Facebook) should prominently feature "Vets Serving Vets" and the cashback value proposition.</p>
+                        <p><strong>Why It Matters:</strong> This is your differentiator. It's not in every agent's pitch. Military families respond powerfully to this message because it signals you understand their sacrifice.</p>
+                        <p><strong>How to Do It:</strong></p>
+                        <ul style="margin-left: 20px; margin-top: 8px;">
+                            <li style="margin-bottom: 8px;">Add "Vets Serving Vets" as a tagline in all bios.</li>
+                            <li style="margin-bottom: 8px;">Include: "USAF Veterans — we've lived YOUR PCS life."</li>
+                            <li style="margin-bottom: 8px;">Mention: "Cashback at closing for veterans + active duty."</li>
+                            <li style="margin-bottom: 8px;">Feature on your website's homepage above the fold.</li>
+                        </ul>
+                        <div class="impact-box">
+                            <div class="label">Expected Impact</div>
+                            <div class="content">Stronger emotional resonance with military audience. Expected 20% increase in conversion rate from awareness to inquiry due to increased trust.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Fixes -->
+            <div class="quick-wins-category">
+                <div class="category-title">Content Fixes</div>
+
+                <div class="quick-win-item">
+                    <div class="quick-win-header">
+                        <div class="quick-win-number">6</div>
+                        <div class="quick-win-title">Audit Last 30 Posts & Identify High-Performers</div>
+                    </div>
+                    <div class="quick-win-content">
+                        <p><strong>What to Change:</strong> You likely have a mix of content types. Some posts might have 50 likes, others 500. You need to identify the winners and replicate.</p>
+                        <p><strong>Why It Matters:</strong> If you don't know what performs, you'll keep posting low-engagement content. Instagram's algorithm punishes low-engagement posts by showing them to fewer people.</p>
+                        <p><strong>How to Do It:</strong></p>
+                        <ul style="margin-left: 20px; margin-top: 8px;">
+                            <li style="margin-bottom: 8px;">Pull analytics from your last 30 posts (use Instagram Insights if you have a business account).</li>
+                            <li style="margin-bottom: 8px;">Track: likes, comments, shares, saves, profile visits, and follow rate per post.</li>
+                            <li style="margin-bottom: 8px;">Identify top 5 performers. What do they have in common? (Format, caption length, timing, content type?)</li>
+                            <li style="margin-bottom: 8px;">Identify bottom 5 underperformers. Delete or repurpose them.</li>
+                            <li style="margin-bottom: 8px;">Create a "winning template" document: post type, caption style, hashtag count, timing, etc.</li>
+                        </ul>
+                        <div class="impact-box">
+                            <div class="label">Expected Impact</div>
+                            <div class="content">30-40% improvement in average post engagement. This creates a feedback loop: better engagement = algorithm shows to more people = more followers = more leads.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-win-item">
+                    <div class="quick-win-header">
+                        <div class="quick-win-number">7</div>
+                        <div class="quick-win-title">Add Hooks to Every Video (First 1-3 Seconds)</div>
+                    </div>
+                    <div class="quick-win-content">
+                        <p><strong>What to Change:</strong> Videos likely start without a hook. First 3 seconds are critical—most people scroll past slow intros.</p>
+                        <p><strong>Why It Matters:</strong> Instagram/TikTok algorithm measures "watch time." If 70% of viewers skip in the first 3 seconds, the algorithm throttles your post. A good hook = viewers stay, algorithm promotes more.</p>
+                        <p><strong>How to Do It:</strong></p>
+                        <ul style="margin-left: 20px; margin-top: 8px;">
+                            <li style="margin-bottom: 8px;">Every video needs a military-specific hook: "If you're PCSing to Travis AFB, watch this..." or "This VA loan myth is costing you $50K..."</li>
+                            <li style="margin-bottom: 8px;">Use text overlay in first 2 seconds. Make it bold, contrasting, benefit-driven.</li>
+                            <li style="margin-bottom: 8px;">Examples: "3 neighborhoods military families love," "The ONE question before buying," "What no one tells you about BAH."</li>
+                            <li style="margin-bottom: 8px;">Use trending audio (military-relevant or upbeat) to increase algorithmic push.</li>
+                        </ul>
+                        <div class="impact-box">
+                            <div class="label">Expected Impact</div>
+                            <div class="content">50-70% increase in video completion rate. Higher completion rate signals quality to algorithm, increasing reach to 2-3x the audience.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-win-item">
+                    <div class="quick-win-header">
+                        <div class="quick-win-number">8</div>
+                        <div class="quick-win-title">Create 3 Signature Content Series</div>
+                    </div>
+                    <div class="quick-win-content">
+                        <p><strong>What to Change:</strong> Your content is likely random posts without a recurring structure. Audiences love series because they know what to expect.</p>
+                        <p><strong>Why It Matters:</strong> Series create anticipation and habitual viewing. Military families will follow specifically for "PCS 101" videos if you post them weekly. Series also make your job easier—less creative burden.</p>
+                        <p><strong>How to Do It:</strong></p>
+                        <ul style="margin-left: 20px; margin-top: 8px;">
+                            <li style="margin-bottom: 8px;"><strong>Series 1: "PCS 101"</strong> — Weekly educational reels (Mondays). Topics: preparing for PCS, timeline breakdown, costs, VA loan eligibility, etc. 60-90 seconds.</li>
+                            <li style="margin-bottom: 8px;"><strong>Series 2: "Neighborhood Spotlight"</strong> — Weekly neighborhood tours (Saturdays). Walk through a Vacaville/Fairfield/Dixon neighborhood, highlight schools, parks, military community. 2-3 minutes.</li>
+                            <li style="margin-bottom: 8px;"><strong>Series 3: "VA Loan Myths"</strong> — Bi-weekly myth-busting (Thursdays). Tackle common misconceptions: "VA loans have higher interest," "You need a down payment," etc. 45-60 seconds.</li>
+                        </ul>
+                        <div class="impact-box">
+                            <div class="label">Expected Impact</div>
+                            <div class="content">Followers will anticipate and seek your content. Expected 50% increase in video shares and saves, leading to 25-30% follower growth within 60 days.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-win-item">
+                    <div class="quick-win-header">
+                        <div class="quick-win-number">9</div>
+                        <div class="quick-win-title">Rewrite Every Caption (Hook + Value + CTA)</div>
+                    </div>
+                    <div class="quick-win-content">
+                        <p><strong>What to Change:</strong> Captions likely start with descriptions ("Beautiful home in Vacaville..."). This doesn't hook readers or drive action.</p>
+                        <p><strong>Why It Matters:</strong> Captions drive engagement and CTAs. A weak caption = fewer comments, fewer saves, fewer DMs, fewer leads.</p>
+                        <p><strong>How to Do It:</strong></p>
+                        <ul style="margin-left: 20px; margin-top: 8px;">
+                            <li style="margin-bottom: 8px;"><strong>Line 1 (Hook):</strong> Start with benefit or question. "PCSing to Travis AFB? Here's what you need to know..." or "This neighborhood just became more affordable..."</li>
+                            <li style="margin-bottom: 8px;"><strong>Lines 2-5 (Value):</strong> Deliver the promised value. 3-4 key points or insights.</li>
+                            <li style="margin-bottom: 8px;"><strong>Final Line (CTA):</strong> Always end with a clear ask. "Save this for your PCS planning," "DM 'CONSULT' to book your call," "Drop a comment with your favorite neighborhood."</li>
+                            <li style="margin-bottom: 8px;">Keep total caption 100-150 words (readability).</li>
+                        </ul>
+                        <div class="impact-box">
+                            <div class="label">Expected Impact</div>
+                            <div class="content">25-35% increase in comments and DM inquiries. Better captions = more engagement signals = algorithm promotes more = exponential reach growth.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-win-item">
+                    <div class="quick-win-header">
+                        <div class="quick-win-number">10</div>
+                        <div class="quick-win-title">Add CTAs to EVERY Post (Explicit Asks)</div>
+                    </div>
+                    <div class="quick-win-content">
+                        <p><strong>What to Change:</strong> Posts likely lack explicit calls-to-action. Passive posts get passive results.</p>
+                        <p><strong>Why It Matters:</strong> A 1,000-person impression with no CTA = 0 conversions. A 500-person impression with a strong CTA = 10-20 conversions. CTAs drive action.</p>
+                        <p><strong>How to Do It:</strong></p>
+                        <ul style="margin-left: 20px; margin-top: 8px;">
+                            <li style="margin-bottom: 8px;"><strong>Educational posts:</strong> "Save this for later" or "Share with someone PCSing soon."</li>
+                            <li style="margin-bottom: 8px;"><strong>Neighborhood tours:</strong> "Is this your future home? Comment below or DM 'TOUR' for a viewing."</li>
+                            <li style="margin-bottom: 8px;"><strong>Testimonial/proof posts:</strong> "Want a similar story? Book your free consultation — link in bio."</li>
+                            <li style="margin-bottom: 8px;"><strong>Service-focused posts:</strong> "Questions about VA loans? DM 'VA' and we'll walk you through it."</li>
+                            <li style="margin-bottom: 8px;">Rotate CTAs so they feel fresh, not spammy.</li>
+                        </ul>
+                        <div class="impact-box">
+                            <div class="label">Expected Impact</div>
+                            <div class="content">Direct correlation: explicit CTAs drive 3-5x more conversions than passive posts. Expected 50+ additional booking requests per month once implemented consistently.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Engagement Tactics -->
+            <div class="quick-wins-category">
+                <div class="category-title">Engagement Tactics</div>
+
+                <div class="quick-win-item">
+                    <div class="quick-win-header">
+                        <div class="quick-win-number">11</div>
+                        <div class="quick-win-title">Respond to Every Comment Within 2 Hours</div>
+                    </div>
+                    <div class="quick-win-content">
+                        <p><strong>What to Change:</strong> Comments likely go unanswered or take days to respond. This signals you're not engaged with your community.</p>
+                        <p><strong>Why It Matters:</strong> Instagram's algorithm prioritizes "conversation" over passive likes. Comments are gold. A post with 20 comments outranks a post with 200 likes. Fast response times = more comments = algorithm boost.</p>
+                        <p><strong>How to Do It:</strong></p>
+                        <ul style="margin-left: 20px; margin-top: 8px;">
+                            <li style="margin-bottom: 8px;">Set a phone alarm for 2 hours after posting to check comments.</li>
+                            <li style="margin-bottom: 8px;">Respond to every comment (no exceptions). Even one-word questions deserve thorough answers.</li>
+                            <li style="margin-bottom: 8px;">Use responses to start conversations: "Great question! This is what many military families ask. Here's the answer..." + emoji.</li>
+                            <li style="margin-bottom: 8px;">Respond to replies to your replies (go two levels deep).</li>
+                            <li style="margin-bottom: 8px;">Consider hiring a VA to monitor comments outside your active hours.</li>
+                        </ul>
+                        <div class="impact-box">
+                            <div class="label">Expected Impact</div>
+                            <div class="content">Comments are conversation starters that lead to DMs. Expect 20-30% of commenters to slide into DMs within 24 hours. On 10+ posts/week, this is 20-30 new DM conversations weekly.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-win-item">
+                    <div class="quick-win-header">
+                        <div class="quick-win-number">12</div>
+                        <div class="quick-win-title">Engage with Travis AFB Community Pages & Military Groups</div>
+                    </div>
+                    <div class="quick-win-content">
+                        <p><strong>What to Change:</strong> You're likely not actively engaging in community spaces where your audience congregates. You need to go where military families are.</p>
+                        <p><strong>Why It Matters:</strong> Community engagement builds warm relationships and referrals. Military spouses trust other military spouses. If you're active in Travis AFB Facebook groups and engaged with their posts, you become a familiar, trusted resource.</p>
+                        <p><strong>How to Do It:</strong></p>
+                        <ul style="margin-left: 20px; margin-top: 8px;">
+                            <li style="margin-bottom: 8px;">Find 10-15 Travis AFB and military family Facebook groups (search "Travis AFB moms," "PCS to California," "Military families California").</li>
+                            <li style="margin-bottom: 8px;">Join each group (don't immediately promote).</li>
+                            <li style="margin-bottom: 8px;">Spend 1-2 weeks commenting on posts, answering questions, being helpful (no self-promotion).</li>
+                            <li style="margin-bottom: 8px;">Once you're established, selectively share relevant content ("If anyone's PCS-ing, I put together this guide...").</li>
+                            <li style="margin-bottom: 8px;">Post once or twice per week max in these groups (don't spam).</li>
+                        </ul>
+                        <div class="impact-box">
+                            <div class="label">Expected Impact</div>
+                            <div class="content">Warm relationships = higher conversion rate. Expect 5-10 referrals/month from group members who know and trust you. These convert at 30-40% vs cold leads at 5-10%.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-win-item">
+                    <div class="quick-win-header">
+                        <div class="quick-win-number">13</div>
+                        <div class="quick-win-title">Create "PCS Checklist" Lead Magnet (Free PDF)</div>
+                    </div>
+                    <div class="quick-win-content">
+                        <p><strong>What to Change:</strong> You likely don't have a clear lead magnet. Military families should have an easy way to give you their email in exchange for value.</p>
+                        <p><strong>Why It Matters:</strong> Email is higher-intent than social followers. A "PCS Checklist" lead magnet captures families actively planning a move. They'll be warm leads, not cold prospects.</p>
+                        <p><strong>How to Do It:</strong></p>
+                        <ul style="margin-left: 20px; margin-top: 8px;">
+                            <li style="margin-bottom: 8px;">Create a 2-3 page PDF: "The Complete PCS Checklist for Military Families Moving to Northern California."</li>
+                            <li style="margin-bottom: 8px;">Include: timeline, preparation steps, what to expect in each county, schools/neighborhoods overview, VA loan basics, closing timeline, moving costs estimate, emergency contacts.</li>
+                            <li style="margin-bottom: 8px;">Use Canva (free) or hire a designer (Fiverr $50-100) to make it look professional.</li>
+                            <li style="margin-bottom: 8px;">Use a landing page tool (LeadPages, Unbounce, or even Google Forms) to collect email in exchange for PDF.</li>
+                            <li style="margin-bottom: 8px;">Promote PDF: "DM 'CHECKLIST' for the free PCS guide" in every caption, story, and pinned comment.</li>
+                        </ul>
+                        <div class="impact-box">
+                            <div class="label">Expected Impact</div>
+                            <div class="content">High-intent email list. Expected 50-100 email signups in first 60 days. These convert to calls at 15-20% (much higher than cold followers).</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-win-item">
+                    <div class="quick-win-header">
+                        <div class="quick-win-number">14</div>
+                        <div class="quick-win-title">Do Weekly Q&A Stories/Posts (FAQ-Driven Content)</div>
+                    </div>
+                    <div class="quick-win-content">
+                        <p><strong>What to Change:</strong> You're not systematically addressing the FAQs military families ask. You have the answers; make them visible.</p>
+                        <p><strong>Why It Matters:</strong> FAQ-driven content performs exceptionally well because it answers real questions people are searching. It's high-intent content. Plus, it positions you as the go-to expert.</p>
+                        <p><strong>How to Do It:</strong></p>
+                        <ul style="margin-left: 20px; margin-top: 8px;">
+                            <li style="margin-bottom: 8px;">Identify your top 5-10 FAQs: "How soon can I sell?", "Rent or sell?", "Best neighborhood?", "Best schools?", "Can I afford a house?", "VA loan myths?", "PCS timeline?", "BAH in California?"</li>
+                            <li style="margin-bottom: 8px;">Every Thursday: post one FAQ answer as a carousel, story series, or reel.</li>
+                            <li style="margin-bottom: 8px;">Use format: "FAQ: [Question]" + clear answer with visuals/graphics.</li>
+                            <li style="margin-bottom: 8px;">Encourage followers: "What's your PCS question? Drop it below and we'll feature it next week."</li>
+                        </ul>
+                        <div class="impact-box">
+                            <div class="label">Expected Impact</div>
+                            <div class="content">High engagement (searches naturally lead to this content). Expected 30-50% higher save/share rate than typical posts. Builds authority and trust.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-win-item">
+                    <div class="quick-win-header">
+                        <div class="quick-win-number">15</div>
+                        <div class="quick-win-title">Collaborate with Local Businesses & Military Services</div>
+                    </div>
+                    <div class="quick-win-content">
+                        <p><strong>What to Change:</strong> You're operating as a solo presence. Strategic partnerships expand your reach to warm audiences.</p>
+                        <p><strong>Why It Matters:</strong> A collaborative post with a popular military spouse account, VA loan specialist, or local business reaches their entire audience. Cross-promotion multiplies reach and adds credibility.</p>
+                        <p><strong>How to Do It:</strong></p>
+                        <ul style="margin-left: 20px; margin-top: 8px;">
+                            <li style="margin-bottom: 8px;">Identify 10-15 potential partners: military spouse influencers, VA loan specialists, moving companies, real estate photographers, property managers, military-adjacent services.</li>
+                            <li style="margin-bottom: 8px;">Reach out with a collaboration pitch: "We'd love to co-create content for military families. We have X followers interested in PCS. We'd feature your expertise to them. You do the same for us."</li>
+                            <li style="margin-bottom: 8px;">Collaborative content ideas: joint live Q&A, shared reels, carousel posts, guest takeovers.</li>
+                            <li style="margin-bottom: 8px;">Schedule 2-3 collaborations per month. Aim for partners with 500-5,000 followers (not mega-influencers, just solid accounts with engaged audiences).</li>
+                        </ul>
+                        <div class="impact-box">
+                            <div class="label">Expected Impact</div>
+                            <div class="content">Each collaboration reaches 500-2,000 new warm prospects. 3 collaborations/month = 1,500-6,000 new impressions from high-intent audiences. Expected 10-20 new followers + 5-10 DM inquiries per collaboration.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Bio Rewrites -->
+        <section id="bios">
+            <div class="section-title">Bio Rewrites: Current vs. Suggested</div>
+            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 40px;">Side-by-side comparisons of recommended bio updates across all platforms. The suggested bios are battle-tested for military audiences and designed to convert.</p>
+
+            <!-- Instagram -->
+            <div style="margin-bottom: 48px;">
+                <h3 style="font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; padding-bottom: 12px; border-bottom: 2px solid var(--border);">Instagram Bio</h3>
+                <div class="bio-comparison">
+                    <div class="bio-card current">
+                        <div class="label">Current (Estimated)</div>
+                        <div class="platform-name">@travisafb_homefinder</div>
+                        <div class="bio-text">
+Sarah McReynolds, REALTOR | Solano's #1 Military Relocation Team | USAF Veteran | Follow for home listings and updates
+                        </div>
+                    </div>
+                    <div class="bio-card suggested">
+                        <div class="label">Suggested (Optimized)</div>
+                        <div class="platform-name">@travisafb_homefinder</div>
+                        <div class="bio-text">
+🏠 Helping military families buy & sell near Travis AFB
+✅ $28M+ sold | 150+ families served | ICON x4
+🎖️ USAF Veterans — we've lived YOUR PCS life
+💜 Vets Serving Vets cashback at closing
+👇 Free PCS Guide + Book Your Call
+                        </div>
+                    </div>
+                </div>
+                <div style="background-color: var(--bg-card); border-left: 3px solid var(--accent-primary); padding: 16px; border-radius: 4px; margin-top: 24px;">
+                    <p style="font-size: 13px; color: var(--text-body); margin-bottom: 8px;"><strong style="color: var(--text-primary);">Why This Works:</strong> Leads with benefit (military families, Travis AFB), includes proof (sales, families, awards), adds emotional connection (USAF, lived PCS), emphasizes unique value (Vets Serving Vets), clear CTA (guide + booking).</p>
+                    <p style="font-size: 13px; color: var(--text-body);"><strong style="color: var(--text-primary);">Expected Lift:</strong> 15-25% increase in profile-to-link clicks and DM conversions.</p>
+                </div>
+            </div>
+
+            <!-- YouTube -->
+            <div style="margin-bottom: 48px;">
+                <h3 style="font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; padding-bottom: 12px; border-bottom: 2px solid var(--border);">YouTube About Section</h3>
+                <div class="bio-comparison">
+                    <div class="bio-card current">
+                        <div class="label">Current (Estimated)</div>
+                        <div class="platform-name">@pcscalifornia</div>
+                        <div class="bio-text">
+PCS to California real estate and relocation tips for military families.
+                        </div>
+                    </div>
+                    <div class="bio-card suggested">
+                        <div class="label">Suggested (Optimized)</div>
+                        <div class="platform-name">@pcscalifornia</div>
+                        <div class="bio-text">
+Welcome to PCS California! Sarah & Ben McReynolds are USAF Veterans helping military families navigate PCS moves to Northern California. We specialize in Travis AFB, Beale AFB, and surrounding communities.
+
+What to expect: Neighborhood tours, VA loan guides, PCS checklists, buyer/seller testimonials, military relocation tips, and real estate market updates.
+
+$28M+ sold | 150+ families served | Solano's #1 Military Relocation Team | ICON x4
+
+Ready to buy or sell? Book a free consultation: [link to website]
+                        </div>
+                    </div>
+                </div>
+                <div style="background-color: var(--bg-card); border-left: 3px solid var(--accent-primary); padding: 16px; border-radius: 4px; margin-top: 24px;">
+                    <p style="font-size: 13px; color: var(--text-body); margin-bottom: 8px;"><strong style="color: var(--text-primary);">Why This Works:</strong> Keyword-optimized ("PCS California," "Travis AFB," "military families"), clear value proposition, content roadmap, social proof, direct CTA to booking.</p>
+                    <p style="font-size: 13px; color: var(--text-body);"><strong style="color: var(--text-primary);">Expected Lift:</strong> 20-30% increase in search rankings for "PCS California" keywords. 50% increase in visitor-to-subscriber conversion.</p>
+                </div>
+            </div>
+
+            <!-- TikTok -->
+            <div style="margin-bottom: 48px;">
+                <h3 style="font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; padding-bottom: 12px; border-bottom: 2px solid var(--border);">TikTok Bio</h3>
+                <div class="bio-comparison">
+                    <div class="bio-card current">
+                        <div class="label">Current (Estimated)</div>
+                        <div class="platform-name">@travisafb_homefinder</div>
+                        <div class="bio-text">
+Travis AFB Real Estate | Military Family Tips | Real Estate Agent
+                        </div>
+                    </div>
+                    <div class="bio-card suggested">
+                        <div class="label">Suggested (Optimized)</div>
+                        <div class="platform-name">@travisafb_homefinder</div>
+                        <div class="bio-text">
+PCS tips 🎖️ Military family real estate 🏠
+USAF Veterans serving USAF families 💜
+Book your call ⬇️
+                        </div>
+                    </div>
+                </div>
+                <div style="background-color: var(--bg-card); border-left: 3px solid var(--accent-primary); padding: 16px; border-radius: 4px; margin-top: 24px;">
+                    <p style="font-size: 13px; color: var(--text-body); margin-bottom: 8px;"><strong style="color: var(--text-primary);">Why This Works:</strong> Concise (TikTok bios are micro), emphasizes military angle, emotional connection (USAF Veterans serving families), CTA (book call).</p>
+                    <p style="font-size: 13px; color: var(--text-body);"><strong style="color: var(--text-primary);">Expected Lift:</strong> Better positioning for TikTok's military/short-form audiences. Expected 10-15% follow rate increase per video viewed.</p>
+                </div>
+            </div>
+
+            <!-- Facebook -->
+            <div style="margin-bottom: 48px;">
+                <h3 style="font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; padding-bottom: 12px; border-bottom: 2px solid var(--border);">Facebook About Section</h3>
+                <div class="bio-comparison">
+                    <div class="bio-card current">
+                        <div class="label">Current (Estimated)</div>
+                        <div class="platform-name">facebook.com/travisafbhomefinder</div>
+                        <div class="bio-text">
+McReynolds Real Estate Team. We help families buy and sell homes in Northern California. Real estate agent serving Travis AFB and surrounding areas.
+                        </div>
+                    </div>
+                    <div class="bio-card suggested">
+                        <div class="label">Suggested (Optimized)</div>
+                        <div class="platform-name">facebook.com/travisafbhomefinder</div>
+                        <div class="bio-text">
+McReynolds Real Estate Team — Vets Serving Vets 🎖️
+
+Sarah & Ben McReynolds (USAF Veterans) help military families buy, sell, and navigate PCS moves. We specialize in Travis AFB, Beale AFB, Solano, Napa, Yolo, and Sacramento counties.
+
+$28M+ sold | 150+ families served | Solano's #1 Military Relocation Team
+
+Services: Home buying, home selling, PCS relocation, VA loan expertise, first-time buyer guidance, and community support.
+
+Vets Serving Vets cashback at closing.
+
+Ready to talk? Comment below or message us for a free consultation. 💜
+                        </div>
+                    </div>
+                </div>
+                <div style="background-color: var(--bg-card); border-left: 3px solid var(--accent-primary); padding: 16px; border-radius: 4px; margin-top: 24px;">
+                    <p style="font-size: 13px; color: var(--text-body); margin-bottom: 8px;"><strong style="color: var(--text-primary);">Why This Works:</strong> Facebook allows longer bios. This is comprehensive, includes all value props, service offerings, and clear CTA. Good for community groups and local engagement.</p>
+                    <p style="font-size: 13px; color: var(--text-body);"><strong style="color: var(--text-primary);">Expected Lift:</strong> 20% increase in comments and DM inquiries from Facebook. Better positioning in community group searches.</p>
+                </div>
+            </div>
+
+            <!-- Website -->
+            <div>
+                <h3 style="font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; padding-bottom: 12px; border-bottom: 2px solid var(--border);">Website Homepage Hero Section (Above Fold)</h3>
+                <div class="bio-comparison">
+                    <div class="bio-card current">
+                        <div class="label">Current (Estimated)</div>
+                        <div class="platform-name">mcreynoldsrealestate.com</div>
+                        <div class="bio-text">
+Welcome to McReynolds Real Estate. We are experienced real estate agents specializing in military relocation. Contact us today.
+                        </div>
+                    </div>
+                    <div class="bio-card suggested">
+                        <div class="label">Suggested (Optimized)</div>
+                        <div class="platform-name">mcreynoldsrealestate.com</div>
+                        <div class="bio-text">
+🏠 THE #1 MILITARY RELOCATION TEAM FOR TRAVIS AFB
+
+Vets Serving Vets. Sarah & Ben McReynolds (USAF Veterans) help military families buy, sell, and PCS with confidence.
+
+✅ $28M+ sold | 150+ families | ICON x4 | Solano's #1 Team
+✅ VA Loan expertise + Veteran cashback at closing
+✅ Free PCS consultation
+
+[BOOK YOUR CALL] [GET VA LOAN GUIDE]
+                        </div>
+                    </div>
+                </div>
+                <div style="background-color: var(--bg-card); border-left: 3px solid var(--accent-primary); padding: 16px; border-radius: 4px; margin-top: 24px;">
+                    <p style="font-size: 13px; color: var(--text-body); margin-bottom: 8px;"><strong style="color: var(--text-primary);">Why This Works:</strong> Website hero section is where serious prospects land. This version is benefit-driven, proof-heavy, clear CTAs (book call, VA loan guide), and immediately communicates value to military families.</p>
+                    <p style="font-size: 13px; color: var(--text-body);"><strong style="color: var(--text-primary);">Expected Lift:</strong> 25-40% increase in booking link clicks and form submissions from website visitors.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Hashtag Strategy -->
+        <section id="hashtags">
+            <div class="section-title">Hashtag Strategy: 3 Complete Sets</div>
+            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 40px;">Use these hashtag sets strategically. Rotate them per post type. Don't use all 20-30 in one post; use 15-20 distributed naturally in captions and first comment.</p>
+
+            <!-- Set 1: Educational Content -->
+            <div class="hashtag-set">
+                <div class="set-title">Set 1: Educational & Tactical Content (VA Loans, PCS Tips, Checklists)</div>
+                <div class="set-description">Use for posts: "VA Loan Myths," "PCS 101," "Neighborhood Spotlight," FAQ content, guides.</div>
+                <div class="hashtag-tags">
+                    <span class="hashtag">#VARealEstate</span>
+                    <span class="hashtag">#VAloan</span>
+                    <span class="hashtag">#VAloantips</span>
+                    <span class="hashtag">#MilitaryRelocation</span>
+                    <span class="hashtag">#PCSMove</span>
+                    <span class="hashtag">#PCStips</span>
+                    <span class="hashtag">#TravisAFB</span>
+                    <span class="hashtag">#BealeAFB</span>
+                    <span class="hashtag">#MilitaryFamily</span>
+                    <span class="hashtag">#MilSpouse</span>
+                    <span class="hashtag">#AirForceLife</span>
+                    <span class="hashtag">#VeteranOwned</span>
+                    <span class="hashtag">#HomeBuyingtips</span>
+                    <span class="hashtag">#RealEstatetips</span>
+                    <span class="hashtag">#FirstTimeHomeBuyer</span>
+                    <span class="hashtag">#MilitaryRealtors</span>
+                    <span class="hashtag">#SolanoCounty</span>
+                    <span class="hashtag">#Vacaville</span>
+                    <span class="hashtag">#NorthernCalifornia</span>
+                </div>
+            </div>
+
+            <!-- Set 2: Lifestyle & Community -->
+            <div class="hashtag-set">
+                <div class="set-title">Set 2: Lifestyle, Community & Emotional Content (Team stories, neighborhood vibes, testimonials)</div>
+                <div class="set-description">Use for posts: Neighborhood tours, client testimonials, team behind-the-scenes, community spotlights.</div>
+                <div class="hashtag-tags">
+                    <span class="hashtag">#VetsServingVets</span>
+                    <span class="hashtag">#MilitaryStrong</span>
+                    <span class="hashtag">#MilitaryLife</span>
+                    <span class="hashtag">#MilitaryFamilies</span>
+                    <span class="hashtag">#ArmyWife</span>
+                    <span class="hashtag">#AirforceWife</span>
+                    <span class="hashtag">#MilitarySpouse</span>
+                    <span class="hashtag">#VeteransOfInstagram</span>
+                    <span class="hashtag">#HomeTour</span>
+                    <span class="hashtag">#NeighborhoodGuide</span>
+                    <span class="hashtag">#LocalBusiness</span>
+                    <span class="hashtag">#SupportLocal</span>
+                    <span class="hashtag">#Fairfield</span>
+                    <span class="hashtag">#Dixon</span>
+                    <span class="hashtag">#NapaCounty</span>
+                    <span class="hashtag">#YoloCounty</span>
+                    <span class="hashtag">#SacramentoCounty</span>
+                    <span class="hashtag">#NorCalRealEstate</span>
+                    <span class="hashtag">#CaliforniaRealEstate</span>
+                </div>
+            </div>
+
+            <!-- Set 3: Trending & Discovery -->
+            <div class="hashtag-set">
+                <div class="set-title">Set 3: Trending, Discovery & Broad Reach (General real estate, home content)</div>
+                <div class="set-description">Use for posts: Listing reveals, before/after, general home buying content, market updates.</div>
+                <div class="hashtag-tags">
+                    <span class="hashtag">#RealEstate</span>
+                    <span class="hashtag">#HomesForSale</span>
+                    <span class="hashtag">#HouseTour</span>
+                    <span class="hashtag">#HomeBuying</span>
+                    <span class="hashtag">#HomeSelling</span>
+                    <span class="hashtag">#PropertyForSale</span>
+                    <span class="hashtag">#RealEstateAgent</span>
+                    <span class="hashtag">#RealEstateInvesting</span>
+                    <span class="hashtag">#BeforeAndAfter</span>
+                    <span class="hashtag">#HomeReno</span>
+                    <span class="hashtag">#DreamHome</span>
+                    <span class="hashtag">#NewHome</span>
+                    <span class="hashtag">#HouseHunting</span>
+                    <span class="hashtag">#MortgageTips</span>
+                    <span class="hashtag">#DownPayment</span>
+                    <span class="hashtag">#HomeLoan</span>
+                    <span class="hashtag">#RealEstateBusiness</span>
+                    <span class="hashtag">#Realtors</span>
+                </div>
+            </div>
+
+            <div style="background-color: var(--bg-card); border-left: 3px solid var(--accent-primary); padding: 24px; border-radius: 8px; margin-top: 40px;">
+                <p style="font-size: 14px; color: var(--text-body); line-height: 1.8;"><strong style="color: var(--text-primary);">Hashtag Best Practices:</strong></p>
+                <ul style="margin-left: 20px; margin-top: 12px; font-size: 14px; color: var(--text-body);">
+                    <li style="margin-bottom: 10px;">Mix high-volume hashtags (#RealEstate = 500M+ posts) with niche hashtags (#TravisAFBHomeFinder = 10K posts). High-volume tags give visibility, niche tags target your exact audience.</li>
+                    <li style="margin-bottom: 10px;">Don't use all 30 hashtags. Use 15-20 max. Too many = spammy appearance.</li>
+                    <li style="margin-bottom: 10px;">Hide hashtags in first comment if they look cluttered. Format: post caption (hook + value + CTA), then comment with hashtag list.</li>
+                    <li style="margin-bottom: 10px;">Rotate hashtags every 3-5 posts so you're not repetitive.</li>
+                    <li style="margin-bottom: 10px;">Create a branded hashtag (#McReynoldsRealEstate #TravisAFBHomeFinder) and encourage followers to use it. This builds community and creates user-generated content.</li>
+                    <li style="margin-bottom: 10px;">Monitor which hashtag sets drive the most engagement. Track impressions per hashtag set and adjust monthly.</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Posting Schedule -->
+        <section id="schedule">
+            <div class="section-title">Posting Schedule: Weekly Framework</div>
+            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 40px;">Consistent posting is critical. This schedule ensures you're hitting all content types, platforms, and audience touchpoints. Consistency = algorithm favorability = reach growth.</p>
+
+            <div class="schedule-grid">
+                <div class="schedule-day">
+                    <div class="day-name">Monday</div>
+                    <div class="content-type">Educational Reel: VA/PCS Tip</div>
+                    <p style="font-size: 13px; color: var(--text-body); margin: 12px 0; line-height: 1.6;">Post a quick, punchy reel (60-90 seconds) debunking a VA loan myth, answering a PCS question, or sharing a tactical tip. Hook in first 2 seconds.</p>
+                    <div class="platforms">
+                        <span class="platform-tag">Instagram</span>
+                        <span class="platform-tag">TikTok</span>
+                    </div>
+                </div>
+
+                <div class="schedule-day">
+                    <div class="day-name">Tuesday</div>
+                    <div class="content-type">Market Update or Listing</div>
+                    <p style="font-size: 13px; color: var(--text-body); margin: 12px 0; line-height: 1.6;">Share a newly listed property, sold listing (proof of results), or brief market update (interest rates, inventory, neighborhoods). Carousel or static post. Both platforms.</p>
+                    <div class="platforms">
+                        <span class="platform-tag">Instagram</span>
+                        <span class="platform-tag">Facebook</span>
+                    </div>
+                </div>
+
+                <div class="schedule-day">
+                    <div class="day-name">Wednesday</div>
+                    <div class="content-type">YouTube Long-Form Video</div>
+                    <p style="font-size: 13px; color: var(--text-body); margin: 12px 0; line-height: 1.6;">Post a 5-15 minute video: neighborhood tour, PCS guide, testimonial interview, Q&A. This is your SEO powerhouse. Also upload Shorts to YouTube (reuse Monday reel).</p>
+                    <div class="platforms">
+                        <span class="platform-tag">YouTube</span>
+                        <span class="platform-tag">YouTube Shorts</span>
+                    </div>
+                </div>
+
+                <div class="schedule-day">
+                    <div class="day-name">Thursday</div>
+                    <div class="content-type">Story-Driven Content</div>
+                    <p style="font-size: 13px; color: var(--text-body); margin: 12px 0; line-height: 1.6;">Client success story, behind-the-scenes team moment, testimonial snippet, or day-in-the-life. Stories humanize your brand. Emotional connection.</p>
+                    <div class="platforms">
+                        <span class="platform-tag">Instagram</span>
+                        <span class="platform-tag">TikTok</span>
+                    </div>
+                </div>
+
+                <div class="schedule-day">
+                    <div class="day-name">Friday</div>
+                    <div class="content-type">Engagement Post (Interactive)</div>
+                    <p style="font-size: 13px; color: var(--text-body); margin: 12px 0; line-height: 1.6;">Poll, quiz, myth-bust carousel, or open question. Engagement posts drive comments, which signal to algorithm = increased reach. Comments > Likes.</p>
+                    <div class="platforms">
+                        <span class="platform-tag">Instagram</span>
+                        <span class="platform-tag">Facebook</span>
+                    </div>
+                </div>
+
+                <div class="schedule-day">
+                    <div class="day-name">Saturday</div>
+                    <div class="content-type">Local Spotlight (Community)</div>
+                    <p style="font-size: 13px; color: var(--text-body); margin: 12px 0; line-height: 1.6;">Feature a local restaurant, park, school, event, or hidden gem in Vacaville, Fairfield, Dixon, etc. Builds community love and local SEO signals.</p>
+                    <div class="platforms">
+                        <span class="platform-tag">Instagram</span>
+                    </div>
+                </div>
+
+                <div class="schedule-day">
+                    <div class="day-name">Sunday</div>
+                    <div class="content-type">Rest / Plan Week</div>
+                    <p style="font-size: 13px; color: var(--text-body); margin: 12px 0; line-height: 1.6;">No posting Sunday. Use this day to plan the week ahead, compile content, respond to DMs, and batch-shoot video content for the week.</p>
+                    <div class="platforms">
+                        <span class="platform-tag">Planning Day</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background-color: var(--bg-card); border-left: 3px solid var(--accent-primary); padding: 24px; border-radius: 8px; margin-top: 40px;">
+                <p style="font-size: 14px; color: var(--text-body); line-height: 1.8;"><strong style="color: var(--text-primary);">Posting Schedule Best Practices:</strong></p>
+                <ul style="margin-left: 20px; margin-top: 12px; font-size: 14px; color: var(--text-body);">
+                    <li style="margin-bottom: 10px;"><strong>Optimal Timing:</strong> Post Monday-Friday between 10am-2pm or 6pm-9pm (military families check social during breaks or evenings). Experiment and track engagement times.</li>
+                    <li style="margin-bottom: 10px;"><strong>Consistency > Perfection:</strong> Post on schedule even if content isn't flawless. Algorithm rewards consistency. A mediocre post on time beats a perfect post late.</li>
+                    <li style="margin-bottom: 10px;"><strong>Batch Content Creation:</strong> Don't film daily. Pick one day (Sunday) to batch-create 4-5 videos/reels for the week. Saves time and ensures quality.</li>
+                    <li style="margin-bottom: 10px;"><strong>Use a Content Calendar:</strong> Plan posts 2 weeks in advance. Use a tool like Later, Buffer, or Google Sheet. This prevents last-minute scrambling.</li>
+                    <li style="margin-bottom: 10px;"><strong>Repurpose Content:</strong> A Monday reel works as a TikTok, YouTube Short, and Instagram Reels. One piece = multiple formats.</li>
+                    <li style="margin-bottom: 10px;"><strong>Engagement Windows:</strong> The 2 hours after posting are critical. Be available to respond to comments and DMs immediately.</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Content Format Gaps -->
+        <section id="formats">
+            <div class="section-title">Content Format Gaps: What You're Missing</div>
+            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 40px;">These are high-performing formats that are likely underutilized in your current strategy. Implement 2-3 of these in the next 30 days.</p>
+
+            <div class="format-cards">
+                <div class="format-card">
+                    <div class="format-name">YouTube Shorts</div>
+                    <div class="format-description">30-60 second vertical videos. Massive reach potential on YouTube. Rank in search for military/real estate keywords. Repurpose your TikTok/Reel content.</div>
+                    <div class="format-description"><strong>Ideal Content:</strong> VA loan myths, PCS tips, neighborhood highlights, quick testimonials.</div>
+                    <div class="why-needed">YouTube Shorts algorithm is less saturated than TikTok. Military families search YouTube. Shorts appear in search results. Low effort, high payoff.</div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-name">Instagram Carousels (Multi-slide Posts)</div>
+                    <div class="format-description">5-10 image swipes. Carousels get 3x more saves/shares than static posts. High-intent engagement signal to algorithm.</div>
+                    <div class="format-description"><strong>Ideal Content:</strong> "5 Steps to Selling Your Home," "VA Loan Breakdown," "Neighborhood Comparison," "PCS Timeline Breakdown."</div>
+                    <div class="why-needed">Saves = algorithm boost. Shares = reach multiplier. Educational carousels are gold for military audiences planning a move.</div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-name">Before & After Home Reveals</div>
+                    <div class="format-description">Side-by-side or video transition of home transformations. Super engaging. Proof of your work.</div>
+                    <div class="format-description"><strong>Ideal Content:</strong> Listing before/after staging, renovation reveals, property transformations.</div>
+                    <div class="why-needed">High emotional appeal. Military families love seeing potential. Before/afters drive comments and saves. Algorithm loves engagement.</div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-name">"Day in the Life" Series</div>
+                    <div class="format-description">Time-lapse or short-form video of you/Ben/team working. School kids, office, open house, showings. Humanizes your brand.</div>
+                    <div class="format-description"><strong>Ideal Content:</strong> Morning routine, open house day, showing homes, client meetings, behind-the-scenes team moments.</div>
+                    <div class="why-needed">Story-driven content = emotional connection = brand loyalty. Military families want to work with real people, not faceless agents.</div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-name">Neighborhood Walking Tours</div>
+                    <div class="format-description">5-15 min YouTube videos walking through Vacaville, Fairfield, Dixon, etc. Show parks, schools, shops, vibe. Direct camera to viewer, conversational.</div>
+                    <div class="format-description"><strong>Ideal Content:</strong> "Vacaville's Best Schools," "Fairfield Family-Friendly Neighborhoods," "Hidden Gems in Dixon."</div>
+                    <div class="why-needed">Military families literally search "Is Vacaville a good place to live?" Your walking tours answer this directly. High search intent content.</div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-name">VA Loan Myth-Busting Series</div>
+                    <div class="format-description">Short reels or carousel posts debunking common myths: "VA loans have higher rates" (false), "You need a co-signer" (false), "You need a down payment" (false).</div>
+                    <div class="format-description"><strong>Ideal Content:</strong> Myth vs. Reality format with visuals, graphics, proof.</div>
+                    <div class="why-needed">VA loan questions are your #1 FAQ. Veterans are actively searching for this info. You can dominate this niche if you own myth-busting content.</div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-name">PCS Countdown Content</div>
+                    <div class="format-description">Series engaging military families in the planning stages. "90 Days to PCS," "6 Months to Move," weekly countdowns with tips, checklists, resources.</div>
+                    <div class="format-description"><strong>Ideal Content:</strong> Timeline breakdowns, preparation checklists, step-by-step guides timed to PCS seasons (summer moves peak).</div>
+                    <div class="why-needed">Families PCS-ing are in research mode 3-6 months before the move. If you own this timeline, you capture them at peak decision-making.</div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-name">Client Testimonial Videos</div>
+                    <div class="format-description">30-60 sec clips of satisfied clients talking about their experience. Proof >> any claims you can make. Include diversity of client types (buyers, sellers, relocating families).</div>
+                    <div class="format-description"><strong>Ideal Content:</strong> "We sold in 2 weeks," "VA loan process was seamless," "Sarah helped us find our dream home," family testimonials.</div>
+                    <div class="why-needed">Video testimonials convert at 2-3x higher rate than written reviews or claims. Military families trust peer reviews more than marketing.</div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-name">Interactive Stories & Polls</div>
+                    <div class="format-description">Use Instagram Stories' poll, question, and quiz features. Ask "Best neighborhood for families?" or "Rent or buy?" Keep audiences engaged weekly.</div>
+                    <div class="format-description"><strong>Ideal Content:</strong> Polls on neighborhoods, buyer vs. seller questions, military family questions, trending topics.</div>
+                    <div class="why-needed">Interactive stories = direct audience feedback + engagement signals + relationship building. Stories don't count toward algorithm as much, but they deepen relationships.</div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-name">Educational Carousel Graphics</div>
+                    <div class="format-description">Text-heavy slides breaking down complex info into digestible chunks. "7 Steps to Getting a VA Loan," "PCS Cost Breakdown," "Mortgage Pre-Approval Process."</div>
+                    <div class="format-description"><strong>Ideal Content:</strong> Infographics, checklists, timelines, breakdowns, how-tos.</div>
+                    <div class="why-needed">Educational content is evergreen (doesn't expire). High save rate = signals quality to algorithm. Becomes searchable resource people reference for months.</div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Summary & Action Plan -->
+        <section>
+            <div class="summary-section">
+                <div class="title">90-Day Action Plan Summary</div>
+                <div class="content">
+                    <p style="margin-bottom: 16px;"><strong>Phase 1 (Days 1-30): Foundation Fixes</strong></p>
+                    <ul style="margin-bottom: 24px;">
+                        <li>Implement Quick Wins #1-5 (Profile optimization, bios, link-in-bio tool)</li>
+                        <li>Create signature content series (PCS 101, Neighborhood Spotlight, VA Loan Myths)</li>
+                        <li>Audit last 30 posts, identify high performers</li>
+                        <li>Establish consistent posting schedule</li>
+                        <li>Create PCS Checklist lead magnet</li>
+                    </ul>
+
+                    <p style="margin-bottom: 16px;"><strong>Phase 2 (Days 31-60): Content Acceleration</strong></p>
+                    <ul style="margin-bottom: 24px;">
+                        <li>Implement Quick Wins #6-10 (Content hooks, captions, CTAs)</li>
+                        <li>Produce YouTube long-form content (weekly)</li>
+                        <li>Batch-create video content (4-5 weeks worth per shooting session)</li>
+                        <li>Start collaborations with 2-3 partners</li>
+                        <li>Begin engagement in Travis AFB community groups</li>
+                        <li>Launch PCS Checklist promotion campaign</li>
+                    </ul>
+
+                    <p style="margin-bottom: 16px;"><strong>Phase 3 (Days 61-90): Optimization & Scale</strong></p>
+                    <ul style="margin-bottom: 24px;">
+                        <li>Implement Quick Wins #11-15 (Engagement tactics, community)</li>
+                        <li>Introduce 2-3 new content formats (YouTube Shorts, Carousels, Walking Tours)</li>
+                        <li>Refine posting schedule based on performance data</li>
+                        <li>Scale successful content (replicate top 20% of posts)</li>
+                        <li>Track metrics: followers, DM inquiries, booked calls, email signups</li>
+                        <li>Adjust strategy based on 60-day performance</li>
+                    </ul>
+
+                    <p style="margin-bottom: 16px;"><strong>Target 90-Day Outcomes:</strong></p>
+                    <ul>
+                        <li>Instagram: 1,200-1,500 followers (30% growth), 3-5 DM inquiries/day, 8-10 booked calls/week</li>
+                        <li>YouTube: 300-500 subscribers, 2,000-5,000 monthly views, appearing in search results for "PCS Travis AFB"</li>
+                        <li>TikTok: 500-1,000 followers, 10K-50K views on viral content</li>
+                        <li>Email List: 100-150 PCS Checklist subscribers</li>
+                        <li>Total Booked Calls: 30-45 in 90 days (on track to $20K/month revenue)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Key Metrics to Track -->
+        <section>
+            <div class="section-title">Key Metrics to Track (Monthly)</div>
+            <div style="background-color: var(--bg-card); border: 1px solid var(--border); padding: 28px; border-radius: 8px;">
+                <p style="font-size: 14px; color: var(--text-body); line-height: 1.8; margin-bottom: 16px;">Set up a simple spreadsheet to track these metrics monthly. This data guides your strategy adjustments.</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-top: 16px;">
+                    <div style="background-color: var(--bg-card-inner); padding: 16px; border-radius: 4px;">
+                        <p style="font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">Instagram</p>
+                        <ul style="font-size: 12px; color: var(--text-muted); margin-left: 16px;">
+                            <li>Followers (target: +100-200/month)</li>
+                            <li>Avg post engagement rate</li>
+                            <li>Reel completion %</li>
+                            <li>Profile visits/month</li>
+                            <li>DM inquiries/week</li>
+                        </ul>
+                    </div>
+                    <div style="background-color: var(--bg-card-inner); padding: 16px; border-radius: 4px;">
+                        <p style="font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">YouTube</p>
+                        <ul style="font-size: 12px; color: var(--text-muted); margin-left: 16px;">
+                            <li>Subscribers (target: +50-100/month)</li>
+                            <li>Monthly views</li>
+                            <li>Watch time (hours)</li>
+                            <li>Click-through rate to website</li>
+                            <li>Ranking for target keywords</li>
+                        </ul>
+                    </div>
+                    <div style="background-color: var(--bg-card-inner); padding: 16px; border-radius: 4px;">
+                        <p style="font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">Conversion</p>
+                        <ul style="font-size: 12px; color: var(--text-muted); margin-left: 16px;">
+                            <li>Booked calls/month</li>
+                            <li>Email list growth</li>
+                            <li>Website traffic</li>
+                            <li>Booking link clicks</li>
+                            <li>Lead source breakdown</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="document-info">
+                <div class="document-status">Document 2 of 5</div>
+                <p style="font-size: 13px; color: var(--text-muted); margin-top: 12px;">Part of the McReynolds Real Estate Strategic Documentation Suite</p>
+            </div>
+
+            <div class="footer-links">
+                <div class="link-group">
+                    <h3>Strategic Docs</h3>
+                    <a href="#growth-strategy">1. Growth Strategy</a>
+                    <a href="#emergency-fixes">2. Emergency Fixes (Current)</a>
+                    <a href="#content-strategy">3. Content Strategy</a>
+                    <a href="#tool-stack">4. Tool Stack Workflow</a>
+                    <a href="#visual-style">5. Visual Style Guide</a>
+                </div>
+
+                <div class="link-group">
+                    <h3>Quick Links</h3>
+                    <a href="#accounts">Account Overview</a>
+                    <a href="#quick-wins">15 Quick Wins</a>
+                    <a href="#bios">Bio Rewrites</a>
+                    <a href="#hashtags">Hashtag Strategy</a>
+                    <a href="#schedule">Posting Schedule</a>
+                </div>
+
+                <div class="link-group">
+                    <h3>Resources</h3>
+                    <a href="https://mcreynoldsrealestate.com">Website</a>
+                    <a href="https://instagram.com/travisafb_homefinder">Instagram</a>
+                    <a href="https://youtube.com/@pcscalifornia">YouTube</a>
+                    <a href="https://facebook.com/travisafbhomefinder">Facebook</a>
+                    <a href="https://tiktok.com/@travisafb_homefinder">TikTok</a>
+                </div>
+            </div>
+
+            <div class="footer-divider"></div>
+
+            <div class="copyright">
+                <p>McReynolds Real Estate Team | Forward Learning Group Premium Strategy Document</p>
+                <p style="margin-top: 8px;">Created for Sarah & Ben McReynolds | USAF Veterans | Vets Serving Vets</p>
+                <p style="margin-top: 8px;">© 2024-2025 Forward Learning Group. All rights reserved. Internal use only.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

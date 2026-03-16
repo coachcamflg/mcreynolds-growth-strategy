@@ -1,0 +1,720 @@
+<body>
+
+<!-- ===== HEADER (STICKY) ===== -->
+<header class="main-header">
+  <div class="header-container">
+    <div class="header-left">
+      <div class="logo">MCREYNOLDS REAL ESTATE</div>
+      <div class="subtitle">Social Media Strategy Dashboard</div>
+      <div class="attribution">Prepared by Forward Learning Group</div>
+    </div>
+    <div class="header-right">
+      <div class="current-date" id="currentDate"></div>
+      <nav class="nav-quick-links">
+        <a href="#timeline" onclick="scrollToSection('timeline')">Timeline</a>
+        <a href="#kpis" onclick="scrollToSection('kpis')">KPIs</a>
+        <a href="#calendar" onclick="scrollToSection('calendar')">Calendar</a>
+        <a href="#strategy" onclick="scrollToSection('strategy')">Strategy</a>
+        <a href="#ideas" onclick="scrollToSection('ideas')">Ideas</a>
+        <a href="#revenue" onclick="scrollToSection('revenue')">Revenue</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<!-- ===== MAIN CONTAINER ===== -->
+<main class="dashboard-main">
+
+  <!-- ===== TIMELINE SECTION ===== -->
+  <section id="timeline" class="section timeline-section">
+    <h2 class="section-title">Project Timeline</h2>
+    <div class="timeline-container">
+      <div class="timeline-bar-wrapper">
+        <div class="timeline-bar" id="timelineBar">
+          <div class="timeline-progress" id="timelineProgress"></div>
+        </div>
+        <div class="timeline-items" id="timelineItems"></div>
+      </div>
+      <div class="phases-grid" id="phasesGrid"></div>
+    </div>
+  </section>
+
+  <!-- ===== KPI CARDS SECTION ===== -->
+  <section id="kpis" class="section kpis-section">
+    <h2 class="section-title">Key Performance Indicators</h2>
+    <div class="kpi-grid" id="kpiGrid"></div>
+  </section>
+
+  <!-- ===== CHARTS SECTION ===== -->
+  <section id="charts" class="section charts-section">
+    <h2 class="section-title">Analytics Overview</h2>
+    <div class="charts-grid">
+      <div class="chart-card">
+        <h3 class="chart-title">Content Pillar Distribution</h3>
+        <div class="chart-wrapper">
+          <canvas id="pillarChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-card">
+        <h3 class="chart-title">Follower Growth Projection</h3>
+        <div class="chart-wrapper">
+          <canvas id="growthChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTENT CALENDAR SECTION ===== -->
+  <section id="calendar" class="section calendar-section">
+    <div class="calendar-header">
+      <h2 class="section-title">Content Calendar</h2>
+      <div class="calendar-nav">
+        <button class="nav-btn" onclick="previousWeek()">← Previous Week</button>
+        <button class="nav-btn" onclick="nextWeek()">Next Week →</button>
+      </div>
+    </div>
+    <div class="content-grid" id="contentGrid"></div>
+  </section>
+
+  <!-- ===== STRATEGY DOCUMENTS SECTION ===== -->
+  <section id="strategy" class="section strategy-section">
+    <h2 class="section-title">Strategy Documents</h2>
+    <div class="documents-grid" id="documentsGrid"></div>
+  </section>
+
+  <!-- ===== STRATEGY IDEAS & NOTES SECTION ===== -->
+  <section id="ideas" class="section ideas-section">
+    <h2 class="section-title">Strategy Ideas & Notes</h2>
+    <div class="ideas-input-row">
+      <textarea id="ideaInput" class="idea-textarea" placeholder="Add a strategy idea or note..."></textarea>
+      <button id="ideaSubmit" class="idea-submit-btn">Add Idea</button>
+    </div>
+    <div class="ideas-list" id="ideasList"></div>
+  </section>
+
+  <!-- ===== DELIVERABLES CHECKLIST SECTION ===== -->
+  <section id="checklist" class="section checklist-section">
+    <h2 class="section-title">Deliverables Checklist</h2>
+    <div class="checklist-progress-container">
+      <div class="checklist-progress-text" id="checklistProgressText">0 of 0 completed</div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="checklistProgressBar"></div>
+      </div>
+    </div>
+    <div class="checklist-grid" id="checklistGrid"></div>
+  </section>
+
+  <!-- ===== REVENUE PROJECTIONS SECTION ===== -->
+  <section id="revenue" class="section revenue-section">
+    <h2 class="section-title">Revenue Projections</h2>
+    <div class="revenue-header">
+      <div class="revenue-total">
+        <span class="revenue-label">Total Revenue</span>
+        <span class="revenue-amount" id="totalRevenue">$448,500</span>
+      </div>
+    </div>
+    <div class="revenue-container">
+      <div class="revenue-chart-wrapper">
+        <canvas id="revenueChart"></canvas>
+      </div>
+      <div class="revenue-items" id="revenueItems"></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="main-footer">
+  <div class="footer-container">
+    <div class="footer-section footer-about">
+      <h4>Forward Learning Group</h4>
+      <p>Strategic digital marketing consultancy specializing in social media growth and content strategy.</p>
+    </div>
+    <div class="footer-section footer-team">
+      <h4>MCREYNOLDS REAL ESTATE Team</h4>
+      <p>Project Lead: Cameron (Forward Learning Group) - cam@forward-learn.com</p>
+      <p>Strategy Partner: Forward Learning Group | Handle: @travisafb_homefinder</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 Forward Learning Group. Confidential.</p>
+  </div>
+</footer>
+
+<!-- ===== SCRIPTS ===== -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+
+// ===== CLIENT CONFIGURATION =====
+
+const BRAND_COLORS = {
+    primary: '#008080',
+    secondary: '#00B3B3',
+    gold: '#D4A843',
+    pink: '#00CED1',
+    blue: '#006666',
+    cyan: '#20B2AA',
+    card: '#111111',
+    border: '#1A1A1A',
+    textPrimary: '#FFFFFF',
+    textSecondary: '#A0A0A0',
+    textMuted: '#606060'
+};
+
+const TODAY = new Date('2026-02-13');
+const PROJECT_START = new Date('2026-02-15');
+const PROJECT_END = new Date('2027-02-15');
+
+// Timeline Events
+const timelineEvents = [
+    { date: new Date('2026-02-15'), label: 'Strategy Launch', major: true, tooltip: 'Content strategy goes live' },
+    { date: new Date('2026-05-15'), label: '2,000 Followers\nIG Milestone', major: true, tooltip: 'Instagram doubles from 929 to 2K' },
+    { date: new Date('2026-08-15'), label: '5,000 Followers\nYT + TT Growth', major: true, tooltip: 'Cross-platform growth phase' },
+    { date: new Date('2026-11-15'), label: '10,000 Followers\nAuthority Status', major: true, tooltip: 'Established as go-to military relocation expert' },
+    { date: new Date('2027-02-15'), label: '$20K/mo Revenue\nFrom Social', major: true, tooltip: 'Monthly revenue target from social media pipeline' }
+];
+
+// Phases
+const phases = [
+    { name: 'Foundation', start: new Date('2026-02-15'), end: new Date('2026-05-14'), startDate: new Date('2026-02-15'), endDate: new Date('2026-05-14'), description: 'Audit, restructure, launch calendar' },
+    { name: 'Growth', start: new Date('2026-05-15'), end: new Date('2026-08-14'), startDate: new Date('2026-05-15'), endDate: new Date('2026-08-14'), description: 'Double content, expand platforms' },
+    { name: 'Authority', start: new Date('2026-08-15'), end: new Date('2027-02-15'), startDate: new Date('2026-08-15'), endDate: new Date('2027-02-15'), description: 'Scale, paid ads, 45 calls/mo' }
+];
+
+// Content Data
+const contentData = [
+    { date: 'Feb 17', title: 'PCS to Travis AFB: Your Complete 2026 Guide', platforms: ['IG', 'YT', 'FB'], pillar: 'Mission Ready', status: 'Ready' },
+    { date: 'Feb 18', title: 'Top 5 Neighborhoods Near Travis AFB for Families', platforms: ['IG', 'TT', 'YT'], pillar: 'Know Your Market', status: 'Ready' },
+    { date: 'Feb 19', title: 'VA Loan Myths BUSTED: What Every Military Family Needs to Know', platforms: ['IG', 'TT', 'FB'], pillar: 'VA Home Buying 101', status: 'Ready' },
+    { date: 'Feb 20', title: 'Client Spotlight: The Martinez Family Found Their Dream Home', platforms: ['IG', 'FB'], pillar: 'Proof of Impact', status: 'Ready' },
+    { date: 'Feb 21', title: '8 PCS Moves Later: Why We Started McReynolds Real Estate', platforms: ['IG', 'YT', 'LI'], pillar: 'Personal Story', status: 'Ready' },
+    { date: 'Feb 24', title: 'BAH vs. Mortgage: Can You Afford to Buy Near Travis?', platforms: ['IG', 'TT', 'YT'], pillar: 'Mission Ready', status: 'In Production' },
+    { date: 'Feb 25', title: 'Fairfield vs Vacaville vs Suisun City: Neighborhood Breakdown', platforms: ['YT', 'IG'], pillar: 'Know Your Market', status: 'In Production' },
+    { date: 'Feb 26', title: 'First-Time VA Buyer? Start Here (Step-by-Step)', platforms: ['IG', 'TT', 'FB'], pillar: 'VA Home Buying 101', status: 'Scheduled' },
+    { date: 'Feb 27', title: 'Open House Vlog: $475K Home 10 Min from Travis', platforms: ['YT', 'IG', 'TT'], pillar: 'Know Your Market', status: 'Scheduled' },
+    { date: 'Feb 28', title: 'What I Wish I Knew Before My First PCS', platforms: ['IG', 'TT'], pillar: 'Personal Story', status: 'Scheduled' },
+    { date: 'Mar 3', title: 'Travis AFB School Districts Ranked for Military Kids', platforms: ['IG', 'FB', 'YT'], pillar: 'Know Your Market', status: 'Scheduled' },
+    { date: 'Mar 4', title: 'How to Use Your VA Loan with $0 Down Payment', platforms: ['IG', 'TT', 'YT'], pillar: 'VA Home Buying 101', status: 'Scheduled' }
+];
+
+// Documents
+const documents = [
+    { title: 'Growth Strategy', desc: '3-phase roadmap: 929 → 10,000+ followers', icon: '📈' },
+    { title: 'Emergency Fixes', desc: 'Bio rewrites, hashtags, posting schedule', icon: '⚡' },
+    { title: 'Content Strategy', desc: '5 pillars, hooks, templates, repurpose engine', icon: '📝' },
+    { title: 'Tool Stack & Workflow', desc: '7-step pipeline, SOPs, content math', icon: '🔧' },
+    { title: 'Visual Style Guide', desc: 'Brand identity, thumbnails, typography', icon: '🎨' },
+    { title: 'Complete Strategy', desc: 'All 5 documents combined in one view', icon: '✨', highlighted: true }
+];
+
+// Deliverables
+const deliverables = [
+    { name: 'Growth Strategy Document', completed: true },
+    { name: 'Emergency Fixes Document', completed: true },
+    { name: 'Content Strategy Playbook', completed: true },
+    { name: 'Tool Stack & Workflow', completed: true },
+    { name: 'Visual Style Guide', completed: true },
+    { name: 'Combined Strategy Document', completed: true },
+    { name: '12+ Content Calendar Entries', completed: true },
+    { name: 'Notion Workspace Setup', completed: false },
+    { name: 'GoHighLevel CRM Configuration', completed: false },
+    { name: 'YouTube Channel Optimization', completed: false },
+    { name: 'TikTok Account Setup', completed: false },
+    { name: 'Lead Magnet (PCS Checklist PDF)', completed: false },
+    { name: 'Email Nurture Sequence', completed: false },
+    { name: 'Paid Ad Campaign Setup', completed: false }
+];
+
+// Revenue Items
+const revenueItems = [
+    { label: 'Social Media Leads', calc: '45 calls × 40% close', amount: 225000 },
+    { label: 'Referral Pipeline', calc: '10 deals × $500K × 2.5%', amount: 125000 },
+    { label: 'YouTube Inbound', calc: '5 deals × $500K × 2.5%', amount: 62500 },
+    { label: 'Brand Partnerships', calc: 'Military relocation sponsors', amount: 24000 },
+    { label: 'Speaking/Events', calc: 'NAHREP, military events', amount: 12000 }
+];
+
+// Ideas (in-memory storage)
+let ideas = [];
+
+// Chart instances (for updates)
+let pillarChartInstance = null;
+let growthChartInstance = null;
+let revenueChartInstance = null;
+
+
+// ===== INITIALIZATION =====
+
+document.addEventListener('DOMContentLoaded', function() {
+  init();
+});
+
+function init() {
+  setCurrentDate();
+  initTimeline();
+  initKPIs();
+  initCharts();
+  initCalendar();
+  initDocuments();
+  initIdeas();
+  initChecklist();
+  initRevenue();
+}
+
+
+// ===== CURRENT DATE =====
+
+function setCurrentDate() {
+  const dateEl = document.getElementById('currentDate');
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  dateEl.textContent = TODAY.toLocaleDateString('en-US', options);
+}
+
+
+// ===== TIMELINE =====
+
+function initTimeline() {
+  const bar = document.getElementById('timelineBar');
+  const progress = document.getElementById('timelineProgress');
+  const itemsContainer = document.getElementById('timelineItems');
+  const phasesContainer = document.getElementById('phasesGrid');
+
+  // Calculate overall progress
+  const totalDays = PROJECT_END - PROJECT_START;
+  const elapsedDays = TODAY - PROJECT_START;
+  const progressPercent = Math.min(100, Math.max(0, (elapsedDays / totalDays) * 100));
+  progress.style.width = progressPercent + '%';
+
+  // Render timeline items (markers)
+  itemsContainer.innerHTML = timelineEvents.map(event => {
+    const eventDate = new Date(event.date);
+    const daysFromStart = eventDate - PROJECT_START;
+    const posPercent = (daysFromStart / totalDays) * 100;
+    const isMajor = event.major === true;
+    const isToday = eventDate.toDateString() === TODAY.toDateString();
+    const className = `timeline-item ${isMajor ? 'major' : 'minor'} ${isToday ? 'today' : ''}`;
+    const color = isToday ? '#00bcd4' : (isMajor ? '#ffc107' : BRAND_COLORS.primary || '#1976d2');
+
+    return `
+      <div class="${className}" style="left: ${posPercent}%; background-color: ${color};" title="${event.label}">
+        <span class="timeline-tooltip">${event.label}</span>
+      </div>
+    `;
+  }).join('');
+
+  // Render phases
+  phasesContainer.innerHTML = phases.map((phase, idx) => {
+    const phaseStart = new Date(phase.startDate);
+    const phaseEnd = new Date(phase.endDate);
+    const phaseDuration = phaseEnd - phaseStart;
+    const phaseStartPercent = ((phaseStart - PROJECT_START) / totalDays) * 100;
+    const phaseWidthPercent = (phaseDuration / totalDays) * 100;
+    const phaseColors = [BRAND_COLORS.secondary, BRAND_COLORS.gold, BRAND_COLORS.cyan];
+
+    return `
+      <div class="phase-card">
+        <div class="phase-bar" style="margin-left: ${phaseStartPercent}%; width: ${phaseWidthPercent}%; background: linear-gradient(135deg, #00B3B3, #008080, #006666);"></div>
+        <div class="phase-label">${phase.name}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+
+// ===== KPIs =====
+
+function initKPIs() {
+  const kpiGrid = document.getElementById('kpiGrid');
+
+  const kpiData = [
+    {
+      label: 'Follower Target',
+      value: '929 → 10,000+',
+      target: '10,000+ (12 months)',
+      current: 9,
+      breakdown: [
+        { item: 'Current', value: '929' },
+        { item: 'Target', value: '10,000+' },
+        { item: 'Growth Timeline', value: '12 months' }
+      ]
+    },
+    {
+      label: 'Content Output',
+      value: '0 this month',
+      target: '150+/month',
+      current: 0,
+      breakdown: [
+        { item: 'Long-form/mo', value: '2-3' },
+        { item: 'Short-form/mo', value: '36-48' },
+        { item: 'Carousels/mo', value: '6-8' }
+      ]
+    },
+    {
+      label: 'Engagement Rate',
+      value: '1-2%',
+      target: '3-5%',
+      current: 50,
+      breakdown: [
+        { item: 'Current', value: '1-2%' },
+        { item: 'Target', value: '3-5%' },
+        { item: 'Focus', value: 'Reels, Stories' }
+      ]
+    },
+    {
+      label: 'Monthly Revenue',
+      value: '$0 from social',
+      target: '$20,000+/mo',
+      current: 0,
+      breakdown: [
+        { item: 'Avg Deal', value: '$500K' },
+        { item: 'Commission', value: '2.5% ($12.5K)' },
+        { item: 'Target Calls', value: '45/mo' }
+      ]
+    }
+  ];
+
+  kpiGrid.innerHTML = kpiData.map((kpi, idx) => {
+    const progressPercent = Math.min(100, (kpi.current / 100) * 100);
+    const expandId = `expand-kpi-${idx}`;
+
+    return `
+      <div class="kpi-card" onclick="document.getElementById('${expandId}').classList.toggle('expanded')">
+        <div class="kpi-header">
+          <div class="kpi-label">${kpi.label}</div>
+          <div class="kpi-value">${kpi.value}</div>
+        </div>
+        <div class="kpi-meta">
+          <span>Target: ${kpi.target}</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: ${progressPercent}%; background: linear-gradient(135deg, #00B3B3, #008080, #006666);"></div>
+        </div>
+        <div class="kpi-breakdown" id="${expandId}">
+          <div class="breakdown-title">Breakdown</div>
+          ${kpi.breakdown.map(item => `
+            <div class="breakdown-item">
+              <span class="breakdown-label">${item.item}</span>
+              <span class="breakdown-value">${item.value}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+
+// ===== CHARTS (Chart.js) =====
+
+function initCharts() {
+  const pillarCtx = document.getElementById('pillarChart').getContext('2d');
+  const growthCtx = document.getElementById('growthChart').getContext('2d');
+
+  // Pillar Colors mapped to content pillars
+  const pillarColors = [
+    BRAND_COLORS.primary,      // Mission Ready - primary teal
+    BRAND_COLORS.gold,         // Know Your Market - gold
+    BRAND_COLORS.secondary,    // VA Home Buying 101 - secondary light teal
+    BRAND_COLORS.cyan,         // Proof of Impact - cyan
+    BRAND_COLORS.blue          // Personal Story - blue (dark teal)
+  ];
+
+  // Doughnut Chart - Content Pillar Distribution
+  pillarChartInstance = new Chart(pillarCtx, {
+    type: 'doughnut',
+    data: {
+      labels: [
+        'Mission Ready',
+        'Know Your Market',
+        'VA Home Buying 101',
+        'Proof of Impact',
+        'Personal Story'
+      ],
+      datasets: [{
+        data: [35, 25, 20, 10, 10],
+        backgroundColor: pillarColors,
+        borderColor: '#fff',
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: {
+            usePointStyle: true,
+            padding: 15,
+            font: { size: 12 }
+          }
+        }
+      }
+    }
+  });
+
+  // Line Chart - Follower Growth Projection
+  const primaryColor = BRAND_COLORS.primary || '#008080';
+  growthChartInstance = new Chart(growthCtx, {
+    type: 'line',
+    data: {
+      labels: ['Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb'],
+      datasets: [{
+        label: 'Projected Followers',
+        data: [929, 1100, 1400, 2000, 2800, 3800, 5000, 6200, 7500, 8500, 9200, 10000],
+        borderColor: primaryColor,
+        backgroundColor: 'rgba(0, 128, 128, 0.1)',
+        borderWidth: 3,
+        fill: true,
+        tension: 0.4,
+        pointRadius: 5,
+        pointBackgroundColor: primaryColor,
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: {
+          display: true,
+          labels: { font: { size: 12 } }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: { display: true, text: 'Followers' }
+        }
+      }
+    }
+  });
+}
+
+
+// ===== CONTENT CALENDAR =====
+
+function initCalendar() {
+  const contentGrid = document.getElementById('contentGrid');
+
+  // Map pillar names to colors
+  const pillarColorMap = {
+    'Mission Ready': BRAND_COLORS.primary,
+    'Know Your Market': BRAND_COLORS.gold,
+    'VA Home Buying 101': BRAND_COLORS.secondary,
+    'Proof of Impact': BRAND_COLORS.cyan,
+    'Personal Story': BRAND_COLORS.blue
+  };
+
+  contentGrid.innerHTML = contentData.map(content => {
+    const pillarColor = pillarColorMap[content.pillar] || BRAND_COLORS.primary;
+    return `
+      <div class="content-card">
+        <div class="content-date">${content.date}</div>
+        <div class="content-title">${content.title}</div>
+        <div class="content-badges">
+          ${content.platforms.map(p => `<span class="badge platform-badge">${p}</span>`).join('')}
+          <span class="badge pillar-badge" style="background-color: ${pillarColor};">${content.pillar}</span>
+          <span class="badge status-badge status-${content.status.toLowerCase()}">${content.status}</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function previousWeek() {
+  // Placeholder for calendar navigation
+  console.log('Previous week clicked');
+}
+
+function nextWeek() {
+  // Placeholder for calendar navigation
+  console.log('Next week clicked');
+}
+
+
+// ===== STRATEGY DOCUMENTS =====
+
+function initDocuments() {
+  const docsGrid = document.getElementById('documentsGrid');
+
+  docsGrid.innerHTML = documents.map((doc, idx) => {
+    const isHighlighted = doc.highlighted === true ? 'highlighted' : '';
+    return `
+      <div class="document-card ${isHighlighted}" style="background: linear-gradient(135deg, #00B3B3, #008080, #006666);">
+        <div class="doc-icon">${doc.icon}</div>
+        <div class="doc-title">${doc.title}</div>
+        <div class="doc-description">${doc.description}</div>
+        <a href="javascript:void(0);" class="doc-button">View Document</a>
+      </div>
+    `;
+  }).join('');
+}
+
+
+// ===== STRATEGY IDEAS & NOTES =====
+
+function initIdeas() {
+  const input = document.getElementById('ideaInput');
+  const btn = document.getElementById('ideaSubmit');
+
+  btn.addEventListener('click', addIdea);
+  input.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      addIdea();
+    }
+  });
+  renderIdeas();
+}
+
+function addIdea() {
+  const input = document.getElementById('ideaInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  ideas.push({
+    text: text,
+    timestamp: new Date().toLocaleString(),
+    id: Date.now()
+  });
+  input.value = '';
+  renderIdeas();
+}
+
+function deleteIdea(id) {
+  ideas = ideas.filter(i => i.id !== id);
+  renderIdeas();
+}
+
+function renderIdeas() {
+  const list = document.getElementById('ideasList');
+  if (ideas.length === 0) {
+    list.innerHTML = '<div class="idea-empty">No ideas yet. Type something above to get started!</div>';
+    return;
+  }
+  list.innerHTML = ideas.map(idea => `
+    <div class="idea-item">
+      <div class="idea-text">${idea.text}</div>
+      <div class="idea-meta">
+        <span class="idea-timestamp">${idea.timestamp}</span>
+        <button class="idea-delete" onclick="deleteIdea(${idea.id})">✕</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+
+// ===== DELIVERABLES CHECKLIST =====
+
+function initChecklist() {
+  const checklistGrid = document.getElementById('checklistGrid');
+
+  checklistGrid.innerHTML = deliverables.map((item, idx) => {
+    const itemId = `checklist-${idx}`;
+    return `
+      <div class="checklist-item" onclick="toggleChecklist(${idx})">
+        <input type="checkbox" id="${itemId}" class="checklist-checkbox" ${item.completed ? 'checked' : ''}>
+        <label for="${itemId}" class="checklist-label">${item.name}</label>
+      </div>
+    `;
+  }).join('');
+
+  updateChecklistProgress();
+}
+
+function toggleChecklist(idx) {
+  deliverables[idx].completed = !deliverables[idx].completed;
+  updateChecklistProgress();
+}
+
+function updateChecklistProgress() {
+  const completed = deliverables.filter(d => d.completed).length;
+  const total = deliverables.length;
+  const percent = total > 0 ? (completed / total) * 100 : 0;
+
+  document.getElementById('checklistProgressText').textContent = `${completed} of ${total} completed`;
+  document.getElementById('checklistProgressBar').style.width = percent + '%';
+  document.getElementById('checklistProgressBar').style.background = 'linear-gradient(135deg, #00B3B3, #008080, #006666)';
+}
+
+
+// ===== REVENUE PROJECTIONS =====
+
+function initRevenue() {
+  const revenueItemsContainer = document.getElementById('revenueItems');
+  const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+
+  // Render revenue items
+  revenueItemsContainer.innerHTML = revenueItems.map(item => {
+    const formattedAmount = '$' + item.amount.toLocaleString();
+    return `
+      <div class="revenue-item">
+        <div class="revenue-item-header">
+          <span class="revenue-item-label">${item.label}</span>
+          <span class="revenue-item-amount">${formattedAmount}</span>
+        </div>
+        <div class="revenue-item-detail">${item.calc}</div>
+      </div>
+    `;
+  }).join('');
+
+  // Revenue Colors (5-color array)
+  const revenueColors = [
+    BRAND_COLORS.primary,      // Social Media Leads
+    BRAND_COLORS.secondary,    // Referral Pipeline
+    BRAND_COLORS.gold,         // YouTube Inbound
+    BRAND_COLORS.cyan,         // Brand Partnerships
+    BRAND_COLORS.blue          // Speaking/Events
+  ];
+
+  // Stacked Bar Chart
+  revenueChartInstance = new Chart(revenueCtx, {
+    type: 'bar',
+    data: {
+      labels: ['Revenue Breakdown'],
+      datasets: revenueItems.map((item, idx) => ({
+        label: item.label,
+        data: [item.amount],
+        backgroundColor: revenueColors[idx % revenueColors.length],
+        borderColor: '#fff',
+        borderWidth: 1
+      }))
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: true,
+      scales: {
+        x: {
+          stacked: true
+        }
+      },
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: {
+            usePointStyle: true,
+            padding: 15,
+            font: { size: 12 }
+          }
+        }
+      }
+    }
+  });
+}
+
+
+// ===== NAVIGATION & SCROLL =====
+
+function scrollToSection(id) {
+  const element = document.getElementById(id);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+</script>
+</body>
+</html>

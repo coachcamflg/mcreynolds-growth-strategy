@@ -1,0 +1,1787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>McReynolds Real Estate | Tool Stack & Production Workflow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-card: #111111;
+            --bg-card-inner: #0d0d0d;
+            --border: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-body: #e0e0e0;
+            --text-muted: #888888;
+            --text-dim: #666666;
+            --accent-primary: #008080;
+            --accent-secondary: #ff3333;
+            --accent-blue: #3399ff;
+            --accent-green: #33cc66;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--text-body);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent-primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(0, 128, 128, 0.1) 0%, rgba(51, 153, 255, 0.05) 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero .highlight {
+            color: var(--accent-primary);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-body);
+            margin-bottom: 1.5rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .stat {
+            padding: 1.5rem;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Section */
+        section {
+            padding: 4rem 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        section h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+        }
+
+        section h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        section h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-primary);
+        }
+
+        section p {
+            color: var(--text-body);
+            margin-bottom: 1rem;
+        }
+
+        section ul, section ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        section li {
+            color: var(--text-body);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Flow Diagram */
+        .flow-container {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+
+        .flow-steps {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            padding: 1rem 0;
+            min-width: min-content;
+        }
+
+        .flow-step {
+            background-color: var(--bg-card-inner);
+            border: 2px solid var(--accent-primary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            min-width: 200px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .flow-step-num {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: var(--accent-primary);
+            color: var(--bg-primary);
+            border-radius: 50%;
+            line-height: 40px;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .flow-step h5 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .flow-step p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .flow-arrow {
+            color: var(--accent-primary);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        /* Tool Cards */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .tool-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .tool-card:hover {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 20px rgba(0, 128, 128, 0.1);
+        }
+
+        .tool-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1.5rem;
+        }
+
+        .tool-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .tool-badge {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-existing {
+            background-color: rgba(51, 204, 102, 0.2);
+            color: var(--accent-green);
+        }
+
+        .badge-recommended {
+            background-color: rgba(0, 128, 128, 0.2);
+            color: var(--accent-primary);
+        }
+
+        .tool-cost {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .tool-description {
+            color: var(--text-body);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .tool-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .tool-features li {
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-features li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: var(--accent-primary);
+            font-weight: bold;
+        }
+
+        .pro-tips {
+            background-color: var(--bg-card-inner);
+            border-left: 3px solid var(--accent-primary);
+            padding: 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .pro-tips-title {
+            font-weight: 600;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .pro-tips p {
+            color: var(--text-muted);
+            margin: 0.3rem 0;
+        }
+
+        /* Schedule Table */
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .schedule-table thead {
+            background-color: var(--bg-card-inner);
+            border-bottom: 2px solid var(--border);
+        }
+
+        .schedule-table th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-primary);
+            border-right: 1px solid var(--border);
+        }
+
+        .schedule-table th:last-child {
+            border-right: none;
+        }
+
+        .schedule-table td {
+            padding: 1rem;
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            color: var(--text-body);
+        }
+
+        .schedule-table td:last-child {
+            border-right: none;
+        }
+
+        .schedule-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .schedule-table tbody tr:hover {
+            background-color: var(--bg-card-inner);
+        }
+
+        .time-badge {
+            display: inline-block;
+            background-color: rgba(0, 128, 128, 0.2);
+            color: var(--accent-primary);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Content Math */
+        .content-math {
+            background: linear-gradient(135deg, rgba(0, 128, 128, 0.1) 0%, rgba(51, 153, 255, 0.05) 100%);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .math-section {
+            margin-bottom: 2rem;
+        }
+
+        .math-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .math-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+        }
+
+        .math-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .math-item {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 1rem;
+            border-radius: 6px;
+        }
+
+        .math-item-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .math-item-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+        }
+
+        /* SOP Cards */
+        .sop-container {
+            display: grid;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .sop-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+        }
+
+        .sop-header {
+            border-bottom: 2px solid var(--accent-primary);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .sop-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .sop-steps {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .sop-step {
+            background-color: var(--bg-card-inner);
+            border-left: 3px solid var(--accent-primary);
+            padding: 1rem;
+            border-radius: 4px;
+        }
+
+        .step-number {
+            display: inline-block;
+            background-color: var(--accent-primary);
+            color: var(--bg-primary);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-right: 0.7rem;
+            vertical-align: middle;
+        }
+
+        .step-content {
+            display: inline;
+            color: var(--text-body);
+        }
+
+        .step-detail {
+            margin-top: 0.5rem;
+            margin-left: 2.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* Budget Allocation */
+        .budget-section {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .budget-bars {
+            display: grid;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .budget-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .budget-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .budget-label {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .budget-amount {
+            color: var(--accent-primary);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .budget-bar {
+            width: 100%;
+            height: 24px;
+            background-color: var(--bg-card-inner);
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .budget-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-blue));
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-primary);
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .budget-note {
+            padding: 1rem;
+            background-color: var(--bg-card-inner);
+            border-left: 3px solid var(--accent-green);
+            border-radius: 4px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem;
+        }
+
+        footer .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .footer-section h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-primary);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-copyright {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .footer-doc-number {
+            color: var(--accent-primary);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* Highlights */
+        .highlight-box {
+            background-color: rgba(0, 128, 128, 0.1);
+            border-left: 4px solid var(--accent-primary);
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box h4 {
+            color: var(--accent-primary);
+            margin-top: 0;
+        }
+
+        .highlight-box p {
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight-box ul {
+            margin: 1rem 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+                font-size: 0.85rem;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .flow-steps {
+                flex-direction: column;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+
+            .schedule-table {
+                font-size: 0.85rem;
+            }
+
+            .schedule-table th, .schedule-table td {
+                padding: 0.7rem;
+            }
+
+            .math-list {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            section {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">McReynolds Real Estate</div>
+            <ul>
+                <li><a href="#production-flow">Production Flow</a></li>
+                <li><a href="#tool-stack">Tools</a></li>
+                <li><a href="#schedule">Schedule</a></li>
+                <li><a href="#content-math">Content Math</a></li>
+                <li><a href="#sops">SOPs</a></li>
+                <li><a href="#budget">Budget</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Tool Stack & <span class="highlight">Production Workflow</span></h1>
+            <p>A comprehensive guide to McReynolds Real Estate's content production system, optimized for military family outreach at Travis AFB. This document outlines the complete workflow from recording through publishing, with specific tool assignments, time estimates, and proven SOPs.</p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="stat-value">2 hrs/month</div>
+                    <div class="stat-label">Filming Time</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">35-45</div>
+                    <div class="stat-label">Content Pieces per 2 hrs</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">$62/month</div>
+                    <div class="stat-label">Tool Stack Cost</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">45</div>
+                    <div class="stat-label">Booked Calls Target</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Master Production Flow -->
+    <section id="production-flow">
+        <div class="container">
+            <h2>Master Production Flow</h2>
+            <p>The complete content lifecycle from raw footage to published content across all platforms. Each stage has assigned tools and estimated time investments. This pipeline is designed to maximize efficiency and ensure nothing falls through the cracks.</p>
+
+            <div class="flow-container">
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <div class="flow-step-num">1</div>
+                        <h5>Recording</h5>
+                        <p>2 hours/month studio + on-location</p>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="flow-step-num">2</div>
+                        <h5>Ingestion</h5>
+                        <p>Import to Google Drive, organize by folder</p>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="flow-step-num">3</div>
+                        <h5>Video Editing</h5>
+                        <p>CapCut/DaVinci — 45 min per long-form</p>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="flow-step-num">4</div>
+                        <h5>Graphics & Captions</h5>
+                        <p>Canva templates + auto-captions</p>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="flow-step-num">5</div>
+                        <h5>Copy & SEO</h5>
+                        <p>Titles, descriptions, hashtags</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-container">
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <div class="flow-step-num">6</div>
+                        <h5>Scheduling</h5>
+                        <p>Later/Metricool — batch schedule week</p>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="flow-step-num">7</div>
+                        <h5>Publishing</h5>
+                        <p>Auto-publish across platforms</p>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="flow-step-num">8</div>
+                        <h5>Engagement</h5>
+                        <p>Comments, DMs, community management</p>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="flow-step-num">9</div>
+                        <h5>Analytics</h5>
+                        <p>GHL + platform native analytics</p>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="flow-step-num">10</div>
+                        <h5>Optimization</h5>
+                        <p>Adjust strategy based on data</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Why This Flow Works for McReynolds</h3>
+            <ul>
+                <li><strong>Batch Efficiency:</strong> Record 2 hours once/month, not scattered throughout. Extract 35-45 pieces of content from one focused session.</li>
+                <li><strong>Tool Integration:</strong> Google Drive → CapCut → Canva → Later → GHL creates a seamless handoff. No lost files or duplicate work.</li>
+                <li><strong>Scalable:</strong> Sarah and Ben can execute this without hiring. If they want to expand, the workflow is documented and delegable.</li>
+                <li><strong>Data-Driven:</strong> GHL tracks lead source (which post brought them in). Analytics inform next month's content themes.</li>
+                <li><strong>Military Focus:</strong> The pipeline is optimized for the content types that resonate with military families: testimonials, PCS guides, local market insights, community highlights.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Tool Stack -->
+    <section id="tool-stack">
+        <div class="container">
+            <h2>Complete Tool Stack</h2>
+            <p>McReynolds uses a carefully curated set of tools that work together seamlessly. Below are the tools they already use, plus recommended additions to maximize content output within the $1,000/month budget.</p>
+
+            <h3>Tools Already in Use</h3>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-name">Google Drive</div>
+                        <span class="tool-badge badge-existing">Existing</span>
+                    </div>
+                    <div class="tool-cost">Cost: Free (with Google Workspace for team collaboration)</div>
+                    <div class="tool-description">
+                        Central hub for all brand assets, raw footage, templates, and team collaboration. Google Drive is the source of truth for McReynolds' content library.
+                    </div>
+                    <div class="tool-features">
+                        <li>Centralized asset storage</li>
+                        <li>Real-time collaboration with Sarah & Ben</li>
+                        <li>Version control for documents and assets</li>
+                        <li>Easy sharing with external collaborators (editors, designers)</li>
+                        <li>Automatic backup of all brand materials</li>
+                    </div>
+                    <div class="pro-tips">
+                        <div class="pro-tips-title">Pro Tips for McReynolds:</div>
+                        <p><strong>Folder Structure:</strong> Create folders by month (Jan 2025, Feb 2025) then subfolders by content type: Long-form Videos, Shorts, Reels, Thumbnails, Raw Footage, Graphics, Brand Assets. This makes finding archived content instant.</p>
+                        <p><strong>Naming Convention:</strong> Use format like "2025-02-Travis-AFB-Home-Tour-Raw.mp4" and "2025-02-Travis-AFB-Home-Tour-Edited.mp4" so you can easily find both raw and edited versions.</p>
+                        <p><strong>Shared Team Access:</strong> Create a "Content Production" folder that Sarah and Ben can both access. Create a separate "Client Assets" folder for any client-provided footage (with permissions set to view-only to protect client material).</p>
+                        <p><strong>Quick Access Shortcuts:</strong> Star frequently-used templates and brand assets so they appear at the top for fast retrieval during batch production days.</p>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-name">GoHighLevel (GHL)</div>
+                        <span class="tool-badge badge-existing">Existing</span>
+                    </div>
+                    <div class="tool-cost">Cost: ~$300-500/month (enterprise plan with team access)</div>
+                    <div class="tool-description">
+                        GHL is McReynolds' CRM and lead management hub. Every booked call, email, text, and pipeline stage flows through GHL. This is where leads are qualified and converted to clients.
+                    </div>
+                    <div class="tool-features">
+                        <li>Lead tracking and CRM</li>
+                        <li>Automated booking calendar integration</li>
+                        <li>Email and SMS automation sequences</li>
+                        <li>Pipeline management (lead → appointment → client)</li>
+                        <li>Built-in analytics and reporting</li>
+                        <li>Multi-user team access for Sarah & Ben</li>
+                    </div>
+                    <div class="pro-tips">
+                        <div class="pro-tips-title">Pro Tips for McReynolds:</div>
+                        <p><strong>PCS Consultation Booking Page:</strong> Set up a dedicated "PCS to Travis AFB Consultation" booking page that links from all social posts. This page should highlight: "Free consultation for military families relocating to Travis AFB. 15-min call with Sarah or Ben."</p>
+                        <p><strong>Automated Follow-Up Sequences:</strong> When a lead books via social, trigger an automated sequence: (1) Thank you email immediately, (2) SMS 1 hour before appointment, (3) Post-call email with resources if they don't show, (4) 48-hour follow-up text if they do show.</p>
+                        <p><strong>Pipeline Stages:</strong> Create custom stages for the McReynolds workflow: "Social Media Lead" → "PCS Qualified" → "Consultation Scheduled" → "Consultation Complete" → "Hot Prospect" → "Under Contract" → "Client"</p>
+                        <p><strong>Lead Source Tracking:</strong> Tag every lead with the exact social post that brought them in. This tells you which Instagram Reel, TikTok, or YouTube video is actually driving qualified leads. Use UTM parameters in your post links.</p>
+                        <p><strong>Military Veteran Status Field:</strong> Add a custom field to track if the prospect is active duty, veteran, or family member. This helps personalize messaging.</p>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-name">Notion</div>
+                        <span class="tool-badge badge-existing">Existing</span>
+                    </div>
+                    <div class="tool-cost">Cost: $10/month per user for Team plan (or $80/year for free tier with full features)</div>
+                    <div class="tool-description">
+                        Notion is McReynolds' project management and content planning hub. This is where the content calendar lives, SOPs are documented, and the team coordinates. It's where strategy becomes action.
+                    </div>
+                    <div class="tool-features">
+                        <li>Content calendar with post scheduling</li>
+                        <li>Project tracking and task management</li>
+                        <li>Documentation and SOP storage</li>
+                        <li>Database views (calendar, board, table)</li>
+                        <li>Team collaboration and comments</li>
+                        <li>Integration with other tools</li>
+                    </div>
+                    <div class="pro-tips">
+                        <div class="pro-tips-title">Pro Tips for McReynolds:</div>
+                        <p><strong>Content Calendar Database:</strong> Create a master database with columns for: Date, Platform, Post Type (Long-form/Reel/Short/Carousel), Topic, Status (Draft/Scheduled/Published), Video Link (Google Drive), Captions, Hashtags, Publish Time. Set up a Calendar view to see the month at a glance.</p>
+                        <p><strong>FLG Strategy Hub:</strong> Create a "Forward Learning Group Strategy" section in Notion that links to all 5 documents (Brand Strategy, Content Pillars, Tool Stack, Analytics, etc). Make this the central knowledge base for the team.</p>
+                        <p><strong>Content Pipeline Tracker:</strong> Set up a Kanban board with columns: Ideas → Approved → Filmed → Editing → Scheduled → Published. As content moves through the workflow, drag it between columns. This prevents anything from getting lost.</p>
+                        <p><strong>SOP Documentation:</strong> Create individual Notion pages for each SOP (YouTube Video Production, Reel Creation, Lead Follow-Up, etc). Include step-by-step checklists, time estimates, and links to templates. If Sarah or Ben need to delegate or train someone, it's all documented.</p>
+                        <p><strong>Client Communication Log:</strong> Keep a Notion database of client interactions, feedback, and results. This becomes valuable case study material.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Recommended Tool Additions</h3>
+            <p>These tools fill critical gaps in the current stack and are essential for the production workflow to function at full efficiency. Total cost: ~$62/month, leaving $938 of the $1,000 budget for ads and other expenses.</p>
+
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-name">CapCut</div>
+                        <span class="tool-badge badge-recommended">Recommended</span>
+                    </div>
+                    <div class="tool-cost">Cost: Free (Pro version $5.99/month optional)</div>
+                    <div class="tool-description">
+                        The fastest way to edit videos for social media. CapCut's auto-captions, templates, and effects are perfect for quick-turn military-themed content. Sarah and Ben can turn raw footage into publishable videos in 30-45 minutes.
+                    </div>
+                    <div class="tool-features">
+                        <li>One-click auto-captions in 60+ languages</li>
+                        <li>Built-in trending sounds and effects</li>
+                        <li>Template library for fast edits</li>
+                        <li>Batch import and edit multiple videos</li>
+                        <li>Export to any platform format instantly</li>
+                        <li>AI background removal and correction</li>
+                    </div>
+                    <div class="pro-tips">
+                        <div class="pro-tips-title">Pro Tips for McReynolds:</div>
+                        <p><strong>Workflow Hack:</strong> CapCut allows you to create a "project template." Set up a template with McReynolds' brand colors (teal/black), logo placement, standard intro/outro, and default captions. Every new video starts with these elements pre-loaded, saving 5-10 minutes per edit.</p>
+                        <p><strong>Auto-Captions for Accessibility:</strong> Always turn on captions. Many viewers watch without sound (especially on social). CapCut's auto-captions take 30 seconds and make your content instantly more accessible. Perfect for military families watching during breaks.</p>
+                        <p><strong>Create Shorts from Long-Form:</strong> Record one 15-minute YouTube video in CapCut, then use the "clip" feature to extract 3-4 natural breakpoints where you can cut 30-60 second standalone videos. These become Instagram Reels and TikToks automatically.</p>
+                        <p><strong>Military-Focused Transitions:</strong> Use CapCut's transition library. Quick cuts and "whoosh" sounds work great for military content. Avoid overly fancy transitions — keep it professional and fast-paced.</p>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-name">Canva Pro</div>
+                        <span class="tool-badge badge-recommended">Recommended</span>
+                    </div>
+                    <div class="tool-cost">Cost: $13/month (annual plan) or $18/month (monthly)</div>
+                    <div class="tool-description">
+                        Canva is where YouTube thumbnails, Instagram carousels, story graphics, and social post templates come from. Canva's brand kit feature ensures every design maintains McReynolds' teal/black/white color system.
+                    </div>
+                    <div class="tool-features">
+                        <li>500,000+ templates for every platform</li>
+                        <li>Brand Kit to auto-apply colors and fonts</li>
+                        <li>Magic Design AI (describe what you want, Canva builds it)</li>
+                        <li>Instagram carousel creator (multi-page posts)</li>
+                        <li>Story templates with animation</li>
+                        <li>Team collaboration on designs</li>
+                    </div>
+                    <div class="pro-tips">
+                        <div class="pro-tips-title">Pro Tips for McReynolds:</div>
+                        <p><strong>Brand Kit Setup:</strong> Create a McReynolds Brand Kit in Canva with: Primary color #008080 (teal), Secondary colors #000000 (black) and #FFFFFF (white). Upload the McReynolds logo and any team photos. Now every design automatically uses these brand colors — consistency guaranteed.</p>
+                        <p><strong>Template Library for YouTube Thumbnails:</strong> Create 5-10 template designs for YouTube thumbnails. One template might be: big bold text on teal background with a face or arrow. Duplicate the template, change the text and headline, and you have a new thumbnail in 2 minutes. Consistency in thumbnail style improves click-through rate.</p>
+                        <p><strong>Instagram Carousel Creator:</strong> Use Canva to build 5-slide "PCS Checklist" or "5 Things Military Families Love About Travis AFB" carousels. Each slide is a visual infographic with teal accents. These carousels drive high engagement because people swipe through all 5 slides.</p>
+                        <p><strong>Batch Create Monthly Graphics:</strong> Once per month, sit down and create all the story graphics, carousel backgrounds, and post overlays for the next 4 weeks. Save them all to Google Drive organized by date. Then during the week, just grab the graphic and add it to your scheduled posts.</p>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-name">Later or Metricool</div>
+                        <span class="tool-badge badge-recommended">Recommended</span>
+                    </div>
+                    <div class="tool-cost">Cost: $25/month for Later or Metricool (covers all platforms)</div>
+                    <div class="tool-description">
+                        Social media scheduling is critical to maintain consistent posting across Instagram, TikTok, Facebook, and YouTube. Later and Metricool both allow batch scheduling, optimal posting time analysis, and detailed performance analytics.
+                    </div>
+                    <div class="tool-features">
+                        <li>Schedule posts weeks in advance</li>
+                        <li>Optimal posting time recommendations per platform</li>
+                        <li>Link-in-bio landing page</li>
+                        <li>Hashtag generator and tracking</li>
+                        <li>Team collaboration and approval workflows</li>
+                        <li>Detailed analytics by platform and post</li>
+                    </div>
+                    <div class="pro-tips">
+                        <div class="pro-tips-title">Pro Tips for McReynolds:</div>
+                        <p><strong>Batch Scheduling Day (Friday):</strong> Every Friday at 3 PM, spend 1 hour scheduling the next 1-2 weeks of posts. Upload all graphics, captions, and videos to Later/Metricool at once. The tool posts automatically at optimal times (usually 9 AM, 12 PM, 6 PM). This removes the "I forgot to post today" problem completely.</p>
+                        <p><strong>Optimal Posting Times:</strong> Military families typically check social during lunch breaks (12-1 PM), after work (5-7 PM), and early morning (7-8 AM). Later's analytics will show which hours drive the most engagement for your audience. Use these insights to schedule wisely.</p>
+                        <p><strong>Link-in-Bio Landing Page:</strong> Use Later's or Metricool's built-in landing page to create a "hub" that links to: GHL booking page, Google reviews, YouTube channel, and latest blog post. This single link can go in every bio and drives traffic across your ecosystem.</p>
+                        <p><strong>Caption and Hashtag Templates:</strong> Create a Notion database of 20-30 caption templates and hashtag combos. When scheduling, grab a template, customize the opening sentence, and you're done. Consistency in messaging builds trust with your audience.</p>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-name">TubeBuddy or vidIQ</div>
+                        <span class="tool-badge badge-recommended">Recommended</span>
+                    </div>
+                    <div class="tool-cost">Cost: Free tier (or Pro at $9.99/month for advanced features)</div>
+                    <div class="tool-description">
+                        YouTube SEO is critical for McReynolds because search intent matters. Military families searching "PCS to Travis AFB," "homes near Travis Air Force Base," and "military relocation California" are high-intent leads. TubeBuddy helps optimize videos to rank for these searches.
+                    </div>
+                    <div class="tool-features">
+                        <li>Keyword research specific to your niche</li>
+                        <li>Video SEO optimization recommendations</li>
+                        <li>Competitor analysis (what are similar channels doing)</li>
+                        <li>Best thumbnail testing (A/B test thumbnails)</li>
+                        <li>Video analytics and performance tracking</li>
+                        <li>Bulk editing tools for batch improvements</li>
+                    </div>
+                    <div class="pro-tips">
+                        <div class="pro-tips-title">Pro Tips for McReynolds:</div>
+                        <p><strong>Keyword Research:</strong> Use TubeBuddy's keyword tool to research: "PCS to Travis AFB," "homes near Travis Air Force Base," "military relocation California," "realtor for military families," "best neighborhoods Travis AFB," etc. These keywords should appear in your video titles, descriptions, and tags. They're what bring qualified military families to your videos organically.</p>
+                        <p><strong>Thumbnail Testing:</strong> TubeBuddy lets you A/B test thumbnails. Try a thumbnail with Sarah's face and text vs. a thumbnail with a home exterior. See which gets clicked more. Build your thumbnail style around what actually drives clicks for your audience.</p>
+                        <p><strong>Competitor Analysis:</strong> Search "Travis AFB realtor" or "military relocation California" on YouTube. TubeBuddy will show you what videos are ranking. Look at their titles, descriptions, and tags. Adopt similar keywords while maintaining your unique voice.</p>
+                        <p><strong>YouTube Shorts Optimization:</strong> TubeBuddy also optimizes YouTube Shorts. Create a Short about "3 Military Family Questions We Always Get" and tag it with relevant keywords. Shorts are YouTube's fastest-growing feature and have lower competition than long-form content.</p>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-name">Descript</div>
+                        <span class="tool-badge badge-recommended">Recommended</span>
+                    </div>
+                    <div class="tool-cost">Cost: $24/month (or $240/year for 24 hours of monthly transcription)</div>
+                    <div class="tool-description">
+                        Descript is a game-changer for content multiplication. Record a 15-minute consultation video, and Descript automatically transcribes it, creates a blog post, removes filler words, and extracts 10 short clips. One piece of content becomes 12.
+                    </div>
+                    <div class="tool-features">
+                        <li>AI transcription in minutes</li>
+                        <li>Automatic clip generation from long-form video</li>
+                        <li>Remove filler words ("um," "uh," "like") automatically</li>
+                        <li>Generate blog posts from transcript</li>
+                        <li>Screen recording with transcription</li>
+                        <li>Repurposing studio for turning video into documents</li>
+                    </div>
+                    <div class="pro-tips">
+                        <div class="pro-tips-title">Pro Tips for McReynolds:</div>
+                        <p><strong>The Multiplication Formula:</strong> Record one 15-20 minute "Ask Me Anything: Military PCS Edition" video with Sarah and Ben answering real questions from leads. Upload to Descript. Descript transcribes it, generates a blog post titled "15 Questions Every Military Family Asks When Relocating to Travis AFB," and auto-extracts 10-15 clips of 30-90 seconds. You now have: 1 YouTube video, 15 TikToks, 15 Reels, and 1 blog post. All from ONE recording session.</p>
+                        <p><strong>Filler Word Removal:</strong> Descript automatically removes every "um," "uh," and awkward pause. Your videos sound more polished and professional without any manual editing.</p>
+                        <p><strong>Turn Testimonials into Content:</strong> When clients give video testimonials, record them. Upload to Descript. Extract 3-4 soundbites highlighting different points. Subtitled them in teal and black. Post across all platforms. Each testimonial becomes 4+ social posts.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Tool Integration Summary</h3>
+            <div class="highlight-box">
+                <h4>How Everything Works Together</h4>
+                <p><strong>Google Drive:</strong> Store all raw footage, templates, and assets. This is the central repository.</p>
+                <p><strong>Notion:</strong> Plan content calendar. Document SOPs. Track which ideas to film next month.</p>
+                <p><strong>CapCut:</strong> Edit raw footage into finished videos (takes 30-45 min per video).</p>
+                <p><strong>Descript:</strong> Upload finished video. Auto-generate transcript, blog post, and 10+ short clips.</p>
+                <p><strong>Canva:</strong> Create thumbnails, carousels, story graphics, and overlays using brand kit.</p>
+                <p><strong>Later/Metricool:</strong> Schedule all posts for the next 2 weeks at optimal times.</p>
+                <p><strong>TubeBuddy:</strong> Optimize YouTube titles and descriptions for search. Test thumbnails.</p>
+                <p><strong>GHL:</strong> Every visitor from social gets tracked. Booking links go here. Leads are followed up automatically.</p>
+                <p><strong>Results:</strong> 35-45 pieces of content per 2-hour recording session. 5-6 social posts per day. Consistent brand identity. Leads tracked and nurtured. All while maintaining quality and staying on brand.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Weekly Production Schedule -->
+    <section id="schedule">
+        <div class="container">
+            <h2>Weekly Production Schedule</h2>
+            <p>McReynolds operates on a monthly batch recording model, but the editing and scheduling work is distributed throughout the week to maintain fresh daily content. This schedule is designed to fit within their available time while maintaining consistent platform presence.</p>
+
+            <h3>The Batch Recording Model</h3>
+            <p>Instead of filming scattered throughout the month, McReynolds dedicates one focused 2-hour session per month. This could be on the first Wednesday of the month. Sarah and Ben prepare a shot list, content ideas, and props in advance. They film 2-3 long-form videos plus 5-6 short-form clips in this single session. This concentrated approach creates massive efficiency gains and eliminates the friction of "setting up to film" multiple times.</p>
+
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Task</th>
+                        <th>Time</th>
+                        <th>Tools</th>
+                        <th>Owner</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Wednesday (Batch Day)</strong></td>
+                        <td>
+                            <strong>FILM 2-HOUR BATCH</strong><br>
+                            Hour 1: Film 2-3 YouTube long-form videos (10-15 min each). Topics pre-planned from content calendar. Light prep, natural talking head format.<br><br>
+                            Hour 2: Film 5-6 short-form clips. Quick hooks, testimonials, market updates, military tips. Can be filmed in studio or on-location (open houses, neighborhoods).
+                        </td>
+                        <td><span class="time-badge">2 hours</span></td>
+                        <td>Camera, Ring Light, Google Drive (for shot list)</td>
+                        <td>Sarah & Ben</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Friday</strong></td>
+                        <td>
+                            <strong>BATCH SCHEDULING</strong><br>
+                            Import raw footage from Wednesday to Google Drive. Create folder for month (e.g., "February 2025") if it doesn't exist. Review footage and identify the best clips for each platform.
+                        </td>
+                        <td><span class="time-badge">30 min</span></td>
+                        <td>Google Drive</td>
+                        <td>Sarah or Ben</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Friday</strong></td>
+                        <td>
+                            <strong>EDIT 1-2 VIDEOS</strong><br>
+                            Choose 1-2 of the long-form YouTube videos from Wednesday's batch. Edit in CapCut or DaVinci. Add intro/outro, captions, color correction, background music. Export in YouTube format. Upload to Google Drive "Edited Videos" folder.
+                        </td>
+                        <td><span class="time-badge">45 min - 1 hr</span></td>
+                        <td>CapCut or DaVinci Resolve</td>
+                        <td>Sarah or Ben (or delegated editor)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Friday</strong></td>
+                        <td>
+                            <strong>CREATE THUMBNAILS</strong><br>
+                            Use Canva Pro with McReynolds brand kit. Create YouTube thumbnails for the 2 videos you just edited. Use template system: teal background, bold white text, face or arrow. Takes 2 min per thumbnail if using template.
+                        </td>
+                        <td><span class="time-badge">10 min</span></td>
+                        <td>Canva Pro</td>
+                        <td>Sarah or Ben</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Friday</strong></td>
+                        <td>
+                            <strong>YOUTUBE UPLOAD & SEO</strong><br>
+                            Upload the 2 edited videos to YouTube Studio. Write SEO-optimized titles (include "Travis AFB," "PCS," "military" keywords). Write descriptions (200+ words) with GHL booking link. Add tags from TubeBuddy research. Set privacy to "Scheduled" for optimal posting time (usually Wednesday 9 AM).
+                        </td>
+                        <td><span class="time-badge">20 min</span></td>
+                        <td>YouTube Studio, TubeBuddy</td>
+                        <td>Sarah or Ben</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Friday</strong></td>
+                        <td>
+                            <strong>BATCH SCHEDULE WEEK (2-3 hrs)</strong><br>
+                            Extract 1-2 YouTube Shorts from the long-form videos using CapCut. Edit 4-5 Instagram Reels from short-form footage (30-60 sec each). Edit 4-5 TikToks using same footage. Create captions for each using Canva or CapCut auto-captions. Add audio, trending sounds, text overlays. Organize all videos and captions in Google Drive by platform folder.
+                        </td>
+                        <td><span class="time-badge">2-3 hours</span></td>
+                        <td>CapCut, Canva</td>
+                        <td>Sarah, Ben, or delegated editor</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Friday Evening (3-4 PM)</strong></td>
+                        <td>
+                            <strong>SCHEDULE ALL POSTS (1 hour)</strong><br>
+                            Log into Later or Metricool. Upload all prepared content (Reels, TikToks, Stories, Carousels). Write captions for each. Add hashtags (use template from Notion). Schedule for optimal posting times across next 1-2 weeks. Set to auto-publish.
+                        </td>
+                        <td><span class="time-badge">1 hour</span></td>
+                        <td>Later or Metricool, Notion</td>
+                        <td>Sarah or Ben</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Monday - Thursday</strong></td>
+                        <td>
+                            <strong>DAILY ENGAGEMENT (20-30 min/day)</strong><br>
+                            Monitor comments on all platforms. Respond to DMs and comments from prospects and clients. Forward GHL booking link to warm leads. Like and reply to comments within first 2 hours of posting (boosts algorithm visibility). Repost user-generated content or client testimonials in Stories.
+                        </td>
+                        <td><span class="time-badge">20-30 min/day</span></td>
+                        <td>Instagram, Facebook, TikTok, GHL</td>
+                        <td>Sarah & Ben (split)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Monday</strong></td>
+                        <td>
+                            <strong>ANALYTICS REVIEW (30 min)</strong><br>
+                            Check which posts from last week got most engagement (comments, saves, shares). Check which posts generated GHL leads. Note trending topics or angles. Update Notion content calendar with what's working. Plan next week's filming topics based on performance.
+                        </td>
+                        <td><span class="time-badge">30 min</span></td>
+                        <td>Later/Metricool, GHL, YouTube Studio, Notion</td>
+                        <td>Sarah or Ben</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Monthly Rhythm</h3>
+            <ul>
+                <li><strong>First Wednesday:</strong> 2-hour filming batch (record everything for the month)</li>
+                <li><strong>Week 1 (Fri-Sun):</strong> Edit videos, create thumbnails, batch schedule all posts for Week 2</li>
+                <li><strong>Week 2-4:</strong> Posts go out automatically. Daily engagement (20-30 min). Respond to leads. Monitor analytics.</li>
+                <li><strong>End of Month (Last Monday):</strong> Deep analytics review. Plan next month's content themes and filming topics. Celebrate wins.</li>
+            </ul>
+
+            <h3>Time Investment Summary</h3>
+            <p>Total weekly time for this system: approximately 4.5-5 hours (including daily engagement).</p>
+            <ul>
+                <li>Monthly filming: 2 hours (done all at once)</li>
+                <li>Weekly editing/scheduling: 2-3 hours (concentrated on Friday)</li>
+                <li>Daily engagement: 2-3 hours across the week (20-30 min/day)</li>
+                <li><strong>Total: 4.5-5.5 hours per week to maintain daily content posts and lead engagement</strong></li>
+            </ul>
+
+            <p>This is highly efficient compared to filming scattered throughout the month (which would be 8-10 hours total when you include setup/teardown time, plus more fragmented editing sessions).</p>
+        </div>
+    </section>
+
+    <!-- Content Output Math -->
+    <section id="content-math">
+        <div class="container">
+            <h2>Content Output Math</h2>
+            <p>The real power of this system is the multiplication effect. A single 2-hour filming session generates 35-45 pieces of publishable content. This content gets distributed across all platforms, maintaining a consistent posting rhythm without burning out the team.</p>
+
+            <div class="content-math">
+                <div class="math-section">
+                    <div class="math-title">Per Single 2-Hour Filming Session</div>
+                    <ul class="math-list">
+                        <li class="math-item">
+                            <div class="math-item-label">YouTube Long-Form</div>
+                            <div class="math-item-value">2-3</div>
+                        </li>
+                        <li class="math-item">
+                            <div class="math-item-label">YouTube Shorts</div>
+                            <div class="math-item-value">6-8</div>
+                        </li>
+                        <li class="math-item">
+                            <div class="math-item-label">Instagram Reels</div>
+                            <div class="math-item-value">6-8</div>
+                        </li>
+                        <li class="math-item">
+                            <div class="math-item-label">TikToks</div>
+                            <div class="math-item-value">6-8</div>
+                        </li>
+                        <li class="math-item">
+                            <div class="math-item-label">Instagram Stories</div>
+                            <div class="math-item-value">10+</div>
+                        </li>
+                        <li class="math-item">
+                            <div class="math-item-label">Instagram Carousels</div>
+                            <div class="math-item-value">3-4</div>
+                        </li>
+                        <li class="math-item">
+                            <div class="math-item-label">Facebook Posts</div>
+                            <div class="math-item-value">3-4</div>
+                        </li>
+                        <li class="math-item">
+                            <div class="math-item-label">LinkedIn Articles</div>
+                            <div class="math-item-value">1-2</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="math-section">
+                    <div class="math-title">Total Content Per Month (2 filming sessions)</div>
+                    <ul class="math-list">
+                        <li class="math-item">
+                            <div class="math-item-label">YouTube Videos</div>
+                            <div class="math-item-value">4-6</div>
+                        </li>
+                        <li class="math-item">
+                            <div class="math-item-label">Short-Form Videos</div>
+                            <div class="math-item-value">60-80</div>
+                        </li>
+                        <li class="math-item">
+                            <div class="math-item-label">Stories</div>
+                            <div class="math-item-value">20+</div>
+                        </li>
+                        <li class="math-item">
+                            <div class="math-item-label">Carousels</div>
+                            <div class="math-item-value">6-8</div>
+                        </li>
+                        <li class="math-item">
+                            <div class="math-item-label">Posts Per Week</div>
+                            <div class="math-item-value">5-6</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Why This Math Matters</h3>
+            <p>McReynolds' goal is 45 booked calls per month. Each booked call represents a military family potentially buying or selling a home (average commission: $5,000-10,000). To get 45 booked calls, they need visibility. This visibility comes from consistent, frequent posting across all platforms where military families spend time.</p>
+
+            <h4>The Engagement Compounding Effect</h4>
+            <p>More posts = more visibility = more engagement = more leads. But it's not linear. Here's why:</p>
+            <ul>
+                <li><strong>Algorithm Boost:</strong> Instagram and TikTok algorithms favor consistent posting. 1 post/week gets minimal reach. 5-6 posts/week gets exponential reach. Each post you publish increases visibility of previous posts.</li>
+                <li><strong>Multiple Touchpoints:</strong> A military family deciding to PCS to Travis AFB might see one McReynolds TikTok, then a YouTube Shorts the next day, then an Instagram Reel, then a Google Review. By the 3-4th touchpoint, they click the GHL booking link. One lead requires multiple exposures.</li>
+                <li><strong>Evergreen Content:</strong> These posts don't expire. A YouTube video about "5 Military Family Questions We Always Get Asked" posted 6 months ago still shows up in search results and generates leads today.</li>
+                <li><strong>Platform Diversity:</strong> Military families use different platforms. Older spouses might prefer Facebook. Younger officers use TikTok. Enlisted personnel follow Instagram. By being on all 4 platforms daily, McReynolds captures the full demographic.</li>
+            </ul>
+
+            <h3>Content Breakdown by Type</h3>
+            <p>Here's what each piece of content is designed to accomplish in the McReynolds funnel:</p>
+
+            <div class="highlight-box">
+                <h4>Long-Form YouTube Videos (2-3/month)</h4>
+                <p><strong>Purpose:</strong> Build authority and capture search traffic. Military families searching "best neighborhoods for military families near Travis AFB" or "how to buy a home as military in California" should find McReynolds videos in search results.</p>
+                <p><strong>Topics:</strong> Home buying 101, PCS relocation guide, military housing benefits, top neighborhoods, VA loan guide, investment property tips, etc.</p>
+                <p><strong>Lead Value:</strong> High. People watching long-form videos are seriously researching. The GHL booking link in the description captures interested prospects.</p>
+            </div>
+
+            <div class="highlight-box">
+                <h4>YouTube Shorts (12-16/month)</h4>
+                <p><strong>Purpose:</strong> Reach new audiences. Shorts have viral potential and appear on the YouTube home feed for non-subscribers. A 45-second short about "3 Things Military Families Should Know About Travis AFB" can get 2,000-5,000 views.</p>
+                <p><strong>Topics:</strong> Quick tips, surprising facts, client testimonials, market updates, behind-the-scenes, trending sounds with military twist, etc.</p>
+                <p><strong>Lead Value:</strong> Medium. Viewers are entertained but may not be ready to book. However, they follow the channel, and future videos can convert them.</p>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Instagram Reels (12-16/month)</h4>
+                <p><strong>Purpose:</strong> Build brand recognition and Instagram followers. Reels are Instagram's fastest-growing format. High-engagement Reels get placed on the Explore page and reach non-followers.</p>
+                <p><strong>Topics:</strong> Quick home tours, lifestyle content, client stories, before/after home renovations, funny military-related skits, etc.</p>
+                <p><strong>Lead Value:</strong> Medium-High. Instagram followers are warm prospects. They've seen your content multiple times, trust the brand. High propensity to click the bio link and book.</p>
+            </div>
+
+            <div class="highlight-box">
+                <h4>TikToks (12-16/month)</h4>
+                <p><strong>Purpose:</strong> Reach the youngest demographic (Gen Z military spouses, officers' adult children). TikTok has massive reach potential and lowest algorithmic barrier to entry. A single well-performing TikTok can get 50,000-200,000 views.</p>
+                <p><strong>Topics:</strong> Trending sounds with real estate twist, funny home shopping fails, military relocation reality, "day in the life" content, etc.</p>
+                <p><strong>Lead Value:</strong> Lower immediate, but huge awareness value. Many TikTok viewers eventually move to other platforms and remember the McReynolds brand when they're ready to buy.</p>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Instagram Stories (10+/month)</h4>
+                <p><strong>Purpose:</strong> Stay top-of-mind with existing followers. Stories have a 24-hour lifecycle but drive massive engagement from your most engaged followers.</p>
+                <p><strong>Topics:</strong> Day-in-the-life, quick market updates, new listings, team celebrations, client wins, etc.</p>
+                <p><strong>Lead Value:</strong> Medium. Stories viewers are already followers. The goal is to keep them engaged until they're ready to book.</p>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Carousels (6-8/month)</h4>
+                <p><strong>Purpose:</strong> Deep dives on topics people want to learn about. Carousels perform better than single-image posts because people swipe through all 5-10 slides.</p>
+                <p><strong>Topics:</strong> "5-Step Home Buying Checklist," "Top 10 Neighborhoods at Travis AFB," "Military Relocation Timeline," etc.</p>
+                <p><strong>Lead Value:</strong> High. Swiping through all slides shows high interest. The CTA on the last slide can drive to GHL booking page.</p>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Facebook Posts (6-8/month)</h4>
+                <p><strong>Purpose:</strong> Reach older demographics and use Facebook's superior local targeting. Facebook Ads can micro-target "active military within 50 miles of Travis AFB" or "people interested in real estate who live in California."</p>
+                <p><strong>Topics:</strong> Longer-form posts with home tours, detailed market analysis, community spotlights, etc.</p>
+                <p><strong>Lead Value:</strong> Medium. Facebook audience skews older but often has more buying power. Combined with Facebook Ads, ROI can be high.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Standard Operating Procedures -->
+    <section id="sops">
+        <div class="container">
+            <h2>Standard Operating Procedures (SOPs)</h2>
+            <p>These are step-by-step processes for recurring tasks. Each SOP can be executed by Sarah, Ben, or a delegated team member. The goal is consistency, quality, and speed. When in doubt, refer to the relevant SOP.</p>
+
+            <div class="sop-container">
+                <div class="sop-card">
+                    <div class="sop-header">
+                        <div class="sop-title">SOP 1: YouTube Long-Form Video Production</div>
+                    </div>
+                    <div class="sop-steps">
+                        <div class="sop-step">
+                            <span class="step-number">1</span>
+                            <span class="step-content">Choose topic from Notion content calendar.</span>
+                            <div class="step-detail">Check what content worked last month in analytics. Pick a topic that aligns with McReynolds' pillars: Local Market Insights, Military/PCS Guides, Home Tours, Client Success Stories, or Lifestyle.</div>
+                        </div>
+                        <div class="sop-step">
+                            <span class="step-number">2</span>
+                            <span class="step-content">Research competitor videos (3-5 videos on same topic).</span>
+                            <div class="step-detail">Search YouTube for your topic. Use TubeBuddy to see which videos rank. Watch them. Note: strong intros, video structure, key points they cover. Don't copy — use this to inform your angle and ensure you're not missing important info.</div>
+                        </div>
+                        <div class="sop-step">
+                            <span class="step-number">3</span>
+                            <span class="step-content">Write hook + outline (5-10 minutes).</span>
+                            <div class="step-detail">Hook: First 15 seconds must grab attention. Example: "I've sold 200+ homes to military families moving to Travis AFB. Here's what they always ask us." Outline: 3-5 main points you'll cover. Example: Point 1 = Home prices, Point 2 = Best neighborhoods, Point 3 = Military benefits, Point 4 = Timeline.</div>
+                        </div>
+                        <div class="sop-step">
+                            <span class="step-number">4</span>
+                            <span class="step-content">Film in studio or on-location (15-20 minutes per video).</span>
+                            <div class="step-detail">Natural talking head format. Casual and conversational, not scripted. Sit in front of branded background (teal/black). Talk directly to camera. Film 2-3 takes of same content to have options in editing. Smile. Be confident. Remember your audience: military families who are nervous about moving.</div>
+                        </div>
+                        <div class="sop-step">
+                            <span class="step-number">5</span>
+                            <span class="step-content">Edit in CapCut or DaVinci Resolve (30-45 minutes).</span>
+                            <div class="step-detail">Import your best take. Add intro/outro clips if available. Auto-caption using CapCut's feature (English language, readable font). Color correct if needed. Add background music (royalty-free, not too loud). Add text overlays for key points. Export in 1080p MP4 format.</div>
+                        </div>
+                        <div class="sop-step">
+                            <span class="step-number">6</span>
+                            <span class="step-content">Create thumbnail in Canva (2-3 minutes).</span>
+                            <div class="step-detail">Use your YouTube thumbnail template from Canva. Upload a face photo or arrow graphic. Bold headline text (2-3 words max). Teal and black with white text. Download as PNG. Upload to Google Drive "Thumbnails" folder with video name.</div>
+                        </div>
+                        <div class="sop-step">
+                            <span class="step-number">7</span>
+                            <span class="step-content">Write SEO title, description, and tags (10 minutes).</span>
+                            <div class="step-detail">Title: Include main keyword. Example: "PCS to Travis AFB? 5 Things Military Families Should Know About Buying Here" (65 characters). Description: First sentence = hook repeated. Next 5-6 sentences = key points from video. Include GHL booking link. Tags: 10-15 tags from TubeBuddy research (focus on military/PCS keywords).</div>
+                        </div>
+                        <div class="sop-step">
+                            <span class="step-number">8</span>
+                            <span class="step-content">Upload and schedule in YouTube Studio.</span>
+                            <div class="step-detail">YouTube Studio → Create Video. Upload edited MP4. Upload custom thumbnail. Paste title, description, tags. Privacy: Public. Scheduled release date: Wednesday 9 AM (high engagement time for military audience). Add to playlist "Travis AFB Real Estate" so it's easy for viewers to find related content.</div>
+                        </div>
+                        <div class="sop-step">
+                            <span class="step-number">9</span>
+                            <span class="step-content">Extract YouTube Shorts from the long-form video.</span>
+                            <div class="step-detail">Use CapCut. Find the 2-3 best 30-60 second sections of the video. Cut those sections. Add captions, music, trending sounds. These become standalone YouTube Shorts. Upload to YouTube as Shorts (separate from the long-form video).</div>
+                        </div>
+                        <div class="sop-step">
+                            <span class="step-number">10</span>
+                            <span class="step-content">Cross-post Shorts to Instagram Reels and TikTok.</span>
+                            <div class="step-detail">Export the YouTube Shorts video file. In CapCut, adjust dimensions for Instagram (square 1080x1080 or vertical 1080x1350). Add Instagram-specific captions. Schedule in Later for Instagram Reels. Export again for TikTok (vertical, 9:16 aspect ratio). Schedule in Later for TikTok. Use same caption with platform-specific hashtags.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sop-card">
+                    <div class="sop-header">
+                        <div class="sop-title">SOP 2: Instagram Reel Production</div>
+                    </div>
+                    <div class="sop-steps">
+                        <div class="sop-step">
+                            <span class="step-number">1</span>
+                            <span class="step-content">Select raw footage (30-90 second clips from batch filming).</span>
+                            <div class="step-detail">Review all short-form clips from the monthly filming session. Choose 4-5 that have strong visual appeal or surprising moments. Examples: quick home tour walkthrough, client testimonial reaction, market update, before/after transformation.</div>
+                        </div>
+                        <div class="sop-step">
+                            <span class="step-number">2</span>
+                            <span class="step-content">Edit in CapCut for Instagram (15-20 minutes per Reel).</span>
+                            <div class="step-detail">Import clip. Trim to 15-90 seconds (optimal length for engagement). Auto-caption. Add trending audio (CapCut's audio library or TikTok trending sounds). Add text overlays (brand colors: teal text on black background). Add transitions if needed. Export as 1080x1350 (portrait) MP4.</div>
+                        </div>
+                        <div class="sop-step">
+                            <span class="step-number">3</span>
+                            <span class="step-content">Write engaging caption and hashtags.</span>
+                            <div class="step-detail">Caption should be 2-3 sentences. Ask a question if possible (boosts comments). Example: "Which neighborhood would YOU recommend to a military family new to Travis AFB? Comment below!" Hashtags: 15-20 mix of broad (#realestate, #militaryfamily) and specific (#TravisAFB, #PCSmilitary). Use hashtag template from Notion.</div>
+                        </div>
+                        <div class="sop-step">
+                            <span class="step-number">4</span>
+                            <span class="step-content">Schedule in Later/Metricool for optimal posting time.</span>
+                            <div class="step-detail">Later recommends best times based on your audience. For McReynolds, likely 12 PM (lunch break) or 6 PM (after work). Schedule 4-5 Reels across the next 1-2 weeks so they don't compete with each other. Space them 2-3 days apart for maximum reach.</div>
+                        </div>
+                        <div class="sop-step">
+                            <span class="step-number">5</span>
+                            <span class="step-content">Monitor first 2 hours for engagement.</span>
+                            <div class="step-detail">When the Reel posts, check it immediately. Like comments. Reply to first 5-10 comments with thoughtful responses. This signals to Instagram's algorithm that the post is engaging and boosts visibility. Responds build community and can qualify leads (if someone asks about homes, reply with GHL link).</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sop-card">
+                    <div class="sop-header">
+                        <div class="sop-title">SOP 3: Monthly Content Batch Day Checklist</div>
+                    </div>
+                    <div class="sop-steps">
+                        <div class="sop-step">
+                            <span class="step-number">1</span>
+                            <span class="step-content">PRE-SHOOT (Day before filming)</span>
+                            <div class="step-detail">Confirm with Sarah & Ben that filming is happening. Review Notion content calendar. Create shot list: 2-3 YouTube video topics, 5-6 short-form clip ideas. Prep any props (home decor, staging). Check camera battery, lighting, ring light. Book any location or client for featured content. Confirm wardrobe (solid colors, teal if possible).</div>
+                        </div>
+                        <div class="sop-step">
+                            <span class="step-number">2</span>
+                            <span class="step-content">DURING SHOOT (2 hours — batched into 1 focused session)</span>
+                            <div class="step-detail">Hour 1: Film 2-3 YouTube long-form videos (10-15 min talking head format per video). Use shot list. Multiple takes of same content. Smile and be conversational. Hour 2: Film 5-6 short-form clips (30-90 sec each). Includes: quick market updates, testimonials, home features, lifestyle, tips. Raw footage doesn't need to be perfect — editing will clean it up.</div>
+                        </div>
+                        <div class="sop-step">
+                            <span class="step-number">3</span>
+                            <span class="step-content">POST-SHOOT IMPORT & ORGANIZATION</span>
+                            <div class="step-detail">Download camera footage immediately. Create Google Drive folder: "Content 2025/February 2025/Raw Footage." Upload all videos. Create subfolders: "YouTube Long-Form" and "Short-Form Clips." Rename files with format: "YYYY-MM-Topic-Take1.mp4" so you can find best takes easily. Share folder with editing person if delegated.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sop-card">
+                    <div class="sop-header">
+                        <div class="sop-title">SOP 4: GHL Lead Follow-Up Sequence</div>
+                    </div>
+                    <div class="sop-steps">
+                        <div class="sop-step">
+                            <span class="step-number">1</span>
+                            <span class="step-content">Lead clicks GHL booking link from social (immediate trigger).</span>
+                            <div class="step-detail">Prospect sees McReynolds Instagram Reel about military home buying. Clicks GHL booking link. Lands on "Free PCS Consultation" booking page. Enters name, email, phone. Selects 15-min time slot with Sarah or Ben.</div>
+                        </div>
+                        <div class="sop-step">
+                            <span class="step-number">2</span>
+                            <span class="step-content">Automatic thank-you email (immediately after booking).</span>
+                            <div class="step-detail">GHL auto-sends email: "Thanks for booking! Here's your confirmation details. Here's 5 resources about PCS to Travis AFB. Looking forward to talking with you!" Includes: appointment time, Zoom link, contact info, resource PDF. Sets tone: professional, helpful, eager.</div>
+                        </div>
+                        <div class="sop-step">
+                            <span class="step-number">3</span>
+                            <span class="step-content">Automated SMS reminder (30-60 min before call).</span>
+                            <div class="step-detail">GHL auto-sends SMS: "Hi [Name], reminder: your PCS consultation with Sarah McReynolds is in 30 minutes. Click here for Zoom link: [link]. Any questions, reply to this text." Reduces no-shows.</div>
+                        </div>
+                        <div class="sop-step">
+                            <span class="step-number">4</span>
+                            <span class="step-content">15-minute consultation call (Sarah or Ben).</span>
+                            <div class="step-detail">Listen more than you talk. Ask: What's your PCS timeline? Are you buying or selling? VA loan eligible? Biggest concern about moving to Travis AFB? Take notes in GHL contact record. Don't hard-sell. Goal: qualify if they're serious + build relationship.</div>
+                        </div>
+                        <div class="sop-step">
+                            <span class="step-number">5</span>
+                            <span class="step-content">Post-call follow-up email (same day, within 1 hour).</span>
+                            <div class="step-detail">Personalized email: "Thanks for the chat! Based on what you shared, here are 3 neighborhoods I think would work for your family. Here's a link to our buyer's guide. Next step: I'll send you a list of homes that just hit the market in those areas. Talk soon!"</div>
+                        </div>
+                        <div class="sop-step">
+                            <span class="step-number">6</span>
+                            <span class="step-content">Nurture sequence (triggered if they don't reply within 3 days).</span>
+                            <div class="step-detail">Day 3: Follow-up text "Hey [Name], sending over that neighborhood guide. Any questions?" Day 7: Email "Just checking in. Found 2 new homes that match what you're looking for. Thoughts?" Day 14: Email with market report "Military families who waited 30 days to buy wished they hadn't. Here's what inventory looks like now." Keep in touch without being pushy.</div>
+                        </div>
+                        <div class="sop-step">
+                            <span class="step-number">7</span>
+                            <span class="step-content">Track in GHL pipeline for analytics.</span>
+                            <div class="step-detail">Update prospect's status in GHL: "Consultation Complete" → "Hot Prospect" → "Viewing Homes" → "Made Offer" → "Closed." Tag with lead source (e.g., "Instagram Reel Jan 15"). This tells you which social posts actually generate clients. Over time, you'll see patterns: "TikToks convert 10%, Instagram Reels convert 25%, YouTube videos convert 15%." Invest more in what works.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sop-card">
+                    <div class="sop-header">
+                        <div class="sop-title">SOP 5: Weekly Analytics Review</div>
+                    </div>
+                    <div class="sop-steps">
+                        <div class="sop-step">
+                            <span class="step-number">1</span>
+                            <span class="step-content">Check Later/Metricool analytics (Monday 9 AM).</span>
+                            <div class="step-detail">View: Last week's posts. Which had most likes, comments, shares, saves? Which had highest engagement rate? Later provides this summary. Note: saves are more valuable than likes (saves = person wants to reference this later, showing high intent).</div>
+                        </div>
+                        <div class="sop-step">
+                            <span class="step-number">2</span>
+                            <span class="step-content">Check platform native analytics (YouTube, Instagram, TikTok).</span>
+                            <div class="step-detail">YouTube Studio: Which videos got most watch time? What's your average viewer retention (goal: 50%+)? Instagram Insights: Which Reels hit Explore page? TikTok Analytics: Which videos have the highest view count? TikTok videos can go viral even with smaller follower counts. Track which videos got shared/saved most (highest intent metric).</div>
+                        </div>
+                        <div class="sop-step">
+                            <span class="step-number">3</span>
+                            <span class="step-content">Check GHL for lead source data.</span>
+                            <div class="step-detail">GHL → Analytics → Lead Source. Look at which social posts generated booked calls last week. Example: "Instagram Reel posted Jan 15 ('5 Things Military Families Ask'): 3 booked calls. YouTube video posted Jan 10 ('PCS Timeline Guide'): 5 booked calls." This data is GOLD. It tells you exactly what content resonates with your actual audience.</div>
+                        </div>
+                        <div class="sop-step">
+                            <span class="step-number">4</span>
+                            <span class="step-content">Note patterns and update Notion strategy.</span>
+                            <div class="step-detail">Observation: "Long-form YouTube videos consistently generate 20-30% more GHL clicks than TikToks." Action: Next month, film 3 YouTube long-forms instead of 2. Observation: "Client testimonial videos get 2x engagement." Action: Schedule monthly client testimonial filming. Observation: "Posts with 3+ hashtags underperform." Action: Use hashtag template from Notion (which has 15-20 optimized hashtags per topic).</div>
+                        </div>
+                        <div class="sop-step">
+                            <span class="step-number">5</span>
+                            <span class="step-content">Plan next month's filming topics based on what worked.</span>
+                            <div class="step-detail">Look at your highest-performing content themes. If "Military Home Buying Guides" got 40% of engagement, plan 2-3 videos on that theme next month. If "Neighborhood Tours" consistently convert to leads, schedule monthly neighborhood filming. This keeps content aligned with audience interests AND lead generation goals.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Budget Allocation -->
+    <section id="budget">
+        <div class="container">
+            <h2>Monthly Budget Allocation ($1,000 Total)</h2>
+            <p>McReynolds' $1,000/month marketing budget is allocated strategically across tools, paid ads, and content creation. The goal is maximum ROI: more visibility, more leads, more booked calls, more closed deals.</p>
+
+            <div class="budget-section">
+                <h3>Tool Stack ($62/month)</h3>
+                <div class="budget-bars">
+                    <div class="budget-item">
+                        <div class="budget-header">
+                            <div class="budget-label">Canva Pro</div>
+                            <div class="budget-amount">$13</div>
+                        </div>
+                        <div class="budget-bar">
+                            <div class="budget-fill" style="width: 21%;">1.3%</div>
+                        </div>
+                    </div>
+                    <div class="budget-item">
+                        <div class="budget-header">
+                            <div class="budget-label">Later or Metricool</div>
+                            <div class="budget-amount">$25</div>
+                        </div>
+                        <div class="budget-bar">
+                            <div class="budget-fill" style="width: 40%;">2.5%</div>
+                        </div>
+                    </div>
+                    <div class="budget-item">
+                        <div class="budget-header">
+                            <div class="budget-label">Descript</div>
+                            <div class="budget-amount">$24</div>
+                        </div>
+                        <div class="budget-bar">
+                            <div class="budget-fill" style="width: 39%;">2.4%</div>
+                        </div>
+                    </div>
+                </div>
+                <p style="margin-top: 1.5rem; color: var(--text-muted);">Note: Google Drive, Notion, CapCut, and TubeBuddy are free. GHL (~$300-500/month) is a separate investment from the marketing budget.</p>
+            </div>
+
+            <div class="budget-section">
+                <h3>Paid Advertising ($700/month)</h3>
+                <div class="budget-bars">
+                    <div class="budget-item">
+                        <div class="budget-header">
+                            <div class="budget-label">Instagram/Facebook Ads (targeted)</div>
+                            <div class="budget-amount">$500</div>
+                        </div>
+                        <div class="budget-bar">
+                            <div class="budget-fill" style="width: 71%;">50%</div>
+                        </div>
+                    </div>
+                    <div class="budget-item">
+                        <div class="budget-header">
+                            <div class="budget-label">YouTube Pre-Roll Ads</div>
+                            <div class="budget-amount">$150</div>
+                        </div>
+                        <div class="budget-bar">
+                            <div class="budget-fill" style="width: 21%;">15%</div>
+                        </div>
+                    </div>
+                    <div class="budget-item">
+                        <div class="budget-header">
+                            <div class="budget-label">Google Local Services Ads (calls)</div>
+                            <div class="budget-amount">$50</div>
+                        </div>
+                        <div class="budget-bar">
+                            <div class="budget-fill" style="width: 7%;">5%</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="budget-note">
+                    <strong>Advertising Strategy:</strong> These ads are highly targeted. Instagram/Facebook ads target "active military" or "people interested in real estate" within 50 miles of Travis AFB, age 25-55, household income $75K+. YouTube pre-roll targets videos about military relocation or real estate. Google LSAs drive phone calls directly. This is where paid budget drives qualified leads to the GHL funnel.
+                </div>
+            </div>
+
+            <div class="budget-section">
+                <h3>Boosted Organic Content ($138/month)</h3>
+                <div class="budget-bars">
+                    <div class="budget-item">
+                        <div class="budget-header">
+                            <div class="budget-label">Instagram/Facebook Post Boosts</div>
+                            <div class="budget-amount">$100</div>
+                        </div>
+                        <div class="budget-bar">
+                            <div class="budget-fill" style="width: 72%;">10%</div>
+                        </div>
+                    </div>
+                    <div class="budget-item">
+                        <div class="budget-header">
+                            <div class="budget-label">TikTok Spark Ads (promote top Tiktoks)</div>
+                            <div class="budget-amount">$38</div>
+                        </div>
+                        <div class="budget-bar">
+                            <div class="budget-fill" style="width: 27%;">3.8%</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="budget-note">
+                    <strong>Boosting Strategy:</strong> When organic content performs well (1,000+ engagement, 50+ saves), boost it with paid budget. Example: If an Instagram Reel gets 2,000 views organically and high engagement, boost it for $20-30 to reach 10,000+ people. This amplifies your best-performing content. Saves $38 for weekly TikTok boosts of your trending Tiktoks.
+                </div>
+            </div>
+
+            <div class="budget-section">
+                <h3>Creative Assets & Contingency ($100/month)</h3>
+                <div class="budget-bars">
+                    <div class="budget-item">
+                        <div class="budget-header">
+                            <div class="budget-label">Stock footage/music licensing</div>
+                            <div class="budget-amount">$30</div>
+                        </div>
+                        <div class="budget-bar">
+                            <div class="budget-fill" style="width: 30%;">3%</div>
+                        </div>
+                    </div>
+                    <div class="budget-item">
+                        <div class="budget-header">
+                            <div class="budget-label">Freelance editing (if needed)</div>
+                            <div class="budget-amount">$40</div>
+                        </div>
+                        <div class="budget-bar">
+                            <div class="budget-fill" style="width: 40%;">4%</div>
+                        </div>
+                    </div>
+                    <div class="budget-item">
+                        <div class="budget-header">
+                            <div class="budget-label">Contingency/testing</div>
+                            <div class="budget-amount">$30</div>
+                        </div>
+                        <div class="budget-bar">
+                            <div class="budget-fill" style="width: 30%;">3%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Monthly Budget Summary</h3>
+            <div class="highlight-box">
+                <p><strong>Tool Stack:</strong> $62/month (essential infrastructure for content production, scheduling, analytics)</p>
+                <p><strong>Paid Ads (Primary lead driver):</strong> $700/month (Instagram/Facebook, YouTube, Google LSA — highly targeted to military audience)</p>
+                <p><strong>Organic Boosts:</strong> $138/month (amplify top-performing organic content to multiply reach)</p>
+                <p><strong>Creative/Contingency:</strong> $100/month (stock assets, freelance help if needed, experimentation)</p>
+                <p><strong>Total: $1,000/month</strong></p>
+            </div>
+
+            <h3>Expected ROI & Metrics</h3>
+            <p>At this spend level with proper execution, McReynolds should expect:</p>
+            <ul>
+                <li><strong>Cost Per Lead (CPL):</strong> $15-25 per booked consultation (from GHL tracking)</li>
+                <li><strong>Lead to Closed Deal Conversion:</strong> 15-25% (typical for qualified real estate leads)</li>
+                <li><strong>Average Deal Value:</strong> $7,500 (typical commission on $500K home sale)</li>
+                <li><strong>Expected Revenue from $1,000 Ad Spend:</strong> $3,000-5,000 in gross commission (if properly tracked)</li>
+                <li><strong>Booked Calls Target:</strong> 45/month (at $22 CPL cost per booking)</li>
+                <li><strong>Closed Deals from Ads:</strong> 7-11 homes/month (15-25% conversion rate)</li>
+            </ul>
+
+            <div class="highlight-box">
+                <h4>Budget Adjustment Over Time</h4>
+                <p>This budget is a starting point. After 2-3 months, review what's working:</p>
+                <p><strong>If Instagram/Facebook Ads are driving leads at $18 CPL:</strong> Increase budget to $600/month, reduce YouTube pre-roll to $100.</p>
+                <p><strong>If YouTube videos are getting organic leads:</strong> Reduce paid YouTube ads. Instead, boost organic videos when they perform well.</p>
+                <p><strong>If TikToks are underperforming:</strong> Keep organic posting (free) but reduce Spark Ad spend. TikTok organic reach is powerful.</p>
+                <p><strong>If organic posts are consistently high-performing:</strong> Allocate more to boosting organic. It's cheaper than cold ads and converts better (audience already knows McReynolds brand).</p>
+                <p>Flexibility is key. Use GHL data to guide monthly adjustments.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <div class="footer-section">
+                    <h4>Forward Learning Group Strategy Documents</h4>
+                    <ul>
+                        <li><a href="#document-1">1. Brand Strategy & Core Pillars</a></li>
+                        <li><a href="#document-2">2. Content Pillars & Messaging</a></li>
+                        <li><a href="#document-3">3. Platform Strategy & Tactics</a></li>
+                        <li><a href="#document-4">4. Tool Stack & Production Workflow (This Document)</a></li>
+                        <li><a href="#document-5">5. Analytics & Performance Tracking</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#production-flow">Master Production Flow</a></li>
+                        <li><a href="#tool-stack">Complete Tool Stack</a></li>
+                        <li><a href="#schedule">Weekly Production Schedule</a></li>
+                        <li><a href="#content-math">Content Output Math</a></li>
+                        <li><a href="#sops">Standard Operating Procedures</a></li>
+                        <li><a href="#budget">Budget Allocation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>McReynolds Real Estate</h4>
+                    <ul>
+                        <li><a href="#">Instagram: @travisafb_homefinder</a></li>
+                        <li><a href="#">YouTube: @pcscalifornia</a></li>
+                        <li><a href="#">TikTok: @travisafb_homefinder</a></li>
+                        <li><a href="#">Facebook: McReynolds Real Estate Team</a></li>
+                        <li><a href="#">Platform: McReynolds Real Estate</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    McReynolds Real Estate Team Strategy Document | Forward Learning Group | February 2025
+                </div>
+                <div class="footer-doc-number">
+                    Document 4 of 5
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,2623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>McReynolds Real Estate — Social Media Strategy Dashboard</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1"></script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: #0A0A0A;
+            color: #FFFFFF;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* HEADER */
+        header {
+            position: sticky; top: 0; z-index: 1000;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #1A1A1A;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+        .header-container {
+            max-width: 1400px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 2rem;
+        }
+        .header-left { flex: 1; min-width: 300px; }
+        .logo {
+            font-size: 1.8rem; font-weight: 800;
+            background: linear-gradient(135deg, #00B3B3, #008080, #006666);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; letter-spacing: -0.5px; margin-bottom: 0.25rem;
+        }
+        .subtitle { font-size: 0.95rem; color: #A0A0A0; font-weight: 500; }
+        .attribution { font-size: 0.85rem; color: #606060; margin-top: 0.25rem; }
+        .header-right { display: flex; align-items: center; gap: 3rem; flex-wrap: wrap; }
+        .current-date { font-size: 0.95rem; color: #A0A0A0; font-weight: 500; }
+        .save-indicator { font-size: 0.8rem; color: #22C55E; font-weight: 500; opacity: 0; transition: opacity 0.3s; }
+        .save-indicator.visible { opacity: 1; }
+        .nav-quick-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .nav-link {
+            font-size: 0.9rem; color: #A0A0A0; cursor: pointer;
+            transition: all 0.3s ease; font-weight: 500;
+            padding: 0.5rem 0; border-bottom: 2px solid transparent;
+        }
+        .nav-link:hover { color: #008080; border-bottom-color: #008080; }
+
+        /* MAIN */
+        .container { max-width: 1400px; margin: 0 auto; padding: 3rem 2rem; }
+        section { margin-bottom: 4rem; scroll-margin-top: 120px; }
+        section h2 {
+            font-size: 2rem; font-weight: 700; margin-bottom: 2rem;
+            display: flex; align-items: center; gap: 1rem;
+        }
+        section h2::before {
+            content: ''; display: inline-block; width: 4px; height: 2rem;
+            background: linear-gradient(135deg, #00B3B3, #008080); border-radius: 2px;
+        }
+
+        /* TIMELINE */
+        .timeline-container {
+            background: #111111; border: 1px solid #1A1A1A;
+            border-radius: 12px; padding: 2.5rem; margin-bottom: 2rem;
+        }
+        .timeline { position: relative; padding: 1rem 0; overflow-x: auto; }
+        .timeline-track {
+            position: relative; height: 280px; min-width: 1500px;
+            padding: 0 40px;
+        }
+        .timeline-bar {
+            position: absolute; left: 30px; right: 30px; height: 4px;
+            background: #1A1A1A; border-radius: 4px; overflow: hidden;
+            top: 140px;
+        }
+        .timeline-progress {
+            position: absolute; height: 100%;
+            background: linear-gradient(135deg, #00B3B3, #008080, #006666);
+            border-radius: 4px; top: 0; left: 0;
+            box-shadow: 0 0 20px rgba(0, 128, 128, 0.5);
+            animation: glow 2s ease-in-out infinite;
+        }
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 128, 128, 0.5); }
+            50% { box-shadow: 0 0 30px rgba(0, 179, 179, 0.8); }
+        }
+
+        /* Timeline item: a vertical column centered on the bar */
+        .timeline-item {
+            position: absolute; display: flex; flex-direction: column;
+            align-items: center; z-index: 10; transform: translateX(-50%);
+        }
+        /* ABOVE items: positioned so marker sits on bar, label + stem go upward */
+        .timeline-item.above {
+            bottom: calc(100% - 140px - 7px); /* marker bottom aligns with bar center */
+            flex-direction: column-reverse;
+        }
+        /* BELOW items: positioned so marker sits on bar, label + stem go downward */
+        .timeline-item.below {
+            top: 133px; /* bar center minus half marker */
+        }
+
+        .timeline-item-marker {
+            width: 14px; height: 14px; background: #111111;
+            border: 3px solid #008080; border-radius: 50%;
+            cursor: pointer; transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+        .timeline-item-marker:hover {
+            border-color: #00B3B3; box-shadow: 0 0 15px rgba(0, 179, 179, 0.6);
+        }
+        .timeline-item-marker.major {
+            width: 18px; height: 18px; background: #D4A843;
+            border-color: #D4A843;
+            box-shadow: 0 0 12px rgba(212, 168, 67, 0.4);
+        }
+        .timeline-item-marker.major:hover {
+            box-shadow: 0 0 20px rgba(212, 168, 67, 0.8);
+        }
+        .timeline-item-marker.checkin {
+            width: 10px; height: 10px;
+            border: 2px solid #06B6D4; background: #111;
+        }
+        .timeline-item-stem {
+            width: 1px; flex-shrink: 0;
+        }
+        .timeline-item-stem.regular { height: 32px; background: rgba(0, 128, 128, 0.3); }
+        .timeline-item-stem.major { height: 32px; background: rgba(212, 168, 67, 0.4); }
+        .timeline-item-stem.checkin { height: 16px; background: rgba(6, 182, 212, 0.25); }
+
+        .timeline-item-label {
+            font-size: 0.68rem; color: #808080; font-weight: 500;
+            white-space: nowrap; line-height: 1.25; text-align: center;
+            padding: 2px 0;
+        }
+        .timeline-item-label.major { color: #D4A843; font-weight: 700; font-size: 0.72rem; }
+        .timeline-item-label.checkin { color: #06B6D4; font-size: 0.6rem; }
+
+        .timeline-tooltip {
+            display: none; position: absolute; background: #1A1A1A;
+            border: 1px solid #008080; border-radius: 8px;
+            padding: 0.5rem 0.75rem; font-size: 0.75rem;
+            white-space: nowrap; z-index: 30;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            left: 50%; transform: translateX(-50%);
+        }
+        .timeline-item.above .timeline-tooltip { top: -30px; transform: translateX(-50%) translateY(-100%); }
+        .timeline-item.below .timeline-tooltip { bottom: -30px; transform: translateX(-50%) translateY(100%); }
+        .timeline-item:hover .timeline-tooltip { display: block; }
+        .timeline-phases {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #1A1A1A;
+        }
+        .phase-card {
+            background: rgba(0, 128, 128, 0.05); border: 1px solid #008080;
+            border-radius: 8px; padding: 1rem; text-align: center; transition: all 0.3s ease;
+        }
+        .phase-card.active {
+            background: rgba(0, 128, 128, 0.15); border-color: #00B3B3;
+            box-shadow: 0 0 20px rgba(0, 128, 128, 0.3);
+        }
+        .phase-card:hover { transform: translateY(-4px); }
+        .phase-card h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .phase-card p { font-size: 0.8rem; color: #A0A0A0; }
+
+        /* KPI CARDS */
+        .kpi-row {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem; margin-bottom: 2rem;
+        }
+        .kpi-card {
+            background: #111111; border: 1px solid #1A1A1A; border-radius: 12px;
+            padding: 2rem; transition: all 0.3s ease; position: relative; overflow: hidden; cursor: pointer;
+        }
+        .kpi-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, #00B3B3, #008080, #006666); opacity: 0; transition: opacity 0.3s ease;
+        }
+        .kpi-card:hover { border-color: #008080; box-shadow: 0 8px 32px rgba(0, 128, 128, 0.15); }
+        .kpi-card:hover::before { opacity: 1; }
+        .kpi-label { font-size: 0.95rem; color: #A0A0A0; font-weight: 500; margin-bottom: 1rem; }
+        .kpi-value {
+            font-size: 2.2rem; font-weight: 700;
+            background: linear-gradient(135deg, #00B3B3, #008080);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; margin-bottom: 1.5rem;
+        }
+        .kpi-meta { font-size: 0.85rem; color: #606060; margin-bottom: 1rem; }
+        .progress-bar { width: 100%; height: 8px; background: #1A1A1A; border-radius: 4px; overflow: hidden; margin-bottom: 0.75rem; }
+        .progress-fill {
+            height: 100%; background: linear-gradient(90deg, #008080, #006666);
+            border-radius: 4px; transition: width 0.6s ease;
+            box-shadow: 0 0 10px rgba(0, 128, 128, 0.5);
+        }
+        .kpi-breakdown {
+            display: none; margin-top: 1rem; padding-top: 1rem;
+            border-top: 1px solid #1A1A1A; font-size: 0.85rem; color: #A0A0A0;
+        }
+        .kpi-breakdown.visible { display: block; }
+        .breakdown-item { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
+        .breakdown-label { color: #808080; }
+        .breakdown-value { color: #D4A843; font-weight: 600; }
+
+        /* CHARTS */
+        .charts-row {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 2rem; margin-bottom: 2rem;
+        }
+        .chart-card {
+            background: #111111; border: 1px solid #1A1A1A; border-radius: 12px;
+            padding: 2rem; transition: all 0.3s ease;
+        }
+        .chart-card:hover { border-color: #008080; box-shadow: 0 8px 32px rgba(0, 128, 128, 0.15); }
+        .chart-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 1.5rem; }
+        .chart-wrapper { position: relative; height: 350px; }
+
+        /* CONTENT CALENDAR */
+        .content-calendar {
+            background: #111111; border: 1px solid #1A1A1A;
+            border-radius: 12px; padding: 2rem; margin-bottom: 2rem;
+        }
+        .calendar-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;
+        }
+        .calendar-header h3 { font-size: 1.1rem; font-weight: 600; }
+        .calendar-nav { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+        .calendar-btn, .btn {
+            background: rgba(0, 128, 128, 0.1); border: 1px solid #008080;
+            color: #008080; padding: 0.5rem 1rem; border-radius: 6px;
+            cursor: pointer; font-size: 0.85rem; font-weight: 500;
+            transition: all 0.3s ease; font-family: 'Inter', sans-serif;
+        }
+        .calendar-btn:hover, .btn:hover {
+            background: rgba(0, 128, 128, 0.2); box-shadow: 0 0 12px rgba(0, 128, 128, 0.4);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #008080, #006666);
+            border: none; color: #FFFFFF;
+        }
+        .btn-primary:hover { box-shadow: 0 8px 20px rgba(0, 128, 128, 0.4); }
+        .btn-success {
+            background: rgba(34, 197, 94, 0.15); border-color: #22C55E; color: #22C55E;
+        }
+        .btn-success:hover { background: rgba(34, 197, 94, 0.25); }
+        .btn-gold {
+            background: rgba(212, 168, 67, 0.15); border-color: #D4A843; color: #D4A843;
+        }
+        .btn-gold:hover { background: rgba(212, 168, 67, 0.25); }
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.15); border-color: #EF4444; color: #EF4444;
+        }
+        .btn-danger:hover { background: rgba(239, 68, 68, 0.3); }
+
+        /* Timeline controls */
+        .timeline-controls {
+            display: flex; justify-content: flex-end; gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .timeline-add-btn {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            background: rgba(0, 128, 128, 0.15); border: 1px solid #008080;
+            color: #008080; padding: 0.5rem 1rem; border-radius: 8px;
+            font-size: 0.85rem; font-weight: 600; cursor: pointer;
+            font-family: 'Inter', sans-serif; transition: all 0.3s ease;
+        }
+        .timeline-add-btn:hover {
+            background: rgba(0, 128, 128, 0.25); box-shadow: 0 4px 12px rgba(0, 128, 128, 0.2);
+        }
+        .timeline-item-marker.editable { cursor: pointer; }
+        .timeline-item-marker.editable:hover {
+            transform: scale(1.4);
+        }
+        .social-profile-links {
+            display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.5rem;
+        }
+        .social-profile-btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.6rem 1.2rem; border-radius: 8px;
+            font-size: 0.85rem; font-weight: 600; text-decoration: none;
+            transition: all 0.3s ease; border: 1px solid;
+            font-family: 'Inter', sans-serif; cursor: pointer;
+        }
+        .social-profile-btn:hover { transform: translateY(-2px); }
+        .social-btn-ig { background: rgba(225, 48, 108, 0.12); border-color: #E1306C; color: #E1306C; }
+        .social-btn-ig:hover { background: rgba(225, 48, 108, 0.25); box-shadow: 0 6px 16px rgba(225, 48, 108, 0.3); }
+        .social-btn-tt { background: rgba(255, 255, 255, 0.08); border-color: #fff; color: #fff; }
+        .social-btn-tt:hover { background: rgba(255, 255, 255, 0.18); box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2); }
+        .social-btn-fb { background: rgba(24, 119, 242, 0.12); border-color: #1877F2; color: #1877F2; }
+        .social-btn-fb:hover { background: rgba(24, 119, 242, 0.25); box-shadow: 0 6px 16px rgba(24, 119, 242, 0.3); }
+        .social-btn-li { background: rgba(10, 102, 194, 0.12); border-color: #0A66C2; color: #0A66C2; }
+        .social-btn-li:hover { background: rgba(10, 102, 194, 0.25); box-shadow: 0 6px 16px rgba(10, 102, 194, 0.3); }
+        .social-btn-yt { background: rgba(255, 0, 0, 0.12); border-color: #FF0000; color: #FF0000; }
+        .social-btn-yt:hover { background: rgba(255, 0, 0, 0.25); box-shadow: 0 6px 16px rgba(255, 0, 0, 0.3); }
+        .status-filter-bar {
+            display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;
+        }
+        .filter-chip {
+            padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.8rem;
+            font-weight: 600; cursor: pointer; border: 1px solid #333;
+            background: transparent; color: #A0A0A0; transition: all 0.2s;
+        }
+        .filter-chip.active { background: rgba(0, 128, 128, 0.2); border-color: #008080; color: #008080; }
+        .filter-chip[data-filter="Ready"].active { background: rgba(34, 197, 94, 0.2); border-color: #22C55E; color: #22C55E; }
+        .filter-chip[data-filter="In Production"].active { background: rgba(235, 160, 30, 0.2); border-color: #EBA01E; color: #EBA01E; }
+        .filter-chip[data-filter="Shot"].active { background: rgba(6, 182, 212, 0.2); border-color: #06B6D4; color: #06B6D4; }
+        .filter-chip[data-filter="Posted"].active { background: rgba(0, 179, 179, 0.2); border-color: #00B3B3; color: #00B3B3; }
+        .filter-chip[data-filter="Scheduled"].active { background: rgba(0, 128, 128, 0.2); border-color: #008080; color: #008080; }
+
+        .calendar-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;
+        }
+        .content-card {
+            background: #0F0F0F; border: 1px solid #1A1A1A; border-radius: 8px;
+            padding: 1.25rem; transition: all 0.3s ease; cursor: pointer;
+        }
+        .content-card:hover {
+            border-color: #008080; box-shadow: 0 8px 24px rgba(0, 128, 128, 0.2);
+            transform: translateY(-4px);
+        }
+        .content-date { font-size: 0.85rem; color: #06B6D4; font-weight: 600; margin-bottom: 0.5rem; }
+        .content-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.75rem; line-height: 1.4; color: #FFFFFF; }
+        .content-platforms { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+        .platform-badge {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 28px; height: 28px; background: rgba(0, 128, 128, 0.1);
+            border: 1px solid #008080; border-radius: 4px;
+            font-size: 0.7rem; font-weight: 600; color: #008080; transition: all 0.2s ease;
+        }
+        .content-pillar {
+            display: inline-block; padding: 0.35rem 0.75rem; border-radius: 4px;
+            font-size: 0.75rem; font-weight: 600; margin-bottom: 0.5rem; margin-right: 0.5rem;
+        }
+        .pillar-military { background: rgba(0, 128, 128, 0.2); border: 1px solid #008080; color: #008080; }
+        .pillar-lifestyle { background: rgba(0, 179, 179, 0.2); border: 1px solid #00B3B3; color: #00B3B3; }
+        .pillar-tours { background: rgba(6, 182, 212, 0.2); border: 1px solid #06B6D4; color: #06B6D4; }
+        .pillar-market { background: rgba(212, 168, 67, 0.2); border: 1px solid #D4A843; color: #D4A843; }
+        .pillar-trust { background: rgba(0, 102, 102, 0.2); border: 1px solid #006666; color: #006666; }
+        .content-status {
+            font-size: 0.75rem; font-weight: 700; padding: 0.4rem 0.75rem;
+            border-radius: 4px; display: inline-block;
+        }
+        .status-ready { background: rgba(34, 197, 94, 0.2); color: #22C55E; border: 1px solid #22C55E; }
+        .status-production { background: rgba(235, 160, 30, 0.2); color: #EBA01E; border: 1px solid #EBA01E; }
+        .status-scheduled { background: rgba(0, 128, 128, 0.2); color: #008080; border: 1px solid #008080; }
+        .status-shot { background: rgba(6, 182, 212, 0.2); color: #06B6D4; border: 1px solid #06B6D4; }
+        .status-posted { background: rgba(0, 179, 179, 0.2); color: #00B3B3; border: 1px solid #00B3B3; }
+
+        /* MODAL */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8); z-index: 2000;
+            justify-content: center; align-items: center; padding: 2rem;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal {
+            background: #111111; border: 1px solid #008080; border-radius: 16px;
+            padding: 2.5rem; max-width: 600px; width: 100%; max-height: 90vh;
+            overflow-y: auto; position: relative;
+            box-shadow: 0 24px 80px rgba(0, 128, 128, 0.3);
+        }
+        .modal-close {
+            position: absolute; top: 1rem; right: 1rem; background: none;
+            border: none; color: #A0A0A0; font-size: 1.5rem; cursor: pointer;
+            transition: color 0.2s; line-height: 1;
+        }
+        .modal-close:hover { color: #FFFFFF; }
+        .modal h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem; padding-right: 2rem; }
+        .modal-field { margin-bottom: 1.25rem; }
+        .modal-field label {
+            display: block; font-size: 0.85rem; color: #A0A0A0;
+            font-weight: 600; margin-bottom: 0.5rem;
+        }
+        .modal-field select, .modal-field input, .modal-field textarea {
+            width: 100%; background: #0A0A0A; border: 1px solid #333;
+            color: #FFFFFF; padding: 0.75rem 1rem; border-radius: 8px;
+            font-family: 'Inter', sans-serif; font-size: 0.9rem;
+            transition: border-color 0.2s;
+        }
+        .modal-field select:focus, .modal-field input:focus, .modal-field textarea:focus {
+            outline: none; border-color: #008080;
+        }
+        .modal-field textarea { resize: vertical; min-height: 80px; }
+        .modal-actions { display: flex; gap: 1rem; margin-top: 1.5rem; }
+        .modal-actions .btn { flex: 1; padding: 0.75rem; text-align: center; }
+
+        /* STRATEGY DOCUMENTS */
+        .documents-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem; margin-bottom: 2rem;
+        }
+        .document-card {
+            background: #111111; border: 1px solid #1A1A1A; border-radius: 12px;
+            padding: 2rem; transition: all 0.3s ease; display: flex; flex-direction: column;
+            position: relative; overflow: hidden;
+        }
+        .document-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(0, 179, 179, 0.05), rgba(0, 128, 128, 0.05));
+            opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+        }
+        .document-card:hover {
+            border-color: #008080; box-shadow: 0 12px 40px rgba(0, 128, 128, 0.25);
+            transform: translateY(-8px);
+        }
+        .document-card:hover::before { opacity: 1; }
+        .document-card.highlighted { border: 2px solid #D4A843; background: rgba(212, 168, 67, 0.03); }
+        .document-card.highlighted:hover { box-shadow: 0 12px 40px rgba(212, 168, 67, 0.25); }
+        .document-icon {
+            width: 48px; height: 48px;
+            background: linear-gradient(135deg, #00B3B3, #008080);
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; margin-bottom: 1rem; font-weight: 700;
+        }
+        .document-card.highlighted .document-icon { background: linear-gradient(135deg, #D4A843, #B8881F); }
+        .document-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem; }
+        .document-description { font-size: 0.9rem; color: #A0A0A0; margin-bottom: 1.5rem; flex-grow: 1; }
+        .document-btn {
+            background: linear-gradient(135deg, #008080, #006666); color: #FFFFFF;
+            border: none; padding: 0.75rem 1.5rem; border-radius: 6px;
+            font-size: 0.9rem; font-weight: 600; cursor: pointer;
+            transition: all 0.3s ease; font-family: 'Inter', sans-serif; text-align: center;
+        }
+        .document-card.highlighted .document-btn { background: linear-gradient(135deg, #D4A843, #B8881F); }
+        .document-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 128, 128, 0.4); }
+        .strategy-header-btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: linear-gradient(135deg, #D4A843, #B8881F); color: #FFFFFF;
+            border: none; padding: 0.6rem 1.2rem; border-radius: 6px;
+            font-size: 0.8rem; font-weight: 700; cursor: pointer;
+            font-family: 'Inter', sans-serif; text-decoration: none;
+            transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .strategy-header-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(212, 168, 67, 0.4); }
+        .strategy-hub-intro {
+            background: linear-gradient(135deg, rgba(212, 168, 67, 0.08), rgba(0, 128, 128, 0.08));
+            border: 1px solid rgba(212, 168, 67, 0.2); border-radius: 12px;
+            padding: 2rem; margin-bottom: 2rem; text-align: center;
+        }
+        .strategy-hub-intro h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .strategy-hub-intro p { color: #A0A0A0; font-size: 0.95rem; max-width: 600px; margin: 0 auto; }
+        .strategy-hub-master {
+            margin-bottom: 2rem; text-align: center;
+        }
+        .strategy-master-btn {
+            display: inline-flex; align-items: center; gap: 0.75rem;
+            background: linear-gradient(135deg, #D4A843, #B8881F); color: #FFFFFF;
+            border: none; padding: 1rem 2.5rem; border-radius: 8px;
+            font-size: 1.1rem; font-weight: 700; cursor: pointer;
+            font-family: 'Inter', sans-serif; text-decoration: none;
+            transition: all 0.3s ease; letter-spacing: 0.5px;
+        }
+        .strategy-master-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(212, 168, 67, 0.4); }
+        .strategy-divider {
+            display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; color: #555;
+            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;
+        }
+        .strategy-divider::before, .strategy-divider::after {
+            content: ''; flex: 1; height: 1px; background: #1A1A1A;
+        }
+
+        /* CHECKLIST */
+        .checklist-container {
+            background: #111111; border: 1px solid #1A1A1A;
+            border-radius: 12px; padding: 2rem; margin-bottom: 2rem;
+        }
+        .checklist-progress { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid #1A1A1A; }
+        .progress-text { font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; }
+        .progress-bar-large { width: 100%; height: 12px; background: #1A1A1A; border-radius: 6px; overflow: hidden; }
+        .progress-fill-large {
+            height: 100%; background: linear-gradient(90deg, #008080, #006666);
+            border-radius: 6px; transition: width 0.6s ease;
+            box-shadow: 0 0 12px rgba(0, 128, 128, 0.5);
+        }
+        .checklist {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;
+        }
+        .checklist-item {
+            display: flex; align-items: center; gap: 1rem; padding: 1rem;
+            background: #0F0F0F; border: 1px solid #1A1A1A; border-radius: 8px;
+            cursor: pointer; transition: all 0.3s ease; user-select: none;
+        }
+        .checklist-item:hover { border-color: #008080; background: rgba(0, 128, 128, 0.03); }
+        .checklist-item.completed { border-color: #22C55E; background: rgba(34, 197, 94, 0.05); }
+        .checklist-checkbox {
+            width: 24px; height: 24px; border: 2px solid #008080; border-radius: 4px;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+            transition: all 0.3s ease; background: transparent; font-size: 0.9rem; font-weight: 700;
+        }
+        .checklist-item.completed .checklist-checkbox { background: #22C55E; border-color: #22C55E; color: #FFFFFF; }
+        .checklist-label { font-size: 0.95rem; font-weight: 500; color: #FFFFFF; flex: 1; }
+        .checklist-item.completed .checklist-label { color: #A0A0A0; text-decoration: line-through; }
+
+        /* REVENUE */
+        .revenue-container {
+            background: #111111; border: 1px solid #1A1A1A;
+            border-radius: 12px; padding: 2rem; margin-bottom: 2rem;
+        }
+        .revenue-total { font-size: 1.3rem; font-weight: 700; color: #D4A843; margin-bottom: 2rem; text-align: center; }
+        .revenue-chart-wrapper { position: relative; height: 140px; margin-bottom: 2rem; }
+        .revenue-items {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;
+        }
+        .revenue-item {
+            background: #0F0F0F; border: 1px solid #1A1A1A; border-radius: 8px;
+            padding: 1.25rem; transition: all 0.3s ease;
+        }
+        .revenue-item:hover { border-color: #008080; transform: translateY(-4px); }
+        .revenue-label { font-size: 0.9rem; color: #A0A0A0; margin-bottom: 0.5rem; }
+        .revenue-amount { font-size: 1.2rem; font-weight: 700; color: #D4A843; }
+        .revenue-breakdown { font-size: 0.8rem; color: #606060; margin-top: 0.5rem; }
+
+        /* SOCIAL MEDIA TRACKER */
+        .social-tracker {
+            background: #111111; border: 1px solid #1A1A1A;
+            border-radius: 12px; padding: 2rem; margin-bottom: 2rem;
+        }
+        .tracker-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;
+        }
+        .tracker-header h3 { font-size: 1.1rem; font-weight: 600; }
+        .platform-stats {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem; margin-bottom: 2rem;
+        }
+        .platform-stat-card {
+            background: #0F0F0F; border: 1px solid #1A1A1A; border-radius: 8px;
+            padding: 1.25rem; transition: all 0.3s ease;
+        }
+        .platform-stat-card:hover { border-color: #008080; }
+        .platform-stat-card .platform-name {
+            font-size: 0.85rem; color: #A0A0A0; font-weight: 600; margin-bottom: 0.5rem;
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+        .platform-stat-card .platform-icon {
+            width: 24px; height: 24px; border-radius: 4px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.65rem; font-weight: 700;
+        }
+        .platform-stat-card .follower-count {
+            font-size: 1.8rem; font-weight: 700; margin-bottom: 0.25rem;
+        }
+        .platform-stat-card .follower-change {
+            font-size: 0.8rem; font-weight: 600;
+        }
+        .change-positive { color: #22C55E; }
+        .change-neutral { color: #606060; }
+        .follower-input-row {
+            display: flex; gap: 0.5rem; align-items: center; margin-top: 0.75rem;
+        }
+        .follower-input-row input {
+            width: 100px; background: #0A0A0A; border: 1px solid #333;
+            color: #FFFFFF; padding: 0.4rem 0.6rem; border-radius: 6px;
+            font-family: 'Inter', sans-serif; font-size: 0.85rem;
+        }
+        .follower-input-row input:focus { outline: none; border-color: #008080; }
+        .follower-input-row button {
+            background: rgba(0, 128, 128, 0.15); border: 1px solid #008080;
+            color: #008080; padding: 0.4rem 0.6rem; border-radius: 6px;
+            cursor: pointer; font-size: 0.75rem; font-weight: 600;
+            font-family: 'Inter', sans-serif; transition: all 0.2s;
+        }
+        .follower-input-row button:hover { background: rgba(0, 128, 128, 0.3); }
+        .snapshot-history {
+            background: #0F0F0F; border: 1px solid #1A1A1A; border-radius: 8px;
+            padding: 1.5rem; margin-top: 1.5rem;
+        }
+        .snapshot-history h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 1rem; }
+        .snapshot-table {
+            width: 100%; border-collapse: collapse; font-size: 0.85rem;
+        }
+        .snapshot-table th {
+            text-align: left; color: #A0A0A0; font-weight: 600;
+            padding: 0.5rem 0.75rem; border-bottom: 1px solid #1A1A1A;
+        }
+        .snapshot-table td {
+            padding: 0.5rem 0.75rem; border-bottom: 1px solid #111;
+            color: #FFFFFF;
+        }
+        .snapshot-table tr:hover td { background: rgba(0, 128, 128, 0.05); }
+        .snapshot-delete {
+            background: none; border: none; color: #606060; cursor: pointer;
+            font-size: 0.8rem; transition: color 0.2s;
+        }
+        .snapshot-delete:hover { color: #EF4444; }
+
+        /* POST LOG */
+        .post-log { margin-top: 2rem; }
+        .post-log h4 { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; }
+        .post-log-form {
+            display: grid; grid-template-columns: 1fr 1fr 2fr 1fr auto;
+            gap: 0.75rem; align-items: end; margin-bottom: 1.5rem;
+        }
+        .post-log-form .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+        .post-log-form label { font-size: 0.75rem; color: #A0A0A0; font-weight: 600; }
+        .post-log-form input, .post-log-form select {
+            background: #0A0A0A; border: 1px solid #333; color: #FFFFFF;
+            padding: 0.5rem 0.75rem; border-radius: 6px;
+            font-family: 'Inter', sans-serif; font-size: 0.85rem;
+        }
+        .post-log-form input:focus, .post-log-form select:focus { outline: none; border-color: #008080; }
+        .post-log-entries { max-height: 400px; overflow-y: auto; }
+        .post-entry {
+            display: grid; grid-template-columns: 100px 80px 1fr 100px auto;
+            gap: 0.75rem; align-items: center; padding: 0.75rem 1rem;
+            background: #0F0F0F; border: 1px solid #1A1A1A; border-radius: 6px;
+            margin-bottom: 0.5rem; font-size: 0.85rem;
+        }
+        .post-entry:hover { border-color: #333; }
+        .post-entry .post-platform {
+            font-weight: 600; font-size: 0.75rem;
+            padding: 0.25rem 0.5rem; border-radius: 4px; text-align: center;
+        }
+        .post-entry-delete {
+            background: none; border: none; color: #606060; cursor: pointer;
+            font-size: 0.8rem; transition: color 0.2s;
+        }
+        .post-entry-delete:hover { color: #EF4444; }
+
+        /* FOOTER */
+        footer {
+            background: #111111; border-top: 1px solid #1A1A1A;
+            padding: 3rem 2rem; margin-top: 4rem;
+        }
+        .footer-container {
+            max-width: 1400px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem;
+        }
+        .footer-section h3 { font-size: 1rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .footer-section p { font-size: 0.95rem; color: #A0A0A0; line-height: 1.8; margin-bottom: 0.75rem; }
+        .footer-section a { color: #008080; text-decoration: none; transition: color 0.3s ease; }
+        .footer-section a:hover { color: #00B3B3; }
+        .team-member { font-size: 0.9rem; color: #A0A0A0; margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid #1A1A1A; }
+        .team-member:last-child { border-bottom: none; }
+        .member-name { font-weight: 600; color: #FFFFFF; }
+        .member-title { font-size: 0.85rem; color: #606060; }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .header-container { gap: 1rem; }
+            .header-right { width: 100%; gap: 1rem; }
+            .nav-quick-links { width: 100%; flex-wrap: wrap; }
+            .charts-row { grid-template-columns: 1fr; }
+            .kpi-row { grid-template-columns: repeat(2, 1fr); }
+            section h2 { font-size: 1.5rem; }
+            .container { padding: 2rem 1.5rem; }
+            .post-log-form { grid-template-columns: 1fr 1fr; }
+            .post-entry { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+        }
+        @media (max-width: 480px) {
+            .header-container { flex-direction: column; gap: 1rem; }
+            header { padding: 1rem; }
+            .logo { font-size: 1.3rem; }
+            .kpi-row { grid-template-columns: 1fr; }
+            .calendar-grid { grid-template-columns: 1fr; }
+            .nav-quick-links { gap: 0.5rem; font-size: 0.8rem; }
+            .post-log-form { grid-template-columns: 1fr; }
+            .post-entry { grid-template-columns: 1fr; }
+        }
+        /* TIMELINE CHECK-IN MARKERS */
+        .timeline-item-marker.checkin {
+            width: 10px; height: 10px; background: #06B6D4;
+            border-color: #06B6D4;
+            box-shadow: 0 0 6px rgba(6, 182, 212, 0.4);
+        }
+        .timeline-item-marker.checkin:hover {
+            width: 14px; height: 14px;
+            box-shadow: 0 0 12px rgba(6, 182, 212, 0.8);
+        }
+        .timeline-item-label.checkin { color: #06B6D4; font-size: 0.65rem; }
+
+        /* GOOGLE DRIVE SECTION */
+        .drive-section {
+            background: #111111; border: 1px solid #1A1A1A;
+            border-radius: 12px; padding: 2rem; margin-bottom: 2rem;
+        }
+        .drive-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;
+        }
+        .drive-header h3 { font-size: 1.1rem; font-weight: 600; }
+        .drive-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;
+        }
+        .drive-link-card {
+            background: #0F0F0F; border: 1px solid #1A1A1A; border-radius: 8px;
+            padding: 1.25rem; transition: all 0.3s ease; cursor: pointer;
+        }
+        .drive-link-card:hover { border-color: #008080; transform: translateY(-2px); }
+        .drive-link-card a {
+            color: #008080; text-decoration: none; font-weight: 600;
+            font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem;
+        }
+        .drive-link-card a:hover { color: #00B3B3; }
+        .drive-link-card .drive-desc {
+            font-size: 0.8rem; color: #606060; margin-top: 0.4rem;
+        }
+        .drive-link-card .drive-icon {
+            font-size: 1.3rem; flex-shrink: 0;
+        }
+        .drive-edit-row {
+            display: grid; grid-template-columns: 1fr 2fr 1fr auto; gap: 0.5rem;
+            align-items: end; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #1A1A1A;
+        }
+        .drive-edit-row .form-group { display: flex; flex-direction: column; gap: 0.3rem; }
+        .drive-edit-row label { font-size: 0.75rem; color: #A0A0A0; font-weight: 600; }
+        .drive-edit-row input, .drive-edit-row select {
+            background: #0A0A0A; border: 1px solid #333; color: #FFFFFF;
+            padding: 0.5rem 0.75rem; border-radius: 6px;
+            font-family: 'Inter', sans-serif; font-size: 0.85rem;
+        }
+        .drive-edit-row input:focus { outline: none; border-color: #008080; }
+
+        /* CONTENT IDEAS SECTION */
+        .ideas-section {
+            background: #111111; border: 1px solid #1A1A1A;
+            border-radius: 12px; padding: 2rem; margin-bottom: 2rem;
+        }
+        .ideas-tabs {
+            display: flex; gap: 0; margin-bottom: 1.5rem; border-bottom: 1px solid #1A1A1A;
+        }
+        .idea-tab {
+            padding: 0.75rem 1.5rem; font-size: 0.9rem; font-weight: 600;
+            color: #606060; cursor: pointer; border-bottom: 2px solid transparent;
+            transition: all 0.2s; background: none; border-top: none; border-left: none; border-right: none;
+            font-family: 'Inter', sans-serif;
+        }
+        .idea-tab.active { color: #008080; border-bottom-color: #008080; }
+        .idea-tab:hover { color: #A0A0A0; }
+        .idea-panel { display: none; }
+        .idea-panel.active { display: block; }
+
+        /* Notepad */
+        .notepad-form {
+            display: grid; grid-template-columns: 2fr 1fr auto; gap: 0.75rem;
+            align-items: end; margin-bottom: 1.5rem;
+        }
+        .notepad-form .form-group { display: flex; flex-direction: column; gap: 0.3rem; }
+        .notepad-form label { font-size: 0.75rem; color: #A0A0A0; font-weight: 600; }
+        .notepad-form input, .notepad-form select {
+            background: #0A0A0A; border: 1px solid #333; color: #FFFFFF;
+            padding: 0.5rem 0.75rem; border-radius: 6px;
+            font-family: 'Inter', sans-serif; font-size: 0.85rem;
+        }
+        .notepad-form input:focus { outline: none; border-color: #008080; }
+        .idea-card {
+            background: #0F0F0F; border: 1px solid #1A1A1A; border-radius: 8px;
+            padding: 1rem; margin-bottom: 0.5rem; display: flex;
+            justify-content: space-between; align-items: center; gap: 1rem;
+            transition: all 0.2s;
+        }
+        .idea-card:hover { border-color: #333; }
+        .idea-card .idea-text { flex: 1; font-size: 0.9rem; }
+        .idea-card .idea-pillar-tag {
+            font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.5rem;
+            border-radius: 3px; flex-shrink: 0;
+        }
+        .idea-card .idea-actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
+        .idea-card .idea-actions button {
+            background: none; border: 1px solid #333; color: #A0A0A0; cursor: pointer;
+            font-size: 0.7rem; padding: 0.3rem 0.5rem; border-radius: 4px;
+            font-family: 'Inter', sans-serif; transition: all 0.2s;
+        }
+        .idea-card .idea-actions button:hover { border-color: #008080; color: #008080; }
+        .idea-card .idea-actions button.delete-btn:hover { border-color: #EF4444; color: #EF4444; }
+
+        /* Generator */
+        .generator-controls {
+            display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 0.75rem;
+            align-items: end; margin-bottom: 1.5rem;
+        }
+        .generator-controls .form-group { display: flex; flex-direction: column; gap: 0.3rem; }
+        .generator-controls label { font-size: 0.75rem; color: #A0A0A0; font-weight: 600; }
+        .generator-controls select {
+            background: #0A0A0A; border: 1px solid #333; color: #FFFFFF;
+            padding: 0.5rem 0.75rem; border-radius: 6px;
+            font-family: 'Inter', sans-serif; font-size: 0.85rem;
+        }
+        .generator-controls select:focus { outline: none; border-color: #008080; }
+        .generated-ideas { min-height: 100px; }
+        .gen-idea-card {
+            background: #0F0F0F; border: 1px solid #1A1A1A; border-radius: 8px;
+            padding: 1rem 1.25rem; margin-bottom: 0.5rem; display: flex;
+            justify-content: space-between; align-items: center; gap: 1rem;
+            transition: all 0.2s;
+        }
+        .gen-idea-card:hover { border-color: #008080; }
+        .gen-idea-card .idea-text { flex: 1; font-size: 0.9rem; }
+        .gen-idea-card button {
+            background: rgba(34, 197, 94, 0.1); border: 1px solid #22C55E;
+            color: #22C55E; cursor: pointer; font-size: 0.75rem; font-weight: 600;
+            padding: 0.4rem 0.75rem; border-radius: 4px;
+            font-family: 'Inter', sans-serif; transition: all 0.2s; white-space: nowrap;
+        }
+        .gen-idea-card button:hover { background: rgba(34, 197, 94, 0.2); }
+
+        @media (max-width: 768px) {
+            .drive-edit-row { grid-template-columns: 1fr 1fr; }
+            .notepad-form { grid-template-columns: 1fr; }
+            .generator-controls { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 480px) {
+            .drive-edit-row { grid-template-columns: 1fr; }
+            .generator-controls { grid-template-columns: 1fr; }
+        }
+
+        @media print {
+            header { position: static; margin-bottom: 2rem; }
+            .nav-quick-links, .calendar-nav { display: none; }
+            section { page-break-inside: avoid; }
+            body { background: white; color: black; }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-container">
+            <div class="header-left">
+                <div class="logo">MCREYNOLDS REAL ESTATE</div>
+                <div class="subtitle">Social Media Strategy Dashboard</div>
+                <div class="attribution">Prepared by Forward Learning Group</div>
+            </div>
+            <div class="header-right">
+                <div class="current-date" id="currentDate"></div>
+                <a href="mcreynolds-complete-strategy.html" target="_blank" class="strategy-header-btn">&#x1F4D6; Full Strategy</a>
+                <div class="save-indicator" id="saveIndicator">All changes saved</div>
+                <nav class="nav-quick-links">
+                    <a class="nav-link" onclick="scrollToSection('timeline')">Timeline</a>
+                    <a class="nav-link" onclick="scrollToSection('kpis')">KPIs</a>
+                    <a class="nav-link" onclick="scrollToSection('calendar')">Calendar</a>
+                    <a class="nav-link" onclick="scrollToSection('social')">Social Tracker</a>
+                    <a class="nav-link" onclick="scrollToSection('drive')">Drive</a>
+                    <a class="nav-link" onclick="scrollToSection('ideas')">Ideas</a>
+                    <a class="nav-link" onclick="scrollToSection('strategy')">Strategy</a>
+                    <a class="nav-link" onclick="scrollToSection('revenue')">Revenue</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENT DETAIL MODAL -->
+    <div class="modal-overlay" id="contentModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <h3 id="modalTitle"></h3>
+            <div class="modal-field">
+                <label>Date</label>
+                <div id="modalDate" style="color:#06B6D4;font-weight:600;"></div>
+            </div>
+            <div class="modal-field">
+                <label>Content Pillar</label>
+                <div id="modalPillar"></div>
+            </div>
+            <div class="modal-field">
+                <label>Platforms</label>
+                <div id="modalPlatforms" style="display:flex;gap:0.5rem;flex-wrap:wrap;"></div>
+            </div>
+            <div class="modal-field">
+                <label>Production Status</label>
+                <select id="modalStatus">
+                    <option value="Scheduled">Scheduled</option>
+                    <option value="In Production">In Production</option>
+                    <option value="Shot">Shot / Filmed</option>
+                    <option value="Ready">Ready to Post</option>
+                    <option value="Posted">Posted</option>
+                </select>
+            </div>
+            <div class="modal-field">
+                <label>Notes</label>
+                <textarea id="modalNotes" placeholder="Add production notes, links, or details..."></textarea>
+            </div>
+            <div class="modal-field">
+                <label>Post URL (if posted)</label>
+                <input type="url" id="modalPostUrl" placeholder="https://instagram.com/p/...">
+            </div>
+            <div class="modal-actions">
+                <button class="btn" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveContentChanges()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- TIMELINE -->
+        <section id="timeline">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+                <h2 style="margin-bottom:0;">Project Timeline</h2>
+                <button class="timeline-add-btn" onclick="openTimelineModal()">+ Add Event</button>
+            </div>
+            <div class="timeline-container">
+                <div class="timeline">
+                    <div class="timeline-track" id="timelineTrack">
+                        <div class="timeline-bar">
+                            <div class="timeline-progress" id="timelineProgress"></div>
+                        </div>
+                    </div>
+                    <div class="timeline-phases" id="timelinePhases"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- KPIs -->
+        <section id="kpis">
+            <h2>Key Performance Indicators</h2>
+            <div class="kpi-row" id="kpiRow"></div>
+        </section>
+
+        <!-- CHARTS -->
+        <section id="charts">
+            <h2>Analytics & Growth Projection</h2>
+            <div class="charts-row">
+                <div class="chart-card">
+                    <h3>Content Pillar Distribution</h3>
+                    <div class="chart-wrapper"><canvas id="pillarChart"></canvas></div>
+                </div>
+                <div class="chart-card">
+                    <h3>Follower Growth — Projected vs. Actual</h3>
+                    <div class="chart-wrapper"><canvas id="growthChart"></canvas></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTENT CALENDAR -->
+        <section id="calendar">
+            <h2>Content Calendar</h2>
+            <div class="content-calendar">
+                <div class="calendar-header">
+                    <h3 id="calendarTitle">Content Schedule</h3>
+                    <div class="calendar-nav">
+                        <button class="btn btn-success" onclick="openAddContent()">+ Add Content</button>
+                    </div>
+                </div>
+                <div class="status-filter-bar" id="statusFilters">
+                    <div class="filter-chip active" data-filter="All" onclick="filterCalendar('All')">All</div>
+                    <div class="filter-chip" data-filter="Scheduled" onclick="filterCalendar('Scheduled')">Scheduled</div>
+                    <div class="filter-chip" data-filter="In Production" onclick="filterCalendar('In Production')">In Production</div>
+                    <div class="filter-chip" data-filter="Shot" onclick="filterCalendar('Shot')">Shot</div>
+                    <div class="filter-chip" data-filter="Ready" onclick="filterCalendar('Ready')">Ready</div>
+                    <div class="filter-chip" data-filter="Posted" onclick="filterCalendar('Posted')">Posted</div>
+                </div>
+                <div class="calendar-grid" id="calendarGrid"></div>
+            </div>
+        </section>
+
+        <!-- SOCIAL MEDIA TRACKER -->
+        <section id="social">
+            <h2>Social Media Tracker</h2>
+            <div class="social-profile-links">
+                <a href="https://www.instagram.com/travisafb_homefinder" target="_blank" class="social-profile-btn social-btn-ig">&#x1F4F7; IG: Homefinder</a>
+                <a href="https://www.instagram.com/pcs_travisafb" target="_blank" class="social-profile-btn social-btn-ig">&#x1F4F7; IG: PCS Travis</a>
+                <a href="https://www.facebook.com/smcreynoldsgroup" target="_blank" class="social-profile-btn social-btn-fb">&#x1F44D; FB: McReynolds Group</a>
+                <a href="https://www.facebook.com/benjamin.mcreynolds" target="_blank" class="social-profile-btn social-btn-fb">&#x1F44D; FB: Ben McReynolds</a>
+                <a href="https://youtube.com/@travisafb_homefinder" target="_blank" class="social-profile-btn social-btn-yt">&#x25B6; YouTube</a>
+            </div>
+            <div class="social-tracker">
+                <div class="tracker-header">
+                    <h3>Platform Performance</h3>
+                    <button class="btn btn-gold" onclick="takeSnapshot()">Take Monthly Snapshot</button>
+                </div>
+                <div class="platform-stats" id="platformStats"></div>
+
+                <div class="snapshot-history" id="snapshotHistory">
+                    <h4>Monthly Snapshots</h4>
+                    <div style="overflow-x:auto;">
+                        <table class="snapshot-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>IG</th>
+                                    <th>TikTok</th>
+                                    <th>Facebook</th>
+                                    <th>LinkedIn</th>
+                                    <th>YouTube</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="snapshotTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="post-log">
+                    <h4>Post Log — Track Published Content</h4>
+                    <div class="post-log-form" id="postLogForm">
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="date" id="postDate">
+                        </div>
+                        <div class="form-group">
+                            <label>Platform</label>
+                            <select id="postPlatform">
+                                <option value="IG">Instagram</option>
+                                <option value="TT">TikTok</option>
+                                <option value="FB">Facebook</option>
+                                <option value="LI">LinkedIn</option>
+                                <option value="YT">YouTube</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Content Title / Description</label>
+                            <input type="text" id="postTitle" placeholder="What was posted?">
+                        </div>
+                        <div class="form-group">
+                            <label>Link</label>
+                            <input type="url" id="postLink" placeholder="https://...">
+                        </div>
+                        <button class="btn btn-primary" onclick="addPostEntry()" style="align-self:end;">Add</button>
+                    </div>
+                    <div class="post-log-entries" id="postLogEntries"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GOOGLE DRIVE -->
+        <section id="drive">
+            <h2>Google Drive — Project Files</h2>
+            <div class="drive-section">
+                <div class="drive-header">
+                    <h3>Key Documents & Folders</h3>
+                    <button class="btn btn-primary" onclick="toggleDriveEdit()">+ Add Link</button>
+                </div>
+                <div class="drive-grid" id="driveGrid"></div>
+                <div class="drive-edit-row" id="driveEditRow" style="display:none;">
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" id="driveLinkTitle" placeholder="Document name">
+                    </div>
+                    <div class="form-group">
+                        <label>URL</label>
+                        <input type="url" id="driveLinkUrl" placeholder="https://drive.google.com/...">
+                    </div>
+                    <div class="form-group">
+                        <label>Type</label>
+                        <select id="driveLinkType">
+                            <option value="📁">📁 Folder</option>
+                            <option value="📄">📄 Document</option>
+                            <option value="📊">📊 Spreadsheet</option>
+                            <option value="🎨">🎨 Design</option>
+                            <option value="📸">📸 Media</option>
+                            <option value="📝">📝 Notes</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-success" onclick="addDriveLink()" style="align-self:end;">Save</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTENT IDEAS -->
+        <section id="ideas">
+            <h2>Content Ideas Lab</h2>
+            <div class="ideas-section">
+                <div class="ideas-tabs">
+                    <button class="idea-tab active" onclick="switchIdeaTab('notepad')">Brainstorm Notepad</button>
+                    <button class="idea-tab" onclick="switchIdeaTab('generator')">Idea Generator</button>
+                </div>
+
+                <!-- Notepad Panel -->
+                <div class="idea-panel active" id="notepadPanel">
+                    <div class="notepad-form">
+                        <div class="form-group">
+                            <label>Content Idea</label>
+                            <input type="text" id="ideaText" placeholder="Describe your content idea...">
+                        </div>
+                        <div class="form-group">
+                            <label>Pillar</label>
+                            <select id="ideaPillar">
+                                <option value="Military Relocation">Military Relocation</option>
+                                <option value="Local Lifestyle">Local Lifestyle</option>
+                                <option value="Home Tours">Home Tours</option>
+                                <option value="Market Clarity">Market Clarity</option>
+                                <option value="Trust Builders">Trust Builders</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary" onclick="addIdea()" style="align-self:end;">Add</button>
+                    </div>
+                    <div id="ideasList"></div>
+                </div>
+
+                <!-- Generator Panel -->
+                <div class="idea-panel" id="generatorPanel">
+                    <div class="generator-controls">
+                        <div class="form-group">
+                            <label>Content Pillar</label>
+                            <select id="genPillar">
+                                <option value="any">Any Pillar</option>
+                                <option value="Military Relocation">Military Relocation</option>
+                                <option value="Local Lifestyle">Local Lifestyle</option>
+                                <option value="Home Tours">Home Tours</option>
+                                <option value="Market Clarity">Market Clarity</option>
+                                <option value="Trust Builders">Trust Builders</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Platform</label>
+                            <select id="genPlatform">
+                                <option value="any">Any Platform</option>
+                                <option value="IG">Instagram</option>
+                                <option value="TT">TikTok</option>
+                                <option value="YT">YouTube</option>
+                                <option value="LI">LinkedIn</option>
+                                <option value="FB">Facebook</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Tone</label>
+                            <select id="genTone">
+                                <option value="any">Any Tone</option>
+                                <option value="hype">Hype / Exciting</option>
+                                <option value="educational">Educational</option>
+                                <option value="behind-scenes">Behind the Scenes</option>
+                                <option value="luxury">Luxury / Aspirational</option>
+                                <option value="community">Community / Interactive</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary" onclick="generateIdeas()" style="align-self:end;">Generate</button>
+                    </div>
+                    <div class="generated-ideas" id="generatedIdeas">
+                        <div style="text-align:center;color:#606060;padding:2rem;font-size:0.9rem;">Select your filters and click Generate to get content ideas</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STRATEGY DOCUMENTS -->
+        <section id="strategy">
+            <h2>Your Strategy</h2>
+            <div class="strategy-hub-intro">
+                <h3>Your Complete Strategy Suite</h3>
+                <p>Every document behind your brand growth — from high-level strategy to daily production workflows. Click any card to open that section.</p>
+            </div>
+            <div class="strategy-hub-master">
+                <a href="mcreynolds-complete-strategy.html" target="_blank" class="strategy-master-btn">&#x1F4D6; View Complete Strategy (All Sections)</a>
+            </div>
+            <div class="strategy-divider">or jump to a specific section</div>
+            <div class="documents-grid">
+                <div class="document-card highlighted" onclick="window.open('mcreynolds-growth-strategy.html','_blank')">
+                    <div class="document-icon">&#x1F4C8;</div>
+                    <div class="document-title">Growth Strategy</div>
+                    <div class="document-description">Your 12-month growth roadmap — phases, platform strategies, content pillars, monetization, and success metrics.</div>
+                    <button class="document-btn" onclick="event.stopPropagation();window.open('mcreynolds-growth-strategy.html','_blank')">Open Growth Strategy →</button>
+                </div>
+                <div class="document-card" onclick="window.open('mcreynolds-emergency-fixes.html','_blank')">
+                    <div class="document-icon">&#x1F527;</div>
+                    <div class="document-title">Emergency Fixes</div>
+                    <div class="document-description">Quick wins and immediate action items — account optimization, bio updates, hashtag strategy, and posting schedules.</div>
+                    <button class="document-btn" onclick="event.stopPropagation();window.open('mcreynolds-emergency-fixes.html','_blank')">Open Emergency Fixes →</button>
+                </div>
+                <div class="document-card" onclick="window.open('mcreynolds-content-strategy.html','_blank')">
+                    <div class="document-icon">&#x1F4CB;</div>
+                    <div class="document-title">Content Strategy</div>
+                    <div class="document-description">Content pillars, posting cadence, hooks library, templates, repurposing workflows, and platform-specific tactics.</div>
+                    <button class="document-btn" onclick="event.stopPropagation();window.open('mcreynolds-content-strategy.html','_blank')">Open Content Strategy →</button>
+                </div>
+                <div class="document-card" onclick="window.open('mcreynolds-tool-stack-workflow.html','_blank')">
+                    <div class="document-icon">&#x2699;&#xFE0F;</div>
+                    <div class="document-title">Tool Stack & Workflow</div>
+                    <div class="document-description">Production flow, recommended tools, weekly schedule, and the content math behind hitting your posting targets.</div>
+                    <button class="document-btn" onclick="event.stopPropagation();window.open('mcreynolds-tool-stack-workflow.html','_blank')">Open Tool Stack →</button>
+                </div>
+                <div class="document-card" onclick="window.open('mcreynolds-visual-style-guide.html','_blank')">
+                    <div class="document-icon">&#x1F3A8;</div>
+                    <div class="document-title">Visual Style Guide</div>
+                    <div class="document-description">Brand colors, typography, logo usage, image treatments, and visual identity guidelines for all content.</div>
+                    <button class="document-btn" onclick="event.stopPropagation();window.open('mcreynolds-visual-style-guide.html','_blank')">Open Style Guide →</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- DELIVERABLES CHECKLIST -->
+        <section id="deliverables">
+            <h2>Deliverables Checklist</h2>
+            <div class="checklist-container">
+                <div class="checklist-progress">
+                    <div class="progress-text">Progress: <span id="checklistProgress">0 of 0</span> deliverables complete</div>
+                    <div class="progress-bar-large">
+                        <div class="progress-fill-large" id="checklistProgressBar" style="width: 0%;"></div>
+                    </div>
+                </div>
+                <div class="checklist" id="checklistItems"></div>
+            </div>
+        </section>
+
+        <!-- REVENUE -->
+        <section id="revenue">
+            <h2>Revenue Model & Projections</h2>
+            <div class="revenue-container">
+                <div class="revenue-total">TOTAL PROJECTED REVENUE: <span id="revenueTotal">$1,140,000</span></div>
+                <div class="revenue-chart-wrapper"><canvas id="revenueChart"></canvas></div>
+                <div class="revenue-items" id="revenueItems"></div>
+            </div>
+        </section>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Forward Learning Group</h3>
+                <p><strong>Strategy Partner</strong></p>
+                <p><a href="mailto:cam@forward-learn.com">cam@forward-learn.com</a></p>
+                <p>Your complete social media strategy, content production, and growth execution partner.</p>
+            </div>
+            <div class="footer-section">
+                <h3>McReynolds Real Estate Team</h3>
+                <div class="team-member"><div class="member-name">McReynolds</div><div class="member-title">Lead Agent & Brand Principal</div></div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ADD CONTENT MODAL -->
+    <div class="modal-overlay" id="addContentModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeAddContentModal()">&times;</button>
+            <h3>Add New Content</h3>
+            <div class="modal-field">
+                <label>Date (e.g., Apr 19)</label>
+                <input type="text" id="newContentDate" placeholder="Apr 19">
+            </div>
+            <div class="modal-field">
+                <label>Content Title</label>
+                <input type="text" id="newContentTitle" placeholder="Title of the content piece">
+            </div>
+            <div class="modal-field">
+                <label>Platforms (comma-separated: IG, TT, FB, LI, YT)</label>
+                <input type="text" id="newContentPlatforms" placeholder="IG, TT, FB">
+            </div>
+            <div class="modal-field">
+                <label>Content Pillar</label>
+                <select id="newContentPillar">
+                    <option value="Military Relocation">Military Relocation</option>
+                    <option value="Local Lifestyle">Local Lifestyle</option>
+                    <option value="Home Tours">Home Tours</option>
+                    <option value="Market Clarity">Market Clarity</option>
+                    <option value="Trust Builders">Trust Builders</option>
+                </select>
+            </div>
+            <div class="modal-field">
+                <label>Status</label>
+                <select id="newContentStatus">
+                    <option value="Scheduled">Scheduled</option>
+                    <option value="In Production">In Production</option>
+                    <option value="Shot">Shot / Filmed</option>
+                    <option value="Ready">Ready to Post</option>
+                    <option value="Posted">Posted</option>
+                </select>
+            </div>
+            <div class="modal-field">
+                <label>Notes</label>
+                <textarea id="newContentNotes" placeholder="Production notes..."></textarea>
+            </div>
+            <div class="modal-actions">
+                <button class="btn" onclick="closeAddContentModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="addNewContent()">Add Content</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TIMELINE EVENT MODAL -->
+    <div class="modal-overlay" id="timelineModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeTimelineModal()">&times;</button>
+            <h3 id="timelineModalTitle">Add Timeline Event</h3>
+            <div class="modal-field">
+                <label>Event Name</label>
+                <input type="text" id="tlLabel" placeholder="e.g. 5K Followers Milestone">
+            </div>
+            <div class="modal-field">
+                <label>Date</label>
+                <input type="date" id="tlDate">
+            </div>
+            <div class="modal-field">
+                <label>Event Type</label>
+                <select id="tlType">
+                    <option value="major">Major Milestone (gold dot)</option>
+                    <option value="regular">Regular Event (teal dot)</option>
+                    <option value="checkin">Check-in (small blue dot)</option>
+                </select>
+            </div>
+            <div class="modal-field">
+                <label>Description / Tooltip</label>
+                <input type="text" id="tlTooltip" placeholder="e.g. Target: 5,000 total followers">
+            </div>
+            <div class="modal-actions">
+                <button class="btn" onclick="closeTimelineModal()">Cancel</button>
+                <button class="btn btn-danger" id="tlDeleteBtn" onclick="deleteTimelineEvent()" style="display:none;">Delete</button>
+                <button class="btn btn-primary" id="tlSaveBtn" onclick="saveTimelineEvent()">Add Event</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+// ==================== CONFIGURATION ====================
+const BRAND_COLORS = {
+    primary: '#008080', secondary: '#00B3B3', dark: '#006666',
+    cyan: '#06B6D4', gold: '#D4A843', background: '#0A0A0A',
+    card: '#111111', border: '#1A1A1A', text: '#FFFFFF', textSecondary: '#A0A0A0'
+};
+
+const STORAGE_KEY = 'mcreynolds_dashboard_v1';
+
+// ==================== FIREBASE CONFIG ====================
+const firebaseConfig = {
+    apiKey: "AIzaSyAN8AuyjU-amcaa3LiB3epJyUUGgbzMzpI",
+    authDomain: "artmersive-dashboard.firebaseapp.com",
+    databaseURL: "https://artmersive-dashboard-default-rtdb.firebaseio.com",
+    projectId: "artmersive-dashboard",
+    storageBucket: "artmersive-dashboard.firebasestorage.app",
+    messagingSenderId: "976179317149",
+    appId: "1:976179317149:web:1dcb51b0e126f0c3c28774"
+};
+
+let firebaseReady = false;
+let dbRef = null;
+
+function initFirebase() {
+    // Firebase disabled for McReynolds — using localStorage only
+    firebaseReady = false;
+    return;
+    try {
+        firebase.initializeApp(firebaseConfig);
+        dbRef = firebase.database().ref('dashboardState');
+        firebaseReady = true;
+        // Listen for real-time changes from other devices
+        dbRef.on('value', function(snapshot) {
+            const cloudData = snapshot.val();
+            if (cloudData && cloudData._lastSaved) {
+                const localStr = localStorage.getItem(STORAGE_KEY);
+                const localData = localStr ? JSON.parse(localStr) : null;
+                const localTime = localData && localData._lastSaved ? localData._lastSaved : 0;
+                // Only update if cloud is newer than local
+                if (cloudData._lastSaved > localTime) {
+                    state = cloudData;
+                    delete state._lastSaved;
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+                    refreshAllUI();
+                }
+            }
+        });
+        console.log('Firebase connected successfully');
+    } catch (e) {
+        console.warn('Firebase init failed, using localStorage only:', e);
+        firebaseReady = false;
+    }
+}
+
+function saveToFirebase() {
+    if (!firebaseReady || !dbRef) return;
+    try {
+        const dataToSave = JSON.parse(JSON.stringify(state));
+        dataToSave._lastSaved = Date.now();
+        dbRef.set(dataToSave);
+    } catch (e) {
+        console.warn('Firebase save failed:', e);
+    }
+}
+
+function loadFromFirebase(callback) {
+    if (!firebaseReady || !dbRef) { callback(null); return; }
+    dbRef.once('value').then(function(snapshot) {
+        callback(snapshot.val());
+    }).catch(function(e) {
+        console.warn('Firebase load failed:', e);
+        callback(null);
+    });
+}
+
+function refreshAllUI() {
+    setCurrentDate();
+    initTimeline();
+    initKPIs();
+    initCharts();
+    renderCalendar();
+    initDocuments();
+    initChecklist();
+    initRevenue();
+    renderPlatformStats();
+    renderSnapshots();
+    renderPostLog();
+    renderDriveLinks();
+    renderIdeas();
+}
+
+const TODAY = new Date();
+const PROJECT_START = new Date('2026-02-15');
+const PROJECT_END = new Date('2027-02-15');
+
+const DEFAULT_TIMELINE_EVENTS = [
+    { id: 1, date: '2026-02-15', label: 'Strategy Kickoff', type: 'major', tooltip: 'Project begins — branding and strategy phase' },
+    { id: 2, date: '2026-03-15', label: 'Content Launch — First Posts Live', type: 'major', tooltip: 'First content published across all platforms' },
+    { id: 3, date: '2026-04-15', label: 'Apr Check-in', type: 'checkin', tooltip: 'Monthly performance review' },
+    { id: 4, date: '2026-05-15', label: '1K Followers Milestone', type: 'regular', tooltip: 'Target: 1,000 total followers across platforms' },
+    { id: 5, date: '2026-06-15', label: 'Jun Check-in', type: 'checkin', tooltip: 'Monthly performance review' },
+    { id: 6, date: '2026-07-15', label: 'Jul Check-in', type: 'checkin', tooltip: 'Monthly performance review' },
+    { id: 7, date: '2026-08-15', label: '5K Followers Milestone', type: 'major', tooltip: 'Target: 5,000 total followers' },
+    { id: 8, date: '2026-09-15', label: 'Sep Check-in', type: 'checkin', tooltip: 'Monthly performance review' },
+    { id: 9, date: '2026-11-01', label: '10K Followers + Brand Deals', type: 'major', tooltip: 'Target: 10,000 followers, first brand partnerships' },
+    { id: 10, date: '2027-02-15', label: 'Year One Review', type: 'major', tooltip: '12-month strategy review and renewal' }
+];
+
+const phases = [
+    { name: 'Foundation', start: new Date('2026-02-15'), end: new Date('2026-04-15'), description: 'Branding & content systems' },
+    { name: 'Growth', start: new Date('2026-04-16'), end: new Date('2026-07-15'), description: 'Audience building & engagement' },
+    { name: 'Authority', start: new Date('2026-07-16'), end: new Date('2027-02-15'), description: 'Market leadership & monetization' }
+];
+
+const DEFAULT_CONTENT = [
+    { id: 1, date: 'Mar 1', title: 'PCS Season is Coming — Your Relocation Timeline Starts Here', platforms: ['IG','FB','LI'], pillar: 'Military Relocation', status: 'Ready', notes: '', postUrl: '' },
+    { id: 2, date: 'Mar 3', title: 'This Week\'s Market in 60 Seconds — Spring Edition', platforms: ['IG','TT','LI'], pillar: 'Market Clarity', status: 'Ready', notes: '', postUrl: '' },
+    { id: 3, date: 'Mar 5', title: 'JUST SOLD — Client Win: Keys Day for the Martinez Family', platforms: ['IG','FB','TT'], pillar: 'Trust Builders', status: 'Ready', notes: '', postUrl: '' },
+    { id: 4, date: 'Mar 7', title: 'What You Get for $350K Near Base — 3 Homes Compared', platforms: ['IG','TT','YT'], pillar: 'Home Tours', status: 'Ready', notes: '', postUrl: '' },
+    { id: 5, date: 'Mar 9', title: 'VA Loan Mythbuster: You DON\'T Need 20% Down', platforms: ['IG','LI','TT'], pillar: 'Military Relocation', status: 'In Production', notes: '', postUrl: '' },
+    { id: 6, date: 'Mar 11', title: 'Weekend Guide: Best Family Spots Near Fort Liberty', platforms: ['IG','FB','TT'], pillar: 'Local Lifestyle', status: 'In Production', notes: '', postUrl: '' },
+    { id: 7, date: 'Mar 13', title: 'Rent vs. Buy Breakdown — Real Numbers, No Fluff', platforms: ['IG','TT','LI'], pillar: 'Market Clarity', status: 'Scheduled', notes: '', postUrl: '' },
+    { id: 8, date: 'Mar 15', title: 'Showing Day Chaos — 6 Houses, 1 Day, Here\'s What Happened', platforms: ['TT','IG','YT'], pillar: 'Trust Builders', status: 'Scheduled', notes: '', postUrl: '' },
+    { id: 9, date: 'Mar 17', title: 'Hidden Gem Feature Tour: This Backyard is UNREAL', platforms: ['IG','TT','YT'], pillar: 'Home Tours', status: 'Scheduled', notes: '', postUrl: '' },
+    { id: 10, date: 'Mar 19', title: 'Buying While Deployed: How We Make It Work', platforms: ['IG','FB','LI'], pillar: 'Military Relocation', status: 'Scheduled', notes: '', postUrl: '' },
+    { id: 11, date: 'Mar 21', title: 'Local Biz Spotlight: The Coffee Shop Every Neighbor Loves', platforms: ['IG','TT','FB'], pillar: 'Local Lifestyle', status: 'Scheduled', notes: '', postUrl: '' },
+    { id: 12, date: 'Mar 23', title: 'What We Do That Protects You — Our Offer Strategy Explained', platforms: ['IG','YT','LI'], pillar: 'Trust Builders', status: 'Scheduled', notes: '', postUrl: '' }
+];
+
+const DEFAULT_DELIVERABLES = [
+    { name: 'Growth Strategy Document', completed: true },
+    { name: 'Brand Identity & Style Guide', completed: true },
+    { name: 'Content Strategy Playbook', completed: true },
+    { name: 'Platform Optimization Guide', completed: true },
+    { name: 'Visual Content Templates', completed: false },
+    { name: '12 Content Calendar Entries', completed: true },
+    { name: 'Lead Generation Funnel Doc', completed: false },
+    { name: 'Social Account Optimization', completed: false },
+    { name: 'Content Bank (30+ pieces)', completed: false },
+    { name: 'Monthly Analytics Template', completed: false },
+    { name: 'CRM Integration Setup', completed: false },
+    { name: 'Referral Program Framework', completed: false },
+    { name: 'Video Production SOP', completed: false },
+    { name: 'Email Nurture Sequence', completed: false }
+];
+
+const DEFAULT_PLATFORMS = {
+    IG: { name: 'Instagram', color: '#E1306C', followers: 0 },
+    TT: { name: 'TikTok', color: '#00F2EA', followers: 0 },
+    FB: { name: 'Facebook', color: '#1877F2', followers: 0 },
+    LI: { name: 'LinkedIn', color: '#0A66C2', followers: 0 },
+    YT: { name: 'YouTube', color: '#FF0000', followers: 0 }
+};
+
+const DEFAULT_DRIVE_LINKS = [
+    { id: 1, title: 'McReynolds Real Estate — Project Folder', url: '#', icon: '📁', desc: 'Shared Drive — all project files, assets & deliverables' }
+];
+
+// Documents are now hardcoded in the Strategy Hub HTML with direct links
+
+const revenueItems = [
+    { label: 'Social Media Leads → Closings', calc: '3 deals × $12K avg commission', amount: 432000 },
+    { label: 'Referral Network Growth', calc: '2 referrals/mo × $10K avg', amount: 240000 },
+    { label: 'Brand Partnership Revenue', calc: 'Sponsored content + collabs', amount: 36000 },
+    { label: 'Open House Lead Conversion', calc: 'Social-driven attendance', amount: 144000 },
+    { label: 'Listing Acquisition via Authority', calc: 'Inbound listing leads', amount: 288000 }
+];
+
+// ==================== STATE MANAGEMENT ====================
+let state = {};
+let currentEditIndex = -1;
+let activeFilter = 'All';
+let growthChart = null;
+
+function loadState() {
+    try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+            state = JSON.parse(saved);
+            // Migrate: add missing fields
+            if (!state.postLog) state.postLog = [];
+            if (!state.snapshots) state.snapshots = [];
+            if (!state.platforms) state.platforms = JSON.parse(JSON.stringify(DEFAULT_PLATFORMS));
+            if (!state.deliverables) state.deliverables = JSON.parse(JSON.stringify(DEFAULT_DELIVERABLES));
+            if (!state.driveLinks) state.driveLinks = JSON.parse(JSON.stringify(DEFAULT_DRIVE_LINKS));
+            if (!state.ideas) state.ideas = [];
+            if (!state.nextIdeaId) state.nextIdeaId = 1;
+            if (!state.nextContentId) state.nextContentId = 19;
+            if (!state.timelineEvents) state.timelineEvents = JSON.parse(JSON.stringify(DEFAULT_TIMELINE_EVENTS));
+            if (!state.nextTimelineId) state.nextTimelineId = 11;
+            state.content.forEach((c, i) => {
+                if (!c.id) c.id = i + 1;
+                if (c.notes === undefined) c.notes = '';
+                if (c.postUrl === undefined) c.postUrl = '';
+            });
+        } else {
+            resetToDefaults();
+        }
+    } catch (e) {
+        resetToDefaults();
+    }
+}
+
+function resetToDefaults() {
+    state = {
+        content: JSON.parse(JSON.stringify(DEFAULT_CONTENT)),
+        deliverables: JSON.parse(JSON.stringify(DEFAULT_DELIVERABLES)),
+        platforms: JSON.parse(JSON.stringify(DEFAULT_PLATFORMS)),
+        driveLinks: JSON.parse(JSON.stringify(DEFAULT_DRIVE_LINKS)),
+        timelineEvents: JSON.parse(JSON.stringify(DEFAULT_TIMELINE_EVENTS)),
+        ideas: [],
+        snapshots: [],
+        postLog: [],
+        nextContentId: 19,
+        nextIdeaId: 1,
+        nextTimelineId: 11
+    };
+    saveState();
+}
+
+function saveState() {
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        saveToFirebase();
+        showSaveIndicator();
+    } catch (e) {
+        console.warn('Could not save state:', e);
+    }
+}
+
+function showSaveIndicator() {
+    const el = document.getElementById('saveIndicator');
+    el.classList.add('visible');
+    setTimeout(() => el.classList.remove('visible'), 2000);
+}
+
+// ==================== INIT ====================
+function init() {
+    // Load localStorage first for instant render
+    loadState();
+    setCurrentDate();
+    initTimeline();
+    initKPIs();
+    initCharts();
+    renderCalendar();
+    initDocuments();
+    initChecklist();
+    initRevenue();
+    renderPlatformStats();
+    renderSnapshots();
+    renderPostLog();
+    renderDriveLinks();
+    renderIdeas();
+
+    // Set default post date to today
+    const pd = document.getElementById('postDate');
+    if (pd) pd.value = TODAY.toISOString().split('T')[0];
+
+    // Initialize Firebase (will auto-sync via real-time listener)
+    initFirebase();
+
+    // Also do a one-time check: if cloud state is newer, refresh UI
+    setTimeout(function() {
+        loadFromFirebase(function(cloudData) {
+            if (cloudData && cloudData._lastSaved) {
+                const localStr = localStorage.getItem(STORAGE_KEY);
+                const localData = localStr ? JSON.parse(localStr) : null;
+                const localTime = localData && localData._lastSaved ? localData._lastSaved : 0;
+                if (cloudData._lastSaved > localTime) {
+                    state = cloudData;
+                    delete state._lastSaved;
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+                    refreshAllUI();
+                }
+            }
+        });
+    }, 1000);
+}
+
+function setCurrentDate() {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById('currentDate').textContent = TODAY.toLocaleDateString('en-US', options);
+}
+
+// ==================== TIMELINE ====================
+let currentEditTimelineId = null;
+
+function initTimeline() {
+    const track = document.getElementById('timelineTrack');
+    const progress = document.getElementById('timelineProgress');
+    const phasesEl = document.getElementById('timelinePhases');
+
+    // Clear existing items (for re-renders)
+    track.querySelectorAll('.timeline-item').forEach(el => el.remove());
+    phasesEl.innerHTML = '';
+
+    const totalDays = PROJECT_END - PROJECT_START;
+    const daysElapsed = TODAY - PROJECT_START;
+    const pct = Math.max(0, Math.min(100, (daysElapsed / totalDays) * 100));
+    progress.style.width = pct + '%';
+
+    // Use state events (persisted) — parse date strings to Date objects for sorting
+    const events = (state.timelineEvents || []).map(e => ({
+        ...e,
+        _date: new Date(e.date)
+    }));
+
+    const sortedEvents = events.sort((a, b) => a._date - b._date);
+    const totalD = (PROJECT_END - PROJECT_START) / (1000 * 60 * 60 * 24);
+    const MIN_SPACING = 5.5;
+
+    const positions = sortedEvents.map(event => {
+        const dFromStart = (event._date - PROJECT_START) / (1000 * 60 * 60 * 24);
+        return Math.max(3, Math.min(97, (dFromStart / totalD) * 100));
+    });
+
+    for (let i = 1; i < positions.length; i++) {
+        if (positions[i] - positions[i - 1] < MIN_SPACING) {
+            positions[i] = positions[i - 1] + MIN_SPACING;
+        }
+    }
+
+    sortedEvents.forEach((event, idx) => {
+        const leftPct = Math.min(97, positions[idx]);
+        const isAbove = idx % 2 === 0;
+        const typeClass = event.type || 'regular';
+
+        const item = document.createElement('div');
+        item.className = `timeline-item ${isAbove ? 'above' : 'below'}`;
+        item.style.left = leftPct + '%';
+
+        const labelHtml = `<div class="timeline-item-label ${typeClass}">${event.label.replace(/\n/g, '<br>')}</div>`;
+        const stemHtml = `<div class="timeline-item-stem ${typeClass}"></div>`;
+        const markerHtml = `<div class="timeline-item-marker ${typeClass} editable" onclick="openTimelineModal(${event.id})" title="Click to edit"></div>`;
+        const tooltipHtml = `<div class="timeline-tooltip">${event.tooltip || ''}<br><small style="color:#A0A0A0;">${event._date.toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'})} · click dot to edit</small></div>`;
+
+        item.innerHTML = markerHtml + stemHtml + labelHtml + tooltipHtml;
+        track.appendChild(item);
+    });
+
+    phases.forEach(phase => {
+        const isActive = TODAY >= phase.start && TODAY <= phase.end;
+        const card = document.createElement('div');
+        card.className = `phase-card ${isActive ? 'active' : ''}`;
+        card.innerHTML = `<h4>${phase.name}</h4><p>${phase.description}</p>`;
+        phasesEl.appendChild(card);
+    });
+}
+
+// ==================== TIMELINE MODAL FUNCTIONS ====================
+function openTimelineModal(eventId) {
+    const modal = document.getElementById('timelineModal');
+    const titleEl = document.getElementById('timelineModalTitle');
+    const saveBtn = document.getElementById('tlSaveBtn');
+    const deleteBtn = document.getElementById('tlDeleteBtn');
+
+    if (eventId) {
+        // EDIT mode
+        const event = state.timelineEvents.find(e => e.id === eventId);
+        if (!event) return;
+        currentEditTimelineId = eventId;
+        titleEl.textContent = 'Edit Timeline Event';
+        saveBtn.textContent = 'Save Changes';
+        deleteBtn.style.display = 'inline-flex';
+        document.getElementById('tlLabel').value = event.label;
+        document.getElementById('tlDate').value = event.date;
+        document.getElementById('tlType').value = event.type || 'regular';
+        document.getElementById('tlTooltip').value = event.tooltip || '';
+    } else {
+        // ADD mode
+        currentEditTimelineId = null;
+        titleEl.textContent = 'Add Timeline Event';
+        saveBtn.textContent = 'Add Event';
+        deleteBtn.style.display = 'none';
+        document.getElementById('tlLabel').value = '';
+        document.getElementById('tlDate').value = '';
+        document.getElementById('tlType').value = 'regular';
+        document.getElementById('tlTooltip').value = '';
+    }
+
+    modal.classList.add('open');
+}
+
+function closeTimelineModal() {
+    document.getElementById('timelineModal').classList.remove('open');
+    currentEditTimelineId = null;
+}
+
+function saveTimelineEvent() {
+    const label = document.getElementById('tlLabel').value.trim();
+    const date = document.getElementById('tlDate').value;
+    const type = document.getElementById('tlType').value;
+    const tooltip = document.getElementById('tlTooltip').value.trim();
+
+    if (!label) { alert('Please enter an event name.'); return; }
+    if (!date) { alert('Please select a date.'); return; }
+
+    if (currentEditTimelineId) {
+        // Update existing
+        const event = state.timelineEvents.find(e => e.id === currentEditTimelineId);
+        if (event) {
+            event.label = label;
+            event.date = date;
+            event.type = type;
+            event.tooltip = tooltip;
+        }
+    } else {
+        // Add new
+        state.timelineEvents.push({
+            id: state.nextTimelineId++,
+            date: date,
+            label: label,
+            type: type,
+            tooltip: tooltip
+        });
+    }
+
+    saveState();
+    initTimeline();
+    closeTimelineModal();
+}
+
+function deleteTimelineEvent() {
+    if (!currentEditTimelineId) return;
+    if (!confirm('Delete this timeline event?')) return;
+
+    state.timelineEvents = state.timelineEvents.filter(e => e.id !== currentEditTimelineId);
+    saveState();
+    initTimeline();
+    closeTimelineModal();
+}
+
+// ==================== KPIs ====================
+function initKPIs() {
+    const kpiRow = document.getElementById('kpiRow');
+    const totalFollowers = Object.values(state.platforms).reduce((s, p) => s + (p.followers || 0), 0);
+    const postedCount = state.content.filter(c => c.status === 'Posted').length;
+    const totalContent = state.content.length;
+
+    const kpis = [
+        {
+            label: 'Total Followers',
+            value: totalFollowers.toLocaleString(),
+            target: '5,000+', meta: 'by Month 6',
+            progress: Math.min(100, (totalFollowers / 5000) * 100),
+            breakdown: [
+                { label: 'Instagram', value: (state.platforms.IG?.followers || 0).toLocaleString() },
+                { label: 'TikTok', value: (state.platforms.TT?.followers || 0).toLocaleString() },
+                { label: 'YouTube', value: (state.platforms.YT?.followers || 0).toLocaleString() },
+                { label: 'Facebook', value: (state.platforms.FB?.followers || 0).toLocaleString() },
+                { label: 'LinkedIn', value: (state.platforms.LI?.followers || 0).toLocaleString() }
+            ]
+        },
+        {
+            label: 'Content Pipeline',
+            value: totalContent.toString(),
+            target: '100-150 total', meta: `${postedCount} posted`,
+            progress: Math.min(100, (totalContent / 100) * 100),
+            breakdown: [
+                { label: 'Posted', value: state.content.filter(c => c.status === 'Posted').length.toString() },
+                { label: 'Ready', value: state.content.filter(c => c.status === 'Ready').length.toString() },
+                { label: 'Shot', value: state.content.filter(c => c.status === 'Shot').length.toString() },
+                { label: 'In Production', value: state.content.filter(c => c.status === 'In Production').length.toString() },
+                { label: 'Scheduled', value: state.content.filter(c => c.status === 'Scheduled').length.toString() }
+            ]
+        },
+        {
+            label: 'Posts Published',
+            value: state.postLog.length.toString(),
+            target: '12-16', meta: 'per month',
+            progress: Math.min(100, (state.postLog.length / 16) * 100),
+            breakdown: [
+                { label: 'Instagram', value: state.postLog.filter(p => p.platform === 'IG').length.toString() },
+                { label: 'TikTok', value: state.postLog.filter(p => p.platform === 'TT').length.toString() },
+                { label: 'YouTube', value: state.postLog.filter(p => p.platform === 'YT').length.toString() },
+                { label: 'Facebook', value: state.postLog.filter(p => p.platform === 'FB').length.toString() },
+                { label: 'LinkedIn', value: state.postLog.filter(p => p.platform === 'LI').length.toString() }
+            ]
+        },
+        {
+            label: 'Monthly Revenue Goal',
+            value: '$25K+',
+            target: 'From Social Leads', meta: 'commission target',
+            progress: null,
+            breakdown: [
+                { label: 'Avg Transaction', value: '$450K' },
+                { label: 'Commission Rate', value: '2.5-3%' },
+                { label: 'Deals/Month Target', value: '2-3' }
+            ]
+        }
+    ];
+
+    kpiRow.innerHTML = '';
+    kpis.forEach(kpi => {
+        const card = document.createElement('div');
+        card.className = 'kpi-card';
+        card.onclick = function () { this.querySelector('.kpi-breakdown').classList.toggle('visible'); };
+        let progressHtml = kpi.progress !== null ? `<div class="progress-bar"><div class="progress-fill" style="width:${kpi.progress}%;"></div></div>` : '';
+        let breakdownHtml = kpi.breakdown ? `<div class="kpi-breakdown">${kpi.breakdown.map(b => `<div class="breakdown-item"><span class="breakdown-label">${b.label}</span><span class="breakdown-value">${b.value}</span></div>`).join('')}</div>` : '';
+        card.innerHTML = `
+            <div class="kpi-label">${kpi.label}</div>
+            <div class="kpi-value">${kpi.value}</div>
+            <div class="kpi-meta">Target: ${kpi.target} ${kpi.meta}</div>
+            ${progressHtml}${breakdownHtml}
+        `;
+        kpiRow.appendChild(card);
+    });
+}
+
+// ==================== CHARTS ====================
+function initCharts() {
+    Chart.defaults.color = BRAND_COLORS.textSecondary;
+    Chart.defaults.borderColor = BRAND_COLORS.border;
+    Chart.defaults.font.family = "'Inter', sans-serif";
+
+    // Pillar Distribution
+    const pillarCtx = document.getElementById('pillarChart').getContext('2d');
+    const pillarCounts = {};
+    state.content.forEach(c => { pillarCounts[c.pillar] = (pillarCounts[c.pillar] || 0) + 1; });
+    const pillarLabels = Object.keys(pillarCounts);
+    const pillarData = Object.values(pillarCounts);
+    const pillarColors = pillarLabels.map(l =>
+        l === 'Military Relocation' ? BRAND_COLORS.primary :
+        l === 'Local Lifestyle' ? BRAND_COLORS.secondary :
+        l === 'Home Tours' ? BRAND_COLORS.cyan :
+        l === 'Market Clarity' ? BRAND_COLORS.gold : BRAND_COLORS.dark
+    );
+
+    new Chart(pillarCtx, {
+        type: 'doughnut',
+        data: {
+            labels: pillarLabels,
+            datasets: [{ data: pillarData, backgroundColor: pillarColors, borderColor: BRAND_COLORS.card, borderWidth: 3 }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom', labels: { padding: 20, font: { size: 13, weight: '500' } } } }
+        }
+    });
+
+    // Growth Chart — Projected vs Actual
+    const growthCtx = document.getElementById('growthChart').getContext('2d');
+    const projected = [0, 200, 600, 1200, 2500, 4000, 5000, 6500, 8000, 9000, 10000, 11000, 12000];
+    const months = ['Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb'];
+
+    // Build actual data from snapshots
+    const actual = new Array(13).fill(null);
+    const monthMap = { 'February': 1, 'March': 2, 'April': 3, 'May': 4, 'June': 5, 'July': 6, 'August': 7, 'September': 8, 'October': 9, 'November': 10, 'December': 11, 'January': 12 };
+    state.snapshots.forEach(snap => {
+        const d = new Date(snap.date);
+        const monthNum = d.getMonth();
+        const idx = monthNum - 1; // February=1 -> idx 0
+        if (idx >= 0 && idx < 13) {
+            actual[idx] = snap.total;
+        }
+    });
+
+    // Also include current totals as latest point
+    const totalNow = Object.values(state.platforms).reduce((s, p) => s + (p.followers || 0), 0);
+    const currentMonthIdx = TODAY.getMonth() - 1;
+    if (currentMonthIdx >= 0 && currentMonthIdx < 13 && totalNow > 0) {
+        actual[currentMonthIdx] = totalNow;
+    }
+
+    growthChart = new Chart(growthCtx, {
+        type: 'line',
+        data: {
+            labels: months,
+            datasets: [
+                {
+                    label: 'Projected', data: projected,
+                    borderColor: BRAND_COLORS.primary, backgroundColor: 'rgba(139,92,246,0.1)',
+                    tension: 0.4, fill: true, pointRadius: 6, pointHoverRadius: 8,
+                    pointBackgroundColor: BRAND_COLORS.primary, pointBorderColor: BRAND_COLORS.card, pointBorderWidth: 2
+                },
+                {
+                    label: 'Actual', data: actual,
+                    borderColor: '#22C55E', backgroundColor: 'rgba(34,197,94,0.1)',
+                    tension: 0.4, fill: false, pointRadius: 7, pointHoverRadius: 9,
+                    pointBackgroundColor: '#22C55E', pointBorderColor: BRAND_COLORS.card, pointBorderWidth: 2,
+                    spanGaps: true
+                }
+            ]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { display: true, labels: { font: { size: 13, weight: '500' } } } },
+            scales: { y: { beginAtZero: true, max: 12000, ticks: { stepSize: 2000 } } }
+        }
+    });
+}
+
+// ==================== CONTENT CALENDAR ====================
+function renderCalendar() {
+    const grid = document.getElementById('calendarGrid');
+    grid.innerHTML = '';
+    const filtered = activeFilter === 'All' ? state.content : state.content.filter(c => c.status === activeFilter);
+
+    filtered.forEach((entry, idx) => {
+        const realIdx = state.content.indexOf(entry);
+        const card = document.createElement('div');
+        card.className = 'content-card';
+        card.onclick = () => openContentModal(realIdx);
+
+        const pillarClass = entry.pillar === 'Military Relocation' ? 'pillar-military' :
+            entry.pillar === 'Local Lifestyle' ? 'pillar-lifestyle' :
+            entry.pillar === 'Home Tours' ? 'pillar-tours' :
+            entry.pillar === 'Market Clarity' ? 'pillar-market' : 'pillar-trust';
+
+        const statusClass = entry.status === 'Ready' ? 'status-ready' :
+            entry.status === 'In Production' ? 'status-production' :
+            entry.status === 'Shot' ? 'status-shot' :
+            entry.status === 'Posted' ? 'status-posted' : 'status-scheduled';
+
+        let notesIndicator = entry.notes ? '<span style="color:#D4A843;font-size:0.75rem;margin-left:0.5rem;" title="Has notes">📝</span>' : '';
+
+        card.innerHTML = `
+            <div class="content-date">${entry.date}</div>
+            <div class="content-title">${entry.title}${notesIndicator}</div>
+            <div class="content-platforms">${entry.platforms.map(p => `<div class="platform-badge">${p}</div>`).join('')}</div>
+            <div><span class="content-pillar ${pillarClass}">${entry.pillar}</span></div>
+            <div class="content-status ${statusClass}">${entry.status}</div>
+        `;
+        grid.appendChild(card);
+    });
+
+    // Update status count in filter chips
+    document.querySelectorAll('.filter-chip').forEach(chip => {
+        const f = chip.dataset.filter;
+        if (f === 'All') {
+            chip.textContent = `All (${state.content.length})`;
+        } else {
+            const count = state.content.filter(c => c.status === f).length;
+            chip.textContent = `${f} (${count})`;
+        }
+    });
+}
+
+function filterCalendar(filter) {
+    activeFilter = filter;
+    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    document.querySelector(`.filter-chip[data-filter="${filter}"]`).classList.add('active');
+    renderCalendar();
+}
+
+function openContentModal(idx) {
+    currentEditIndex = idx;
+    const entry = state.content[idx];
+    document.getElementById('modalTitle').textContent = entry.title;
+    document.getElementById('modalDate').textContent = entry.date;
+
+    const pillarClass = entry.pillar === 'Military Relocation' ? 'pillar-military' :
+        entry.pillar === 'Local Lifestyle' ? 'pillar-lifestyle' :
+        entry.pillar === 'Home Tours' ? 'pillar-tours' :
+        entry.pillar === 'Market Clarity' ? 'pillar-market' : 'pillar-trust';
+    document.getElementById('modalPillar').innerHTML = `<span class="content-pillar ${pillarClass}">${entry.pillar}</span>`;
+
+    document.getElementById('modalPlatforms').innerHTML = entry.platforms.map(p => `<div class="platform-badge">${p}</div>`).join('');
+    document.getElementById('modalStatus').value = entry.status;
+    document.getElementById('modalNotes').value = entry.notes || '';
+    document.getElementById('modalPostUrl').value = entry.postUrl || '';
+    document.getElementById('contentModal').classList.add('open');
+}
+
+function closeModal() {
+    document.getElementById('contentModal').classList.remove('open');
+    currentEditIndex = -1;
+}
+
+function saveContentChanges() {
+    if (currentEditIndex < 0) return;
+    state.content[currentEditIndex].status = document.getElementById('modalStatus').value;
+    state.content[currentEditIndex].notes = document.getElementById('modalNotes').value;
+    state.content[currentEditIndex].postUrl = document.getElementById('modalPostUrl').value;
+    saveState();
+    renderCalendar();
+    initKPIs();
+    closeModal();
+}
+
+function openAddContent() {
+    document.getElementById('addContentModal').classList.add('open');
+}
+
+function closeAddContentModal() {
+    document.getElementById('addContentModal').classList.remove('open');
+}
+
+function addNewContent() {
+    const date = document.getElementById('newContentDate').value.trim();
+    const title = document.getElementById('newContentTitle').value.trim();
+    const platforms = document.getElementById('newContentPlatforms').value.split(',').map(p => p.trim().toUpperCase()).filter(p => p);
+    const pillar = document.getElementById('newContentPillar').value;
+    const status = document.getElementById('newContentStatus').value;
+    const notes = document.getElementById('newContentNotes').value;
+
+    if (!date || !title) { alert('Please enter a date and title.'); return; }
+
+    state.content.push({
+        id: state.nextContentId++,
+        date, title, platforms, pillar, status, notes, postUrl: ''
+    });
+    saveState();
+    renderCalendar();
+    initKPIs();
+    closeAddContentModal();
+
+    // Reset form
+    document.getElementById('newContentDate').value = '';
+    document.getElementById('newContentTitle').value = '';
+    document.getElementById('newContentPlatforms').value = '';
+    document.getElementById('newContentNotes').value = '';
+}
+
+// ==================== SOCIAL MEDIA TRACKER ====================
+function renderPlatformStats() {
+    const container = document.getElementById('platformStats');
+    container.innerHTML = '';
+
+    Object.entries(state.platforms).forEach(([key, plat]) => {
+        const prevSnapshot = state.snapshots.length > 0 ? state.snapshots[state.snapshots.length - 1] : null;
+        const prevCount = prevSnapshot ? (prevSnapshot.platforms[key] || 0) : 0;
+        const change = plat.followers - prevCount;
+        const changeText = prevSnapshot
+            ? (change > 0 ? `+${change.toLocaleString()} since last snapshot` : change === 0 ? 'No change' : `${change.toLocaleString()} since last snapshot`)
+            : 'No previous snapshot';
+        const changeClass = change > 0 ? 'change-positive' : 'change-neutral';
+
+        const card = document.createElement('div');
+        card.className = 'platform-stat-card';
+        card.innerHTML = `
+            <div class="platform-name">
+                <div class="platform-icon" style="background:${plat.color};color:#fff;">${key}</div>
+                ${plat.name}
+            </div>
+            <div class="follower-count" style="color:${plat.color};">${plat.followers.toLocaleString()}</div>
+            <div class="follower-change ${changeClass}">${changeText}</div>
+            <div class="follower-input-row">
+                <input type="number" id="input-${key}" placeholder="Update" min="0">
+                <button onclick="updateFollowers('${key}')">Update</button>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function updateFollowers(platformKey) {
+    const input = document.getElementById('input-' + platformKey);
+    const val = parseInt(input.value);
+    if (isNaN(val) || val < 0) return;
+    state.platforms[platformKey].followers = val;
+    input.value = '';
+    saveState();
+    renderPlatformStats();
+    initKPIs();
+    updateGrowthChart();
+}
+
+function updateGrowthChart() {
+    if (!growthChart) return;
+    const totalNow = Object.values(state.platforms).reduce((s, p) => s + (p.followers || 0), 0);
+    const currentMonthIdx = TODAY.getMonth() - 1;
+    const actual = growthChart.data.datasets[1].data;
+    if (currentMonthIdx >= 0 && currentMonthIdx < 13 && totalNow > 0) {
+        actual[currentMonthIdx] = totalNow;
+    }
+    // Also update from snapshots
+    state.snapshots.forEach(snap => {
+        const d = new Date(snap.date);
+        const idx = d.getMonth() - 1;
+        if (idx >= 0 && idx < 13) actual[idx] = snap.total;
+    });
+    growthChart.update();
+}
+
+function takeSnapshot() {
+    const dateStr = TODAY.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+    const platformData = {};
+    let total = 0;
+    Object.entries(state.platforms).forEach(([key, plat]) => {
+        platformData[key] = plat.followers;
+        total += plat.followers;
+    });
+    state.snapshots.push({ date: dateStr, platforms: platformData, total, postCount: state.postLog.length });
+    saveState();
+    renderSnapshots();
+    renderPlatformStats();
+    updateGrowthChart();
+}
+
+function renderSnapshots() {
+    const tbody = document.getElementById('snapshotTableBody');
+    tbody.innerHTML = '';
+    if (state.snapshots.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" style="color:#606060;text-align:center;padding:1rem;">No snapshots yet — click "Take Monthly Snapshot" to record current follower counts</td></tr>';
+        return;
+    }
+    state.snapshots.forEach((snap, i) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${snap.date}</td>
+            <td>${(snap.platforms.IG || 0).toLocaleString()}</td>
+            <td>${(snap.platforms.TT || 0).toLocaleString()}</td>
+            <td>${(snap.platforms.FB || 0).toLocaleString()}</td>
+            <td>${(snap.platforms.LI || 0).toLocaleString()}</td>
+            <td>${(snap.platforms.YT || 0).toLocaleString()}</td>
+            <td style="font-weight:600;color:#D4A843;">${snap.total.toLocaleString()}</td>
+            <td><button class="snapshot-delete" onclick="deleteSnapshot(${i})">✕</button></td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+function deleteSnapshot(idx) {
+    state.snapshots.splice(idx, 1);
+    saveState();
+    renderSnapshots();
+    updateGrowthChart();
+}
+
+// ==================== POST LOG ====================
+function addPostEntry() {
+    const date = document.getElementById('postDate').value;
+    const platform = document.getElementById('postPlatform').value;
+    const title = document.getElementById('postTitle').value.trim();
+    const link = document.getElementById('postLink').value.trim();
+    if (!date || !title) { alert('Please enter a date and content title.'); return; }
+
+    state.postLog.unshift({ date, platform, title, link });
+    saveState();
+    renderPostLog();
+    initKPIs();
+
+    document.getElementById('postTitle').value = '';
+    document.getElementById('postLink').value = '';
+}
+
+function renderPostLog() {
+    const container = document.getElementById('postLogEntries');
+    container.innerHTML = '';
+    if (state.postLog.length === 0) {
+        container.innerHTML = '<div style="text-align:center;color:#606060;padding:2rem;font-size:0.9rem;">No posts logged yet — use the form above to track published content</div>';
+        return;
+    }
+    const platformColors = { IG: '#E1306C', TT: '#00F2EA', FB: '#1877F2', LI: '#0A66C2', YT: '#FF0000' };
+    state.postLog.forEach((post, i) => {
+        const entry = document.createElement('div');
+        entry.className = 'post-entry';
+        const linkHtml = post.link ? `<a href="${post.link}" target="_blank" style="color:#008080;font-size:0.8rem;">View</a>` : '<span style="color:#606060;font-size:0.8rem;">—</span>';
+        entry.innerHTML = `
+            <div style="color:#A0A0A0;">${post.date}</div>
+            <div class="post-platform" style="background:${platformColors[post.platform] || '#008080'}22;color:${platformColors[post.platform] || '#008080'};border:1px solid ${platformColors[post.platform] || '#008080'};">${post.platform}</div>
+            <div style="color:#FFFFFF;">${post.title}</div>
+            ${linkHtml}
+            <button class="post-entry-delete" onclick="deletePost(${i})">✕</button>
+        `;
+        container.appendChild(entry);
+    });
+}
+
+function deletePost(idx) {
+    state.postLog.splice(idx, 1);
+    saveState();
+    renderPostLog();
+    initKPIs();
+}
+
+// ==================== DOCUMENTS ====================
+// Strategy documents are hardcoded in HTML with direct file links
+function initDocuments() {
+    // No-op: strategy cards are now static HTML with real links
+}
+
+// ==================== CHECKLIST ====================
+function initChecklist() {
+    const container = document.getElementById('checklistItems');
+    container.innerHTML = '';
+    state.deliverables.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = `checklist-item ${item.completed ? 'completed' : ''}`;
+        div.onclick = function () {
+            state.deliverables[index].completed = !state.deliverables[index].completed;
+            this.classList.toggle('completed');
+            this.querySelector('.checklist-checkbox').textContent = state.deliverables[index].completed ? '✓' : '';
+            updateChecklistProgress();
+            saveState();
+        };
+        div.innerHTML = `
+            <div class="checklist-checkbox">${item.completed ? '✓' : ''}</div>
+            <span class="checklist-label">${item.name}</span>
+        `;
+        container.appendChild(div);
+    });
+    updateChecklistProgress();
+}
+
+function updateChecklistProgress() {
+    const count = state.deliverables.filter(d => d.completed).length;
+    const total = state.deliverables.length;
+    document.getElementById('checklistProgress').textContent = `${count} of ${total}`;
+    document.getElementById('checklistProgressBar').style.width = ((count / total) * 100) + '%';
+}
+
+// ==================== REVENUE ====================
+function initRevenue() {
+    const container = document.getElementById('revenueItems');
+    container.innerHTML = '';
+    const total = 1140000;
+    revenueItems.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'revenue-item';
+        const pct = ((item.amount / total) * 100).toFixed(1);
+        div.innerHTML = `
+            <div class="revenue-label">${item.label}</div>
+            <div class="revenue-amount">$${(item.amount / 1000).toFixed(0)}K</div>
+            <div class="revenue-breakdown">${item.calc} • ${pct}%</div>
+        `;
+        container.appendChild(div);
+    });
+
+    const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+    const chartColors = [BRAND_COLORS.secondary, BRAND_COLORS.gold, BRAND_COLORS.primary, BRAND_COLORS.dark, BRAND_COLORS.cyan];
+    new Chart(revenueCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Revenue Breakdown'],
+            datasets: revenueItems.map((item, idx) => ({
+                label: item.label, data: [item.amount], backgroundColor: chartColors[idx]
+            }))
+        },
+        options: {
+            indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: { padding: 12, font: { size: 11, weight: '500' }, usePointStyle: true, pointStyle: 'rectRounded', boxWidth: 12 }
+                }
+            },
+            scales: {
+                x: { stacked: true, display: false },
+                y: { stacked: true, display: false }
+            }
+        }
+    });
+}
+
+// ==================== GOOGLE DRIVE ====================
+function renderDriveLinks() {
+    const grid = document.getElementById('driveGrid');
+    grid.innerHTML = '';
+    if (!state.driveLinks || state.driveLinks.length === 0) {
+        grid.innerHTML = '<div style="text-align:center;color:#606060;padding:2rem;font-size:0.9rem;">No Drive links added yet — click "+ Add Link" to get started</div>';
+        return;
+    }
+    state.driveLinks.forEach((link, i) => {
+        const card = document.createElement('div');
+        card.className = 'drive-link-card';
+        card.innerHTML = `
+            <a href="${link.url}" target="_blank" rel="noopener">
+                <span class="drive-icon">${link.icon}</span>
+                ${link.title}
+            </a>
+            <div class="drive-desc">${link.desc || ''}</div>
+            <button class="post-entry-delete" onclick="event.stopPropagation();deleteDriveLink(${i})" style="position:absolute;top:0.75rem;right:0.75rem;">✕</button>
+        `;
+        card.style.position = 'relative';
+        grid.appendChild(card);
+    });
+}
+
+function toggleDriveEdit() {
+    const row = document.getElementById('driveEditRow');
+    row.style.display = row.style.display === 'none' ? 'grid' : 'none';
+}
+
+function addDriveLink() {
+    const title = document.getElementById('driveLinkTitle').value.trim();
+    const url = document.getElementById('driveLinkUrl').value.trim();
+    const icon = document.getElementById('driveLinkType').value;
+    if (!title || !url) { alert('Please enter a title and URL.'); return; }
+
+    const nextId = state.driveLinks.length > 0 ? Math.max(...state.driveLinks.map(l => l.id || 0)) + 1 : 1;
+    state.driveLinks.push({ id: nextId, title, url, icon, desc: '' });
+    saveState();
+    renderDriveLinks();
+    document.getElementById('driveLinkTitle').value = '';
+    document.getElementById('driveLinkUrl').value = '';
+    document.getElementById('driveEditRow').style.display = 'none';
+}
+
+function deleteDriveLink(idx) {
+    state.driveLinks.splice(idx, 1);
+    saveState();
+    renderDriveLinks();
+}
+
+// ==================== CONTENT IDEAS ====================
+function switchIdeaTab(tab) {
+    document.querySelectorAll('.idea-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.idea-panel').forEach(p => p.classList.remove('active'));
+    if (tab === 'notepad') {
+        document.querySelectorAll('.idea-tab')[0].classList.add('active');
+        document.getElementById('notepadPanel').classList.add('active');
+    } else {
+        document.querySelectorAll('.idea-tab')[1].classList.add('active');
+        document.getElementById('generatorPanel').classList.add('active');
+    }
+}
+
+function renderIdeas() {
+    const container = document.getElementById('ideasList');
+    container.innerHTML = '';
+    if (!state.ideas || state.ideas.length === 0) {
+        container.innerHTML = '<div style="text-align:center;color:#606060;padding:2rem;font-size:0.9rem;">No ideas yet — type your content ideas above and hit Add</div>';
+        return;
+    }
+    const pillarClassMap = {
+        'Military Relocation': 'pillar-military', 'Local Lifestyle': 'pillar-lifestyle',
+        'Home Tours': 'pillar-tours', 'Market Clarity': 'pillar-market',
+        'Trust Builders': 'pillar-trust'
+    };
+    state.ideas.forEach((idea, i) => {
+        const card = document.createElement('div');
+        card.className = 'idea-card';
+        card.innerHTML = `
+            <span class="idea-text">${idea.text}</span>
+            <span class="idea-pillar-tag content-pillar ${pillarClassMap[idea.pillar] || 'pillar-community'}">${idea.pillar}</span>
+            <div class="idea-actions">
+                <button onclick="moveIdeaToCalendar(${i})" title="Add to content calendar">→ Calendar</button>
+                <button class="delete-btn" onclick="deleteIdea(${i})" title="Remove idea">✕</button>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function addIdea() {
+    const text = document.getElementById('ideaText').value.trim();
+    const pillar = document.getElementById('ideaPillar').value;
+    if (!text) { alert('Please enter a content idea.'); return; }
+    if (!state.ideas) state.ideas = [];
+    if (!state.nextIdeaId) state.nextIdeaId = 1;
+    state.ideas.push({ id: state.nextIdeaId++, text, pillar });
+    saveState();
+    renderIdeas();
+    document.getElementById('ideaText').value = '';
+}
+
+function deleteIdea(idx) {
+    state.ideas.splice(idx, 1);
+    saveState();
+    renderIdeas();
+}
+
+function moveIdeaToCalendar(idx) {
+    const idea = state.ideas[idx];
+    state.content.push({
+        id: state.nextContentId++,
+        date: 'TBD',
+        title: idea.text,
+        platforms: ['IG'],
+        pillar: idea.pillar,
+        status: 'Scheduled',
+        notes: 'Added from Ideas Lab',
+        postUrl: ''
+    });
+    state.ideas.splice(idx, 1);
+    saveState();
+    renderIdeas();
+    renderCalendar();
+    initKPIs();
+}
+
+// Content Idea Templates
+const IDEA_TEMPLATES = {
+    'Military Relocation': {
+        hype: [
+            'PCS orders just dropped — here\'s your relocation game plan',
+            'Military families: Your VA loan is a SUPERPOWER. Here\'s why.',
+            'Stationed at [Base]? We\'ve helped 50+ families find home here',
+            'POV: You just got orders and you\'re buying sight-unseen — we got you'
+        ],
+        educational: [
+            'VA Loan Mythbuster: No, you don\'t need 20% down',
+            'PCS Timeline Breakdown: When to start house hunting before your move',
+            'BAH vs. Mortgage: How to make the numbers work in your favor',
+            'Buying while deployed — here\'s exactly how we make it happen'
+        ],
+        'behind-scenes': [
+            'Coordinating a remote closing for an active-duty family — the full story',
+            'Base-adjacent neighborhood tour: 15 min commute, great schools, under BAH',
+            'Virtual walkthrough we did for a family stationed overseas',
+            'The paperwork stack behind a VA loan — and why it\'s worth it'
+        ],
+        luxury: [
+            'Officer housing vs. buying off-base: A real cost comparison',
+            'Premium homes near base that feel nothing like base housing',
+            'Military families deserve dream homes too — here are the options',
+            'Retiring military? Here\'s how to transition into your forever home'
+        ],
+        community: [
+            'Military spouses — what\'s your #1 question about buying near base?',
+            'Tag a military family who needs to see this before PCS season',
+            'Share your PCS home-buying story — the good, the stressful, the keys-day joy',
+            'Which base are you PCSing to? Drop it below and we\'ll share neighborhood tips'
+        ]
+    },
+    'Local Lifestyle': {
+        hype: [
+            'This neighborhood is the one everyone\'s moving to — here\'s why',
+            'Weekend guide: The spots locals don\'t want you to know about',
+            'Best-kept-secret park, best coffee, best Friday night — all in one area',
+            'Living here hits different. Here\'s what a typical weekend looks like.'
+        ],
+        educational: [
+            'School district breakdown: Ratings, programs, and what parents actually say',
+            'Commute-to-base breakdown: 5 neighborhoods compared',
+            'Cost of living guide: What your dollar actually buys here',
+            'Best neighborhoods for young families — parks, schools, and vibes'
+        ],
+        'behind-scenes': [
+            'Driving through [Neighborhood] — let me show you what it\'s really like',
+            'Local biz spotlight: The coffee shop every neighbor loves',
+            'Farmers market morning — this is the community feel you\'re looking for',
+            'I asked 10 locals what they love most about living here'
+        ],
+        luxury: [
+            'The neighborhoods where location meets lifestyle',
+            'Premium communities with walkable downtowns and top-rated schools',
+            'Where the best restaurants, trails, and schools all converge',
+            'Luxury isn\'t just the home — it\'s the neighborhood. Here\'s proof.'
+        ],
+        community: [
+            'What\'s YOUR favorite hidden gem in the area? Drop it below!',
+            'New to the area? Ask us anything — we know every corner',
+            'Vote: Best pizza spot near [Neighborhood]?',
+            'Weekend plans? Here are 5 free family-friendly things to do this Saturday'
+        ]
+    },
+    'Home Tours': {
+        hype: [
+            'What you get for $350K near base — 3 homes compared side by side',
+            'This backyard is UNREAL. Wait for the kitchen reveal.',
+            'NEW LISTING ALERT: This one won\'t last the weekend',
+            '3 homes under $300K that don\'t look like it — tour inside'
+        ],
+        educational: [
+            'Rent vs. Buy Breakdown: Real numbers, no fluff, your area',
+            'What to look for during a home tour (most buyers miss these)',
+            'Price per square foot explained: Why it matters more than list price',
+            'Hidden gem features that add $20K+ in value (and most people overlook them)'
+        ],
+        'behind-scenes': [
+            'Walking through a fixer-upper: What I see vs. what you see',
+            'Inspection day tour — here\'s what we found behind the walls',
+            'Staging before & after: Same house, completely different energy',
+            'Showing day recap: 6 homes in one day, here\'s the honest breakdown'
+        ],
+        luxury: [
+            'Luxury home tour: Smart home, wine cellar, and THAT view',
+            'Million-dollar listings: What premium really looks like in this market',
+            'Custom build walkthrough: Every detail was intentional',
+            'The property that made me rethink what a dream home looks like'
+        ],
+        community: [
+            'Which house would YOU pick? Vote: A, B, or C',
+            'Dream home feature poll: Chef\'s kitchen or resort-style backyard?',
+            'Tag someone who needs to see this listing ASAP',
+            'If you could tour any home in the area, what style would you pick?'
+        ]
+    },
+    'Market Clarity': {
+        hype: [
+            'This week\'s market in 60 seconds — here\'s what you need to know',
+            'Interest rates just shifted — here\'s what it actually means for buyers',
+            'The spring market is HERE. This is not a drill.',
+            'Market update: Prices are doing THIS right now in [Area]'
+        ],
+        educational: [
+            'Seller mistakes that cost thousands — avoid these before listing',
+            'Inspection prep checklist: What to fix before the buyer\'s inspector arrives',
+            'Appraisal anxiety? Here\'s how the process actually works',
+            'Interest rate anxiety reframe: Why waiting might cost you more'
+        ],
+        'behind-scenes': [
+            'How I analyze the market every Monday morning — the real process',
+            'Pulling comps for a client: Here\'s what the data actually shows',
+            'Negotiation strategy session: How we approach multiple-offer situations',
+            'Contract review walkthrough: What I\'m looking for on every page'
+        ],
+        luxury: [
+            'Luxury market trends: What high-net-worth buyers care about right now',
+            'Investment analysis: Where smart money is going in this market',
+            'Premium pricing strategy: How top listings command top dollar',
+            'Market clarity for serious investors: The numbers behind the neighborhoods'
+        ],
+        community: [
+            'Q&A time! Drop your real estate questions — I\'ll answer every one',
+            'Poll: Are you team "buy now" or team "wait and see"?',
+            'What\'s the #1 thing confusing you about this market? Let\'s clear it up.',
+            'Myth or fact? Drop a real estate "fact" you\'ve heard and I\'ll tell you the truth'
+        ]
+    },
+    'Trust Builders': {
+        hype: [
+            'KEYS DAY! Another family just closed on their dream home',
+            'Client win: We got them the house in a 7-offer bidding war — here\'s how',
+            'From first call to closing in 38 days. These results speak for themselves.',
+            'Another happy family, another set of keys. This is why we do it.'
+        ],
+        educational: [
+            'What we do that protects you — our offer strategy explained',
+            'Behind every smooth closing is a mountain of work you never see',
+            'How we vet a home before you ever walk through the door',
+            'The negotiation playbook: What we do differently to win offers'
+        ],
+        'behind-scenes': [
+            'Day in the life: Showings, contracts, client calls, and coffee — lots of coffee',
+            'Showing day chaos: 5 houses, 2 cities, 1 very determined buyer',
+            'The late-night contract review nobody sees but every client benefits from',
+            'Behind the scenes at a home inspection — what we\'re watching for'
+        ],
+        luxury: [
+            'White-glove service isn\'t a buzzword — here\'s what it looks like in practice',
+            'VIP client experience: Concierge-level real estate from search to close',
+            'Our premium marketing package: How we present your home to the market',
+            'Exclusive: What our repeat clients say about working with us'
+        ],
+        community: [
+            'Our clients are our best marketing — hear it straight from them',
+            'Testimonial Tuesday: What the Garcia family said after closing',
+            'We don\'t just sell homes, we build relationships. Here\'s proof.',
+            'If you\'ve worked with us, drop your experience below — we\'d love to hear it'
+        ]
+    }
+};
+function generateIdeas() {
+    const pillar = document.getElementById('genPillar').value;
+    const platform = document.getElementById('genPlatform').value;
+    const tone = document.getElementById('genTone').value;
+    const container = document.getElementById('generatedIdeas');
+
+    // Collect matching ideas
+    let ideas = [];
+    const pillarsToSearch = pillar === 'any' ? Object.keys(IDEA_TEMPLATES) : [pillar];
+    const tonesToSearch = tone === 'any' ? ['hype', 'educational', 'behind-scenes', 'luxury', 'community'] : [tone];
+
+    pillarsToSearch.forEach(p => {
+        tonesToSearch.forEach(t => {
+            if (IDEA_TEMPLATES[p] && IDEA_TEMPLATES[p][t]) {
+                IDEA_TEMPLATES[p][t].forEach(idea => {
+                    ideas.push({ text: idea, pillar: p, tone: t });
+                });
+            }
+        });
+    });
+
+    // Shuffle and pick 5
+    ideas = ideas.sort(() => Math.random() - 0.5).slice(0, 5);
+
+    if (ideas.length === 0) {
+        container.innerHTML = '<div style="text-align:center;color:#606060;padding:2rem;">No ideas match that combination. Try broadening your filters.</div>';
+        return;
+    }
+
+    const platformLabel = platform !== 'any' ? ` for ${platform}` : '';
+    container.innerHTML = ideas.map((idea, i) => `
+        <div class="gen-idea-card">
+            <span class="idea-text">${idea.text}</span>
+            <button onclick="saveGeneratedIdea(${i})" data-pillar="${idea.pillar}" data-text="${idea.text.replace(/"/g, '&quot;')}">Save to Notepad</button>
+        </div>
+    `).join('');
+}
+
+function saveGeneratedIdea(idx) {
+    const card = document.querySelectorAll('.gen-idea-card')[idx];
+    const btn = card.querySelector('button');
+    const text = btn.dataset.text;
+    const pillar = btn.dataset.pillar;
+    if (!state.ideas) state.ideas = [];
+    if (!state.nextIdeaId) state.nextIdeaId = 1;
+    state.ideas.push({ id: state.nextIdeaId++, text, pillar });
+    saveState();
+    renderIdeas();
+    btn.textContent = 'Saved ✓';
+    btn.style.borderColor = '#D4A843';
+    btn.style.color = '#D4A843';
+    btn.disabled = true;
+}
+
+// ==================== UTILS ====================
+function scrollToSection(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+}
+
+// Close modal on overlay click
+document.getElementById('contentModal').addEventListener('click', function (e) {
+    if (e.target === this) closeModal();
+});
+document.getElementById('addContentModal').addEventListener('click', function (e) {
+    if (e.target === this) closeAddContentModal();
+});
+
+// Close modals on Escape
+document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+        closeModal();
+        closeAddContentModal();
+    }
+});
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

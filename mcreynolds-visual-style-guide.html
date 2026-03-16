@@ -1,0 +1,2173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>McReynolds Real Estate — Visual Style Guide</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-card: #111111;
+            --bg-card-inner: #0d0d0d;
+            --border: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-body: #e0e0e0;
+            --text-muted: #888888;
+            --text-dim: #666666;
+            --accent-primary: #008080;
+            --accent-secondary: #ff3333;
+            --accent-blue: #3399ff;
+            --accent-green: #33cc66;
+            --accent-teal-light: #20B2AA;
+            --accent-red: #DC2626;
+            --accent-gold: #D4A017;
+            --accent-slate: #64748B;
+            --color-black: #0A0A0A;
+            --color-white: #FFFFFF;
+            --color-gray: #374151;
+            --color-cream: #F5F0EB;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Sticky Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            background-color: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 0 2rem;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        nav .logo {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--text-body);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--accent-primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+            border-bottom: 2px solid var(--accent-primary);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent-primary), #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-body);
+            margin-bottom: 1rem;
+        }
+
+        .hero .subtitle {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        /* Section Header */
+        .section-header {
+            margin-bottom: 3rem;
+            border-left: 4px solid var(--accent-primary);
+            padding-left: 2rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--text-body);
+        }
+
+        /* Card System */
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 20px rgba(0, 128, 128, 0.1);
+        }
+
+        .card-inner {
+            background-color: var(--bg-card-inner);
+            padding: 1.5rem;
+            border-radius: 6px;
+        }
+
+        /* Grid */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Color Swatches */
+        .color-swatch {
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .color-swatch:hover {
+            transform: translateY(-4px);
+        }
+
+        .color-swatch .hex {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        .color-teal {
+            background-color: #008080;
+        }
+
+        .color-black {
+            background-color: #0A0A0A;
+            border: 1px solid #333;
+        }
+
+        .color-white {
+            background-color: #FFFFFF;
+            color: #0A0A0A;
+        }
+
+        .color-gray {
+            background-color: #374151;
+        }
+
+        .color-cream {
+            background-color: #F5F0EB;
+            color: #0A0A0A;
+        }
+
+        .color-red {
+            background-color: #DC2626;
+        }
+
+        .color-blue {
+            background-color: #3B82F6;
+        }
+
+        .color-green {
+            background-color: #10B981;
+        }
+
+        .color-gold {
+            background-color: #D4A017;
+        }
+
+        .color-slate {
+            background-color: #64748B;
+        }
+
+        /* Thumbnail Template Styles */
+        .thumbnail-container {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .thumbnail-preview {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            font-weight: bold;
+            color: white;
+        }
+
+        .thumbnail-details {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .thumbnail-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .thumbnail-use-case {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .thumbnail-use-case strong {
+            color: var(--text-body);
+        }
+
+        /* Authority Shot */
+        .authority-shot {
+            background: linear-gradient(135deg, #2D1B69 0%, #1a0f47 100%);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .authority-shot::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background-color: #008080;
+        }
+
+        .authority-headshot {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #008080, #005F5F);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            flex-shrink: 0;
+        }
+
+        .authority-text {
+            flex: 1;
+            margin-left: 2rem;
+        }
+
+        .authority-text .main {
+            font-size: 2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .authority-text .sub {
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            font-weight: 400;
+        }
+
+        /* Location Reveal */
+        .location-reveal {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                        linear-gradient(135deg, #1a5f4a 0%, #0d3a2e 100%);
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .location-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: #008080;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: fit-content;
+            margin-bottom: 1rem;
+        }
+
+        .location-name {
+            font-size: 1.8rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .location-subtitle {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+        }
+
+        /* Number Drop */
+        .number-drop {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .number-drop .number {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #008080;
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+
+        .number-drop .label {
+            font-size: 1.1rem;
+            color: var(--text-body);
+            font-weight: 500;
+        }
+
+        .number-drop .sub-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        /* Before/After */
+        .before-after {
+            display: flex;
+            height: 100%;
+            position: relative;
+        }
+
+        .before-after-side {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .before-after-side.before {
+            background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+        }
+
+        .before-after-side.after {
+            background: linear-gradient(135deg, #008080 0%, #005F5F 100%);
+        }
+
+        .before-after-arrow {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            z-index: 10;
+            background-color: var(--bg-primary);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--accent-primary);
+        }
+
+        .before-after-label {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .before-after-text {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+        }
+
+        /* Military Special */
+        .military-special {
+            background: linear-gradient(135deg, #1a1a3e 0%, #0d0d20 100%);
+            position: relative;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            border: 2px solid #008080;
+        }
+
+        .military-special::before {
+            content: '★';
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            font-size: 2rem;
+            color: #008080;
+        }
+
+        .military-special::after {
+            content: '★';
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            color: #008080;
+        }
+
+        .military-badge {
+            display: inline-block;
+            background-color: #008080;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            border: 2px solid #008080;
+        }
+
+        .military-text {
+            font-size: 1.8rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            line-height: 1.2;
+        }
+
+        /* Testimonial Card */
+        .testimonial-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border-top: 4px solid #008080;
+        }
+
+        .testimonial-quote {
+            font-size: 1.4rem;
+            font-style: italic;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .testimonial-stars {
+            color: #D4A017;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            letter-spacing: 0.2rem;
+        }
+
+        .testimonial-meta {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .testimonial-name {
+            font-weight: 600;
+            color: var(--text-body);
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Typography Samples */
+        .typography-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .type-sample {
+            padding: 1.5rem;
+            background-color: var(--bg-card-inner);
+            border-left: 3px solid var(--accent-primary);
+            border-radius: 4px;
+        }
+
+        .type-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .headline-sample {
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle-sample {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--color-cream);
+        }
+
+        .body-sample {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--text-body);
+            line-height: 1.6;
+        }
+
+        .cta-sample {
+            display: inline-block;
+            background-color: var(--accent-primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.5rem;
+        }
+
+        .caption-sample {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.75rem;
+        }
+
+        .badge-sample {
+            display: inline-block;
+            background-color: transparent;
+            border: 2px solid var(--accent-primary);
+            color: var(--accent-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Story Framework */
+        .story-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .story-step {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .story-number {
+            flex-shrink: 0;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--accent-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: white;
+        }
+
+        .story-content {
+            flex: 1;
+        }
+
+        .story-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .story-time {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .story-text {
+            color: var(--text-body);
+            line-height: 1.6;
+        }
+
+        .story-arrow {
+            text-align: center;
+            color: var(--accent-primary);
+            font-size: 1.5rem;
+        }
+
+        /* Content Tiers */
+        .tier-box {
+            padding: 2rem;
+            border-left: 4px solid var(--accent-primary);
+            background-color: var(--bg-card-inner);
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .tier-level {
+            display: inline-block;
+            background-color: var(--accent-primary);
+            color: white;
+            padding: 0.35rem 0.75rem;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .tier-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .tier-frequency {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .tier-detail {
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+        }
+
+        .tier-detail strong {
+            color: var(--accent-primary);
+        }
+
+        /* Content Arcs */
+        .arc-item {
+            padding: 1.5rem;
+            background-color: var(--bg-card-inner);
+            border-left: 3px solid var(--accent-primary);
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .arc-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .arc-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+        }
+
+        .arc-episodes {
+            font-size: 0.85rem;
+            color: var(--text-body);
+            line-height: 1.6;
+        }
+
+        /* Weekly Content Table */
+        .content-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .content-table thead {
+            background-color: var(--bg-card-inner);
+        }
+
+        .content-table th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 700;
+            color: var(--accent-primary);
+            border-bottom: 2px solid var(--border);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .content-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-body);
+        }
+
+        .content-table tbody tr:hover {
+            background-color: var(--bg-card-inner);
+        }
+
+        .content-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Do/Don't Layout */
+        .do-dont-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .do-column, .dont-column {
+            padding: 2rem;
+            border-radius: 8px;
+        }
+
+        .do-column {
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid #10B981;
+        }
+
+        .dont-column {
+            background-color: rgba(220, 38, 38, 0.1);
+            border-left: 4px solid #DC2626;
+        }
+
+        .do-column h3, .dont-column h3 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .do-column h3 {
+            color: #10B981;
+        }
+
+        .dont-column h3 {
+            color: #DC2626;
+        }
+
+        .do-item, .dont-item {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .do-item {
+            background-color: rgba(16, 185, 129, 0.15);
+            color: var(--text-body);
+        }
+
+        .dont-item {
+            background-color: rgba(220, 38, 38, 0.15);
+            color: var(--text-body);
+        }
+
+        .do-item::before {
+            content: '✓ ';
+            color: #10B981;
+            font-weight: 700;
+            margin-right: 0.5rem;
+        }
+
+        .dont-item::before {
+            content: '✗ ';
+            color: #DC2626;
+            font-weight: 700;
+            margin-right: 0.5rem;
+        }
+
+        /* Production Checklist */
+        .checklist {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .checklist-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            background-color: var(--bg-card-inner);
+            border-left: 3px solid var(--accent-primary);
+            border-radius: 4px;
+        }
+
+        .checklist-box {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent-primary);
+            border-radius: 3px;
+            margin-right: 1rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .checklist-text {
+            flex: 1;
+            color: var(--text-body);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .footer-section h3 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section a {
+            display: block;
+            color: var(--text-body);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .footer-bottom strong {
+            color: var(--accent-primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .do-dont-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .authority-shot {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .authority-text {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+
+            .before-after {
+                flex-direction: column;
+            }
+
+            .section-header h2 {
+                font-size: 1.8rem;
+            }
+
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Formula Box */
+        .formula-box {
+            background: linear-gradient(135deg, rgba(0, 128, 128, 0.1), rgba(0, 128, 128, 0.05));
+            border: 2px solid var(--accent-primary);
+            border-radius: 8px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .formula {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .formula-component {
+            display: inline-block;
+            margin: 0 0.5rem;
+            color: var(--accent-primary);
+            font-weight: 700;
+        }
+
+        .formula-multiplier {
+            display: inline-block;
+            margin: 0 0.5rem;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        /* Usage Rules Grid */
+        .usage-rules {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .usage-rule {
+            padding: 1.5rem;
+            background-color: var(--bg-card-inner);
+            border-left: 3px solid var(--accent-primary);
+            border-radius: 4px;
+        }
+
+        .usage-rule-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.75rem;
+        }
+
+        .usage-rule-example {
+            font-size: 0.85rem;
+            color: var(--text-body);
+            line-height: 1.5;
+            padding: 1rem;
+            background-color: var(--bg-primary);
+            border-radius: 3px;
+            margin-top: 0.75rem;
+            border-left: 2px solid var(--accent-primary);
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background-color: rgba(0, 128, 128, 0.1);
+            border-left: 4px solid var(--accent-primary);
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin: 2rem 0;
+        }
+
+        .highlight-box strong {
+            color: var(--accent-primary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="#" class="logo">McReynolds Real Estate</a>
+        <ul>
+            <li><a href="#brand-identity">Brand Identity</a></li>
+            <li><a href="#color-system">Colors</a></li>
+            <li><a href="#thumbnails">Thumbnails</a></li>
+            <li><a href="#typography">Typography</a></li>
+            <li><a href="#story-framework">Story</a></li>
+            <li><a href="#dos-donts">Do's & Don'ts</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>McReynolds Real Estate</h1>
+        <p>Visual Style Guide & Content Production Framework</p>
+        <p class="subtitle">Military-Focused Real Estate Strategy for Travis AFB & Beyond</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Brand Identity Section -->
+        <section id="brand-identity">
+            <div class="section-header">
+                <h2>Brand Identity</h2>
+                <p>The visual & philosophical foundation for all McReynolds content and communications</p>
+            </div>
+
+            <div class="card">
+                <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--accent-primary);">The McReynolds Formula</h3>
+                <div class="formula-box">
+                    <div class="formula">
+                        <span class="formula-component">Military Precision</span>
+                        <span class="formula-multiplier">×</span>
+                        <span class="formula-component">California Warmth</span>
+                        <span class="formula-multiplier">×</span>
+                        <span class="formula-component">Authentic Connection</span>
+                    </div>
+                    <p style="font-size: 0.95rem; color: var(--text-body); margin-top: 1rem;">
+                        This three-part formula drives every visual, every word, and every production decision for McReynolds Real Estate.
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem; color: var(--accent-primary);">Military Precision</h3>
+                    <p style="color: var(--text-body); line-height: 1.7; margin-bottom: 1rem;">
+                        Clean lines. Structured layouts. Organized hierarchies. Strategic thinking. Just like operations—every element has a purpose. No wasted movement. Professional polish that says "we know what we're doing."
+                    </p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">
+                        Visual manifestation: Tight grids, bold typography, consistent spacing, clear information architecture.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem; color: var(--accent-primary);">California Warmth</h3>
+                    <p style="color: var(--text-body); line-height: 1.7; margin-bottom: 1rem;">
+                        Natural light. Inviting imagery. Warm earth tones. Human connection. The sun on your face. The feeling of community. A culture that says "you belong here" and "good things are happening."
+                    </p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">
+                        Visual manifestation: Warm color palette (cream, bronze, teal), lifestyle photography, real people, golden hour lighting.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem; color: var(--accent-primary);">Authentic Connection</h3>
+                    <p style="color: var(--text-body); line-height: 1.7; margin-bottom: 1rem;">
+                        Real stories. Real homes. Real people. No BS. Two veterans talking to military families. "I've been there. I understand. Let's win this together." Trust earned through transparency and shared experience.
+                    </p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">
+                        Visual manifestation: Client testimonials, behind-the-scenes content, raw footage, personal stories, branded overlays that feel human.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem; color: var(--accent-primary);">Core Attributes</h3>
+                    <ul style="color: var(--text-body); line-height: 2; font-size: 0.95rem;">
+                        <li>✓ Confident but not arrogant</li>
+                        <li>✓ Precise but not stiff</li>
+                        <li>✓ Professional but approachable</li>
+                        <li>✓ Bold but not aggressive</li>
+                        <li>✓ Innovative but rooted in values</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Color System Section -->
+        <section id="color-system">
+            <div class="section-header">
+                <h2>Color System</h2>
+                <p>Carefully chosen colors that reflect military discipline, California warmth, and real estate trust</p>
+            </div>
+
+            <div class="card">
+                <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--accent-primary);">Primary Palette</h3>
+                <p style="color: var(--text-body); margin-bottom: 2rem;">
+                    Five core colors that form the foundation of all McReynolds visual communications. These colors appear in every design element and are used strategically to create hierarchy and guide user attention.
+                </p>
+
+                <div class="grid-3">
+                    <div class="color-swatch color-teal">
+                        Classic Teal
+                        <div class="hex">#008080</div>
+                    </div>
+                    <div class="color-swatch color-black">
+                        Deep Black
+                        <div class="hex">#0A0A0A</div>
+                    </div>
+                    <div class="color-swatch color-white">
+                        Clean White
+                        <div class="hex">#FFFFFF</div>
+                    </div>
+                    <div class="color-swatch color-gray">
+                        Military Gray
+                        <div class="hex">#374151</div>
+                    </div>
+                    <div class="color-swatch color-cream">
+                        Warm Cream
+                        <div class="hex">#F5F0EB</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--accent-primary);">Accent Palette</h3>
+                <p style="color: var(--text-body); margin-bottom: 2rem;">
+                    Secondary colors used for emphasis, signaling, and creating visual interest. Use sparingly and intentionally—these are supporting players, not leads.
+                </p>
+
+                <div class="grid-3">
+                    <div class="color-swatch color-red">
+                        Patriot Red
+                        <div class="hex">#DC2626</div>
+                    </div>
+                    <div class="color-swatch color-blue">
+                        Trust Blue
+                        <div class="hex">#3B82F6</div>
+                    </div>
+                    <div class="color-swatch color-green">
+                        Success Green
+                        <div class="hex">#10B981</div>
+                    </div>
+                    <div class="color-swatch color-gold">
+                        Gold
+                        <div class="hex">#D4A017</div>
+                    </div>
+                    <div class="color-swatch color-slate">
+                        Slate
+                        <div class="hex">#64748B</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--accent-primary);">Color Usage Rules</h3>
+
+                <div class="usage-rules">
+                    <div class="usage-rule">
+                        <div class="usage-rule-title">Teal — Primary Authority</div>
+                        <p style="color: var(--text-body); font-size: 0.9rem; line-height: 1.6; margin-bottom: 0.75rem;">Use for headlines, CTAs, badges, brand accents, highlights, and primary buttons.</p>
+                        <div class="usage-rule-example">
+                            "Apply Teal to every CTA button, major headline, and brand-identifying element. If you're unsure, default to teal."
+                        </div>
+                    </div>
+
+                    <div class="usage-rule">
+                        <div class="usage-rule-title">Black & White — Contrast</div>
+                        <p style="color: var(--text-body); font-size: 0.9rem; line-height: 1.6; margin-bottom: 0.75rem;">Dark backgrounds for video content, white text for readability. Maximum contrast ensures accessibility.</p>
+                        <div class="usage-rule-example">
+                            "All video thumbnails use dark (black or charcoal) backgrounds with white/teal text for 9:16 vertical and 16:9 horizontal formats."
+                        </div>
+                    </div>
+
+                    <div class="usage-rule">
+                        <div class="usage-rule-title">Gray — Secondary Structure</div>
+                        <p style="color: var(--text-body); font-size: 0.9rem; line-height: 1.6; margin-bottom: 0.75rem;">Use for borders, secondary text, dividers, and structural elements that need to recede.</p>
+                        <div class="usage-rule-example">
+                            "Military gray for captions, metadata, timestamps, and non-critical information."
+                        </div>
+                    </div>
+
+                    <div class="usage-rule">
+                        <div class="usage-rule-title">Cream — Warmth Balance</div>
+                        <p style="color: var(--text-body); font-size: 0.9rem; line-height: 1.6; margin-bottom: 0.75rem;">Subtle warmth for light backgrounds and text in light contexts. Counterbalances the cool dark aesthetic.</p>
+                        <div class="usage-rule-example">
+                            "Use cream (#F5F0EB) in light carousel designs or when you need a warm off-white that feels California, not sterile."
+                        </div>
+                    </div>
+
+                    <div class="usage-rule">
+                        <div class="usage-rule-title">Red / Blue / Green — Purposeful Signals</div>
+                        <p style="color: var(--text-body); font-size: 0.9rem; line-height: 1.6; margin-bottom: 0.75rem;">Red for urgency/alerts, Blue for secondary actions/trust, Green for wins/positive outcomes.</p>
+                        <div class="usage-rule-example">
+                            "BAH rate increase? Highlight in green. Limited-time opportunity? Use red. Testimonial? Border in blue."
+                        </div>
+                    </div>
+
+                    <div class="usage-rule">
+                        <div class="usage-rule-title">Gold — Premium/Awards</div>
+                        <p style="color: var(--text-body); font-size: 0.9rem; line-height: 1.6; margin-bottom: 0.75rem;">Reserved for ICON status, awards, premium designations, and star ratings in testimonials.</p>
+                        <div class="usage-rule-example">
+                            "McReynolds' 4x ICON award? Use gold stars. Client rating 5 stars? Gold. Premium service tier? Gold accent."
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>Color Combination Rule:</strong> Never use more than 3 colors in a single graphic or thumbnail. Default combination: Teal (primary) + Black/White (contrast) + one accent color (signal). This keeps designs clean and impactful.
+                </div>
+            </div>
+        </section>
+
+        <!-- Thumbnail Templates Section -->
+        <section id="thumbnails">
+            <div class="section-header">
+                <h2>Thumbnail Templates</h2>
+                <p>Six reusable, battle-tested thumbnail templates. Use these as starting points for all social and video content.</p>
+            </div>
+
+            <!-- Template 1: The Authority Shot -->
+            <div class="thumbnail-container">
+                <div class="thumbnail-preview authority-shot">
+                    <div class="authority-headshot">👤</div>
+                    <div class="authority-text">
+                        <div class="main">VA LOAN MYTHS</div>
+                        <div class="sub">What They're NOT Telling You</div>
+                    </div>
+                </div>
+                <div class="thumbnail-details">
+                    <div class="thumbnail-title">1. The Authority Shot</div>
+                    <div class="thumbnail-use-case"><strong>Use for:</strong> Educational content, tips, how-to videos, myth-busting, VA loan education, confidence-building</div>
+                    <p style="color: var(--text-body); font-size: 0.9rem; line-height: 1.6; margin-top: 1rem;">
+                        <strong>Composition:</strong> Headshot on left (circle crop, teal gradient background), bold white text on right. Teal accent bar at top. Maximum text = 2 lines. Emphasizes the human authority figure.
+                    </p>
+                    <p style="color: var(--text-body); font-size: 0.9rem; line-height: 1.6; margin-top: 0.5rem;">
+                        <strong>Psychology:</strong> Faces build trust. This template says "listen to someone who knows" and is proven to increase CTR on educational content.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Template 2: The Location Reveal -->
+            <div class="thumbnail-container">
+                <div class="thumbnail-preview location-reveal">
+                    <div style="width: 100%;">
+                        <div class="location-badge">📍 NEIGHBORHOOD GUIDE</div>
+                        <div class="location-name">VACAVILLE</div>
+                        <div class="location-subtitle">Schools, parks, cost of living breakdown</div>
+                    </div>
+                </div>
+                <div class="thumbnail-details">
+                    <div class="thumbnail-title">2. The Location Reveal</div>
+                    <div class="thumbnail-use-case"><strong>Use for:</strong> Neighborhood spotlights, area tours, market guides, location comparisons, "where should I PCS" content</div>
+                    <p style="color: var(--text-body); font-size: 0.9rem; line-height: 1.6; margin-top: 1rem;">
+                        <strong>Composition:</strong> Background photo with dark gradient overlay (60% opacity black), location pin + name, supporting text, "NEIGHBORHOOD GUIDE" badge. Text positioned in lower third.
+                    </p>
+                    <p style="color: var(--text-body); font-size: 0.9rem; line-height: 1.6; margin-top: 0.5rem;">
+                        <strong>Psychology:</strong> Geography triggers curiosity. This template taps into "where should I move?" anxiety and positions McReynolds as the expert guide.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Template 3: The Number Drop -->
+            <div class="thumbnail-container">
+                <div class="thumbnail-preview number-drop">
+                    <div class="number">$28M+</div>
+                    <div class="label">Sold in 2024</div>
+                    <div class="sub-label">Military families to new homes</div>
+                </div>
+                <div class="thumbnail-details">
+                    <div class="thumbnail-title">3. The Number Drop</div>
+                    <div class="thumbnail-use-case"><strong>Use for:</strong> Statistics, market updates, BAH rates, milestones, achievements, proof-of-impact content</div>
+                    <p style="color: var(--text-body); font-size: 0.9rem; line-height: 1.6; margin-top: 1rem;">
+                        <strong>Composition:</strong> Large number in teal (3-4x larger than supporting text), centered, minimal design. Supporting text below in smaller weight. Dark background. Can include supporting metric below.
+                    </p>
+                    <p style="color: var(--text-body); font-size: 0.9rem; line-height: 1.6; margin-top: 0.5rem;">
+                        <strong>Psychology:</strong> Big numbers command attention. Use this for social proof, BAH announcements, market snapshots, and "we're winning" moments.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Template 4: The Before/After -->
+            <div class="thumbnail-container">
+                <div class="thumbnail-preview before-after">
+                    <div class="before-after-side before">
+                        <div class="before-after-label">BEFORE</div>
+                        <div class="before-after-text">Confused about VA loans</div>
+                    </div>
+                    <div class="before-after-arrow">→</div>
+                    <div class="before-after-side after">
+                        <div class="before-after-label">AFTER</div>
+                        <div class="before-after-text">Ready to buy</div>
+                    </div>
+                </div>
+                <div class="thumbnail-details">
+                    <div class="thumbnail-title">4. The Before/After</div>
+                    <div class="thumbnail-use-case"><strong>Use for:</strong> Transformations, client journeys, education outcomes, "how we help", renovations, results-driven content</div>
+                    <p style="color: var(--text-body); font-size: 0.9rem; line-height: 1.6; margin-top: 1rem;">
+                        <strong>Composition:</strong> Split-screen design. Left side darker/muted (gray background), right side vibrant (teal gradient). Arrow or divider in center. Each side has one word/phrase.
+                    </p>
+                    <p style="color: var(--text-body); font-size: 0.9rem; line-height: 1.6; margin-top: 0.5rem;">
+                        <strong>Psychology:</strong> Transformation hooks the viewer. Shows potential and outcome. Powerful for education content and client success stories.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Template 5: The Military Special -->
+            <div class="thumbnail-container">
+                <div class="thumbnail-preview military-special">
+                    <div class="military-badge">MISSION READY</div>
+                    <div class="military-text">8th PCS: Your Complete Timeline Guide</div>
+                </div>
+                <div class="thumbnail-details">
+                    <div class="thumbnail-title">5. The Military Special</div>
+                    <div class="thumbnail-use-case"><strong>Use for:</strong> PCS tips, military-specific content, BAH guides, deployment updates, military life hacks, base-specific content</div>
+                    <p style="color: var(--text-body); font-size: 0.9rem; line-height: 1.6; margin-top: 1rem;">
+                        <strong>Composition:</strong> Military-inspired design (stars or flag elements in corners), structured text, "MISSION READY" badge, teal border, structured grid layout. Feels authoritative and strategic.
+                    </p>
+                    <p style="color: var(--text-body); font-size: 0.9rem; line-height: 1.6; margin-top: 0.5rem;">
+                        <strong>Psychology:</strong> Military audience recognizes military design language. This template builds immediate credibility with the core target audience.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Template 6: The Testimonial Card -->
+            <div class="thumbnail-container">
+                <div class="thumbnail-preview testimonial-card">
+                    <div class="testimonial-quote">"They understood the military experience in a way other agents never could."</div>
+                    <div class="testimonial-stars">★★★★★</div>
+                    <div class="testimonial-meta">
+                        <span class="testimonial-name">Sarah M.</span>
+                        <span>USAF Spouse | Travis AFB</span>
+                    </div>
+                </div>
+                <div class="thumbnail-details">
+                    <div class="thumbnail-title">6. The Testimonial Card</div>
+                    <div class="thumbnail-use-case"><strong>Use for:</strong> Client testimonials, reviews, social proof, success stories, trust-building content, community validation</div>
+                    <p style="color: var(--text-body); font-size: 0.9rem; line-height: 1.6; margin-top: 1rem;">
+                        <strong>Composition:</strong> Client quote in large italic text (1.4rem+), gold star rating (5 stars standard), client first name + military affiliation, location tag. Teal border top. Centered layout.
+                    </p>
+                    <p style="color: var(--text-body); font-size: 0.9rem; line-height: 1.6; margin-top: 0.5rem;">
+                        <strong>Psychology:</strong> Real humans validating the service builds trust faster than any marketing claim. Use real testimonials, real names, real military branches.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 3rem; background: linear-gradient(135deg, rgba(0, 128, 128, 0.1), rgba(0, 128, 128, 0.05)); border: 2px solid var(--accent-primary);">
+                <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; color: var(--accent-primary);">Thumbnail Production Tips</h3>
+                <ul style="color: var(--text-body); line-height: 2; font-size: 0.95rem;">
+                    <li><strong>Contrast is critical:</strong> Thumbnails are viewed at 200x112px on mobile. If it doesn't look good at that size, it's not working.</li>
+                    <li><strong>Text hierarchy:</strong> One main message. One supporting line. No more. Your thumbnail has 3 seconds of attention before the scroll.</li>
+                    <li><strong>Color psychology:</strong> Teal for primary attention, white for readability, accent colors for emotional triggers (red=urgency, green=success, gold=premium).</li>
+                    <li><strong>Faces work:</strong> If using a headshot, make it prominent. Eyes = engagement. Crop tight and intentional.</li>
+                    <li><strong>Consistency matters:</strong> Viewers should recognize a McReynolds thumbnail in a crowded feed. Build brand muscle.</li>
+                    <li><strong>Test platform-specific:</strong> Create thumbnails for 16:9 (YouTube), 9:16 (Reels/TikTok), and square 1:1 (Instagram feed). Same message, different aspect ratio.</li>
+                    <li><strong>Batch create:</strong> Design 4 weeks of thumbnails on one production day. Consistency + efficiency.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Typography Section -->
+        <section id="typography">
+            <div class="section-header">
+                <h2>Typography System</h2>
+                <p>Inter font family, 6 distinct levels of hierarchy, clear rules for each application</p>
+            </div>
+
+            <div class="typography-grid">
+                <div class="type-sample">
+                    <div class="type-label">Headline — Impact & Authority</div>
+                    <div class="headline-sample">YOUR NEXT CHAPTER AWAITS</div>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.75rem;">
+                        Inter 700-900 weight | 24-48px | All caps for maximum impact | Teal or white | Letter-spacing: 2-3px
+                    </p>
+                </div>
+
+                <div class="type-sample">
+                    <div class="type-label">Subtitle — Clarification</div>
+                    <div class="subtitle-sample">Discover neighborhoods perfect for military families</div>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.75rem;">
+                        Inter 500 | 16-20px | Light gray or cream | Role: expand on headline | Max 1-2 lines
+                    </p>
+                </div>
+
+                <div class="type-sample">
+                    <div class="type-label">Body Copy — Information</div>
+                    <div class="body-sample">
+                        When military families PCS to Travis AFB, they need an agent who understands the unique timelines, BAH rates, and market dynamics of moving with the military. That's where we come in. With 34 years of combined USAF service and 150+ military families helped, we're not just real estate agents—we're fellow veterans who've walked in your boots.
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.75rem;">
+                        Inter 400 | 14-16px | #e0e0e0 | Line height: 1.6 | Role: deliver core message
+                    </p>
+                </div>
+
+                <div class="type-sample">
+                    <div class="type-label">Call-to-Action — Urgency & Direction</div>
+                    <div style="margin-top: 0.75rem;">
+                        <div class="cta-sample">DM US "PCS" TO GET STARTED</div>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.75rem;">
+                        Inter 700 | 14-18px | Teal background + white text OR white background + teal text | All caps | Letter-spacing: 1-2px
+                    </p>
+                </div>
+
+                <div class="type-sample">
+                    <div class="type-label">Caption — Metadata & Context</div>
+                    <div class="caption-sample">
+                        Posted on November 15, 2024 | BAH rates current as of Q4 2024 | Comments limited to 2 hours | #TravisAFB #PCS
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.75rem;">
+                        Inter 400 | 12-14px | Muted gray | Role: non-critical information | Timestamps, hashtags, disclaimers
+                    </p>
+                </div>
+
+                <div class="type-sample">
+                    <div class="type-label">Badge / Label — Category Signal</div>
+                    <div style="margin-top: 0.75rem;">
+                        <div class="badge-sample">MISSION READY</div>
+                        <div class="badge-sample" style="margin-left: 1rem;">VA LOAN 101</div>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.75rem;">
+                        Inter 700 | 10-12px | Border: 2px teal + teal text | All caps | Letter-spacing: 2-3px
+                    </p>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 2rem;">
+                <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--accent-primary);">Typography Rules & Guardrails</h3>
+
+                <div class="grid-2">
+                    <div>
+                        <h4 style="color: var(--text-primary); font-weight: 600; margin-bottom: 1rem;">DO</h4>
+                        <ul style="color: var(--text-body); font-size: 0.9rem; line-height: 2;">
+                            <li>✓ Use all caps for headlines (military precision)</li>
+                            <li>✓ Increase letter-spacing in caps (looks cleaner)</li>
+                            <li>✓ Match font weight to hierarchy level</li>
+                            <li>✓ Use line-height 1.6+ for body text (readability)</li>
+                            <li>✓ Maintain consistent font pairing (Inter for all)</li>
+                            <li>✓ Test readability on mobile (smallest text = 14px minimum)</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 style="color: var(--text-primary); font-weight: 600; margin-bottom: 1rem;">DON'T</h4>
+                        <ul style="color: var(--text-body); font-size: 0.9rem; line-height: 2;">
+                            <li>✗ Mix typefaces (Inter is the only font)</li>
+                            <li>✗ Use body copy in all caps (hard to read)</li>
+                            <li>✗ Underline text (unless it's a link)</li>
+                            <li>✗ Use text smaller than 12px for captions</li>
+                            <li>✗ Justify text alignment (use left/center, never justify)</li>
+                            <li>✗ Use more than 3 font weights in one layout</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Story Framework Section -->
+        <section id="story-framework">
+            <div class="section-header">
+                <h2>Story Framework</h2>
+                <p>5-step structure for every video, optimized for military audiences and real estate outcomes</p>
+            </div>
+
+            <div class="card" style="margin-bottom: 2rem;">
+                <p style="color: var(--text-body); line-height: 1.7; margin-bottom: 1rem;">
+                    Every McReynolds video follows this five-step framework. It's designed to hook military audiences, build narrative tension, and drive a specific call-to-action. Adapt the content, but keep the structure sacred.
+                </p>
+            </div>
+
+            <div class="story-flow">
+                <div class="story-step">
+                    <div class="story-number">1</div>
+                    <div class="story-content">
+                        <div class="story-title">THE HOOK (0-3 seconds)</div>
+                        <div class="story-time">3 seconds | This is a do-or-die moment</div>
+                        <div class="story-text">
+                            Start with a relatable military pain point. "When we PCS'd for the 8th time..." or "You've got 30 days to find a house..." or "Your BAH just increased 15%..." The goal: stop the scroll. Signal that this video is about THEM, not about real estate in general.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="story-arrow">↓</div>
+
+                <div class="story-step">
+                    <div class="story-number">2</div>
+                    <div class="story-content">
+                        <div class="story-title">THE PROBLEM (3-15 seconds)</div>
+                        <div class="story-time">12 seconds | Identify the gap</div>
+                        <div class="story-text">
+                            Deepen the relatable pain. "We couldn't find an agent who understood military timelines" or "Most real estate agents don't know the first thing about VA loans" or "Schools, neighborhoods, BAH rates—where do you even start?" Mirror their anxiety. Show you've identified the real problem.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="story-arrow">↓</div>
+
+                <div class="story-step">
+                    <div class="story-number">3</div>
+                    <div class="story-content">
+                        <div class="story-title">THE JOURNEY (15-45 seconds)</div>
+                        <div class="story-time">30 seconds | The transformation process</div>
+                        <div class="story-text">
+                            This is the meat. Show HOW you solve the problem. On-location B-roll, screen shares of data, talking-head explanation, client testimonial, visuals of neighborhoods. "So we built a system..." or "That's why we created..." or "Here's how we guide families through it..." Educate while you entertain.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="story-arrow">↓</div>
+
+                <div class="story-step">
+                    <div class="story-number">4</div>
+                    <div class="story-content">
+                        <div class="story-title">THE RESOLUTION (45-55 seconds)</div>
+                        <div class="story-time">10 seconds | Proof of impact</div>
+                        <div class="story-text">
+                            Land the outcome. "Now we've helped 150+ military families" or "That family closed in 21 days, even while deployed" or "Their kids are in the right schools, and their BAH covers more than they expected." Use numbers. Use testimonials. Show that the system WORKS.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="story-arrow">↓</div>
+
+                <div class="story-step">
+                    <div class="story-number">5</div>
+                    <div class="story-content">
+                        <div class="story-title">THE CTA (55-60 seconds)</div>
+                        <div class="story-time">5 seconds | One clear ask</div>
+                        <div class="story-text">
+                            End with a specific, easy action. "DM us 'PCS'" or "Link in bio to book a free strategy call" or "Follow for weekly BAH updates" or "Drop a comment: where are you PCS'ing next?" One ask. One direction. Make it impossible to misunderstand.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 3rem;">
+                <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--accent-primary);">Story Framework Examples</h3>
+
+                <div class="grid-2">
+                    <div style="background-color: var(--bg-card-inner); padding: 1.5rem; border-radius: 6px;">
+                        <h4 style="color: var(--accent-primary); font-weight: 700; margin-bottom: 1rem;">Example 1: BAH Rate Increase</h4>
+                        <ul style="color: var(--text-body); font-size: 0.9rem; line-height: 1.8;">
+                            <li><strong>Hook:</strong> "Your BAH just went up 15%..."</li>
+                            <li><strong>Problem:</strong> "But you don't know what that means for your buying power"</li>
+                            <li><strong>Journey:</strong> Break down the numbers. Show calculator. Real homes in price range.</li>
+                            <li><strong>Resolution:</strong> "That's an extra $400K in home buying power"</li>
+                            <li><strong>CTA:</strong> "Comment 'BAH' below—let's calculate yours"</li>
+                        </ul>
+                    </div>
+
+                    <div style="background-color: var(--bg-card-inner); padding: 1.5rem; border-radius: 6px;">
+                        <h4 style="color: var(--accent-primary); font-weight: 700; margin-bottom: 1rem;">Example 2: Client Success Story</h4>
+                        <ul style="color: var(--text-body); font-size: 0.9rem; line-height: 1.8;">
+                            <li><strong>Hook:</strong> "He got PCS orders with 45 days' notice..."</li>
+                            <li><strong>Problem:</strong> "Deployed, TDY, no time for house hunting"</li>
+                            <li><strong>Journey:</strong> Show how we managed timeline. Virtual tours. Client interview about process.</li>
+                            <li><strong>Resolution:</strong> "Keys in 38 days. Perfect neighborhood for his family."</li>
+                            <li><strong>CTA:</strong> "DM us 'DEPLOYED'—we specialize in this"</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Content Strategy Section -->
+        <section id="content-strategy">
+            <div class="section-header">
+                <h2>Content Strategy Overview</h2>
+                <p>How to organize content across platforms, tiers, and story arcs for maximum consistency and impact</p>
+            </div>
+
+            <!-- Content Tiers -->
+            <div class="card">
+                <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--accent-primary);">Three Production Tiers</h3>
+                <p style="color: var(--text-body); margin-bottom: 2rem;">
+                    Balance production value with consistency. Higher tier doesn't always mean better results. Tier 3 raw content often outperforms Tier 1 in engagement because it feels authentic.
+                </p>
+
+                <div class="tier-box">
+                    <span class="tier-level">Tier 1 — 1-2x/week</span>
+                    <div class="tier-title">Cinematic / Signature Content</div>
+                    <div class="tier-frequency">Highest production value. Goal: Authority building + SEO discovery</div>
+
+                    <div class="tier-detail"><strong>Filming:</strong> Professional drone B-roll, neighborhood cinematography, studio lighting for talking heads, on-location walkthroughs</div>
+                    <div class="tier-detail"><strong>Editing:</strong> Smooth transitions, color grading, licensed music, motion graphics, captions</div>
+                    <div class="tier-detail"><strong>Length:</strong> 8-15 minutes (YouTube long-form)</div>
+                    <div class="tier-detail"><strong>Platforms:</strong> YouTube (primary), cross-posted as Reels/Shorts (30-90 sec edit)</div>
+                    <div class="tier-detail"><strong>Examples:</strong> Neighborhood tour with 4K drone footage, VA loan comprehensive guide, "How we help deployed buyers" deep dive</div>
+                    <div class="tier-detail"><strong>Production Day:</strong> 8 hours filming + 6 hours editing per video</div>
+                </div>
+
+                <div class="tier-box">
+                    <span class="tier-level">Tier 2 — 2-3x/week</span>
+                    <div class="tier-title">Story-Wrapped Education</div>
+                    <div class="tier-frequency">Medium production. Goal: Engagement + saves + shares</div>
+
+                    <div class="tier-detail"><strong>Filming:</strong> Talking head with B-roll inserts, screen recordings for market data, on-location walkthroughs, client testimonials</div>
+                    <div class="tier-detail"><strong>Editing:</strong> Quick cuts, captions, basic color correction, stock music</div>
+                    <div class="tier-detail"><strong>Length:</strong> 2-5 minutes</div>
+                    <div class="tier-detail"><strong>Platforms:</strong> Instagram Reels, TikTok, YouTube Shorts, Facebook</div>
+                    <div class="tier-detail"><strong>Examples:</strong> "3 neighborhoods under $500K near Travis", "VA loan Q&A", "Fairfield vs Suisun comparison"</div>
+                    <div class="tier-detail"><strong>Production Day:</strong> 2 hours filming + 2 hours editing per video</div>
+                </div>
+
+                <div class="tier-box">
+                    <span class="tier-level">Tier 3 — 2-3x/week</span>
+                    <div class="tier-title">Raw & Real</div>
+                    <div class="tier-frequency">Low production, high authenticity. Goal: Connection + relatability + DMs</div>
+
+                    <div class="tier-detail"><strong>Filming:</strong> Phone-shot BTS, car talks, quick tips in real time, day-in-the-life moments, no script</div>
+                    <div class="tier-detail"><strong>Editing:</strong> Minimal—just captions, hook text, maybe a music bed</div>
+                    <div class="tier-detail"><strong>Length:</strong> 30-90 seconds</div>
+                    <div class="tier-detail"><strong>Platforms:</strong> Instagram Stories, TikTok, Reels, Facebook</div>
+                    <div class="tier-detail"><strong>Examples:</strong> "Coffee talk about BAH rates", "Behind-the-scenes showing a home", "Ben's random 60-second tips"</div>
+                    <div class="tier-detail"><strong>Production Day:</strong> 1 hour filming + 30 minutes editing per video</div>
+                </div>
+            </div>
+
+            <!-- Story Arcs -->
+            <div class="card">
+                <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--accent-primary);">Six Recurring Story Arcs</h3>
+                <p style="color: var(--text-body); margin-bottom: 2rem;">
+                    Plan content in themes. Every week touches at least 3 of these 6 story arcs. This creates pattern recognition—followers begin anticipating certain content on certain days.
+                </p>
+
+                <div class="arc-item">
+                    <div class="arc-name">1. Mission Ready Mondays</div>
+                    <div class="arc-desc">Weekly PCS/military tip. Authority content. Frequency: 1x/week (Tier 1 or 2)</div>
+                    <div class="arc-episodes">
+                        <strong>Episode Ideas:</strong>
+                        "BAH breakdown for Travis AFB 2026" | "How to house-hunt while deployed" | "The 90-day PCS timeline nobody follows" | "Packing checklist for military moves" | "Schools near each gate at Travis" | "TDY housing vs. trying to buy"
+                    </div>
+                </div>
+
+                <div class="arc-item">
+                    <div class="arc-name">2. Neighborhood Intel</div>
+                    <div class="arc-desc">Bi-weekly area guide. Discovery content. Frequency: 1-2x/week (Tier 1 or 2)</div>
+                    <div class="arc-episodes">
+                        <strong>Episode Ideas:</strong>
+                        "Is Vacaville worth it?" | "Fairfield vs Suisun: honest comparison" | "The hidden gem neighborhoods near Travis" | "Dixon walkthrough: pros and cons" | "Downtown Vallejo renaissance (yes, really)" | "Solano County school rankings 2025"
+                    </div>
+                </div>
+
+                <div class="arc-item">
+                    <div class="arc-name">3. VA Vault</div>
+                    <div class="arc-desc">Weekly VA loan education. Trust content. Frequency: 1-2x/week (Tier 2)</div>
+                    <div class="arc-episodes">
+                        <strong>Episode Ideas:</strong>
+                        "VA loan myths debunked" | "How much house can YOUR BAH buy?" | "VA loan after your first PCS" | "Certificate of Eligibility explained" | "Jumbo VA loans in expensive markets" | "Can you use your VA benefit twice?"
+                    </div>
+                </div>
+
+                <div class="arc-item">
+                    <div class="arc-name">4. Client Debrief</div>
+                    <div class="arc-desc">Bi-weekly client story. Proof content. Frequency: 1x/week (Tier 2)</div>
+                    <div class="arc-episodes">
+                        <strong>Episode Ideas:</strong>
+                        "How Sarah M. went from PCS orders to keys in 21 days" | "Deployed buyer: how we made it work across time zones" | "[Name] sold in Hawaii, bought in California (here's how)" | "Single mom, five kids, on a fixed military income—here's our strategy" | "Medical retirement housing transition"
+                    </div>
+                </div>
+
+                <div class="arc-item">
+                    <div class="arc-name">5. Base Life</div>
+                    <div class="arc-desc">Weekly local lifestyle content. Connection content. Frequency: 1-2x/week (Tier 3)</div>
+                    <div class="arc-episodes">
+                        <strong>Episode Ideas:</strong>
+                        "Best coffee near Travis AFB" | "Date nights in Solano County" | "Hidden parks your kids will love" | "Best breweries for military families" | "Commute times from each neighborhood" | "Military-friendly gyms and fitness near Fairfield"
+                    </div>
+                </div>
+
+                <div class="arc-item">
+                    <div class="arc-name">6. Behind the Mission</div>
+                    <div class="arc-desc">Monthly team/personal content. Relatability content. Frequency: 1x/month (Tier 3)</div>
+                    <div class="arc-episodes">
+                        <strong>Episode Ideas:</strong>
+                        "Why we left the Air Force for real estate" | "A day with the McReynolds team" | "Our 8th PCS—the one that changed everything" | "What it's like being USAF spouses in real estate" | "How military service made us better agents"
+                    </div>
+                </div>
+            </div>
+
+            <!-- Weekly Content Grid -->
+            <div class="card">
+                <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--accent-primary);">Sample Weekly Content Schedule</h3>
+                <p style="color: var(--text-body); margin-bottom: 1.5rem;">
+                    This is a template for a typical production week. Adjust based on bandwidth, but maintain consistency in theme and posting schedule.
+                </p>
+
+                <div style="overflow-x: auto;">
+                    <table class="content-table">
+                        <thead>
+                            <tr>
+                                <th>Day</th>
+                                <th>Arc</th>
+                                <th>Tier</th>
+                                <th>Format</th>
+                                <th>Platforms</th>
+                                <th>CTA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Monday</strong></td>
+                                <td>Mission Ready</td>
+                                <td>Tier 2</td>
+                                <td>Talking head + B-roll (3 min)</td>
+                                <td>Reels, TikTok, YT Shorts</td>
+                                <td>DM "PCS"</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tuesday</strong></td>
+                                <td>Base Life</td>
+                                <td>Tier 3</td>
+                                <td>Phone-shot BTS (45 sec)</td>
+                                <td>Stories, TikTok</td>
+                                <td>Save & Share</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Wednesday</strong></td>
+                                <td>Neighborhood Intel</td>
+                                <td>Tier 1</td>
+                                <td>Full neighborhood tour (12 min YouTube + 60 sec Shorts)</td>
+                                <td>YouTube, Reels, TikTok</td>
+                                <td>Book tour</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Thursday</strong></td>
+                                <td>VA Vault</td>
+                                <td>Tier 2</td>
+                                <td>Screen share + talking head (2.5 min)</td>
+                                <td>Reels, TikTok, Facebook</td>
+                                <td>Comment question</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Friday</strong></td>
+                                <td>Client Debrief</td>
+                                <td>Tier 2</td>
+                                <td>Interview + B-roll (4 min)</td>
+                                <td>YouTube, Reels, Facebook</td>
+                                <td>DM for consultation</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Saturday</strong></td>
+                                <td>Base Life</td>
+                                <td>Tier 3</td>
+                                <td>Lifestyle moment (30-60 sec)</td>
+                                <td>Stories, Reels, TikTok</td>
+                                <td>Share your moment</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Sunday</strong></td>
+                                <td>Neighborhood Intel</td>
+                                <td>Tier 3</td>
+                                <td>Quick neighborhood walk (1 min)</td>
+                                <td>Stories, Reels</td>
+                                <td>Save for next PCS</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="highlight-box" style="margin-top: 1.5rem;">
+                    <strong>Why This Schedule Works:</strong> You're touching 6 different story arcs in a week, maintaining 7 posts/day across Stories and main feed, balancing high-production (Wed) with authentic (Tier 3), and cycling through content types. Military families see you as comprehensive expert (content), not just a real estate pitch (consistency).
+                </div>
+            </div>
+        </section>
+
+        <!-- Production Checklist Section -->
+        <section id="production-checklists">
+            <div class="section-header">
+                <h2>Production Checklists</h2>
+                <p>Quality gates before publishing. Use these to maintain standard and catch issues before they go live.</p>
+            </div>
+
+            <div class="checklist">
+                <div class="checklist-title">Tier 1: Cinematic Content Quality Gate</div>
+
+                <div class="checklist-item">
+                    <div class="checklist-box"></div>
+                    <div class="checklist-text"><strong>Hook in first 3 seconds:</strong> Does the opening line stop the scroll? Can the viewer tell within 3 seconds what this video is about and why it matters to them?</div>
+                </div>
+
+                <div class="checklist-item">
+                    <div class="checklist-box"></div>
+                    <div class="checklist-text"><strong>Visual quality:</strong> 4K resolution or best available. No shaky footage. Color grading applied. Lighting professional (no harsh shadows on faces).</div>
+                </div>
+
+                <div class="checklist-item">
+                    <div class="checklist-box"></div>
+                    <div class="checklist-text"><strong>Audio quality:</strong> Dialogue clear and intelligible. No background noise. Music sits under dialogue without competing. Intro/outro music branded.</div>
+                </div>
+
+                <div class="checklist-item">
+                    <div class="checklist-box"></div>
+                    <div class="checklist-text"><strong>Captions & graphics:</strong> Hard-coded captions throughout. Key statistics appear on-screen. Location/neighborhood names labeled. Font consistent (Inter).</div>
+                </div>
+
+                <div class="checklist-item">
+                    <div class="checklist-box"></div>
+                    <div class="checklist-text"><strong>Story framework:</strong> Video follows 5-step structure (Hook → Problem → Journey → Resolution → CTA). Each step clear and distinct.</div>
+                </div>
+
+                <div class="checklist-item">
+                    <div class="checklist-box"></div>
+                    <div class="checklist-text"><strong>Call-to-action:</strong> Final 10 seconds feature clear, one single ask. Not vague. Specific instruction (DM "PCS", visit link, etc.)</div>
+                </div>
+
+                <div class="checklist-item">
+                    <div class="checklist-box"></div>
+                    <div class="checklist-text"><strong>Fact-check:</strong> All statistics verified (BAH rates, market data, school rankings). Sources current as of publish date. Disclaimers added where necessary (lending advice, legal, school info).</div>
+                </div>
+
+                <div class="checklist-item">
+                    <div class="checklist-box"></div>
+                    <div class="checklist-text"><strong>Brand consistency:</strong> Logo appears on-screen. Teal accent used somewhere in design. Thumbnail follows brand template. Font choices consistent with guidelines.</div>
+                </div>
+
+                <div class="checklist-item">
+                    <div class="checklist-box"></div>
+                    <div class="checklist-text"><strong>Pacing & length:</strong> No filler. Video moves purposefully. Tier 1 typically 8-15 min YouTube. Shortest edit (Shorts) is fast-paced, 60-90 seconds.</div>
+                </div>
+
+                <div class="checklist-item">
+                    <div class="checklist-box"></div>
+                    <div class="checklist-text"><strong>Multiple format ready:</strong> Created main 16:9 version AND 9:16 vertical (Reels/TikTok). Different assets for different platforms? Check.</div>
+                </div>
+            </div>
+
+            <div class="checklist">
+                <div class="checklist-title">Tier 2: Story-Wrapped Content Quality Gate</div>
+
+                <div class="checklist-item">
+                    <div class="checklist-box"></div>
+                    <div class="checklist-text"><strong>Hook within first 3 seconds:</strong> "When you PCS for the first time..." or "You just got deployed..." Immediate relevance to viewer.</div>
+                </div>
+
+                <div class="checklist-item">
+                    <div class="checklist-box"></div>
+                    <div class="checklist-text"><strong>Captions throughout:</strong> Every video must have captions (TikTok users watch muted). No exceptions.</div>
+                </div>
+
+                <div class="checklist-item">
+                    <div class="checklist-box"></div>
+                    <div class="checklist-text"><strong>Clear CTA:</strong> One ask. No ambiguity. Text overlay stating the call-to-action in final 5 seconds.</div>
+                </div>
+
+                <div class="checklist-item">
+                    <div class="checklist-box"></div>
+                    <div class="checklist-text"><strong>Audio intelligible:</strong> Dialogue clear. No competing background noise. Music mixed under speech at -6dB minimum.</div>
+                </div>
+
+                <div class="checklist-item">
+                    <div class="checklist-box"></div>
+                    <div class="checklist-text"><strong>B-roll relevant:</strong> Supporting visuals match the narrative. If talking about neighborhoods, show neighborhoods. Don't use stock photos—show real locations.</div>
+                </div>
+
+                <div class="checklist-item">
+                    <div class="checklist-box"></div>
+                    <div class="checklist-text"><strong>Length correct:</strong> Tier 2 = 2-5 minutes depending on platform. Too long for TikTok? Trim or make it Tier 1.</div>
+                </div>
+
+                <div class="checklist-item">
+                    <div class="checklist-box"></div>
+                    <div class="checklist-text"><strong>Thumbnail created:</strong> Uses one of the 6 brand templates. Teal dominant. Text hierarchy clear. Readable at 200x112px.</div>
+                </div>
+
+                <div class="checklist-item">
+                    <div class="checklist-box"></div>
+                    <div class="checklist-text"><strong>Facts verified:</strong> Any claims checked. If mentioning school rankings, BAH amounts, or market data, source is current and accurate.</div>
+                </div>
+            </div>
+
+            <div class="checklist">
+                <div class="checklist-title">Tier 3: Raw & Real Quality Gate</div>
+
+                <div class="checklist-item">
+                    <div class="checklist-box"></div>
+                    <div class="checklist-text"><strong>Authentic & unscripted:</strong> Feels genuine. No over-production. Imperfection is okay (actually preferred). Phone-quality video acceptable if content is strong.</div>
+                </div>
+
+                <div class="checklist-item">
+                    <div class="checklist-box"></div>
+                    <div class="checklist-text"><strong>Captions added:</strong> Even raw content needs captions for accessibility and silent viewing. Use auto-captions if time-limited, then spot-check for accuracy.</div>
+                </div>
+
+                <div class="checklist-item">
+                    <div class="checklist-box"></div>
+                    <div class="checklist-text"><strong>Hook present:</strong> Even 30-second content needs a first-line hook. "Real quick..." or "Here's a thought..." establishes relevance.</div>
+                </div>
+
+                <div class="checklist-item">
+                    <div class="checklist-box"></div>
+                    <div class="checklist-text"><strong>Clear CTA:</strong> What does the viewer do next? Comment, save, share, DM, book a call? One direction, even in raw content.</div>
+                </div>
+
+                <div class="checklist-item">
+                    <div class="checklist-box"></div>
+                    <div class="checklist-text"><strong>Audio acceptable:</strong> No distracting background noise. Viewers can hear you clearly. If extremely noisy environment, consider re-filming or not posting.</div>
+                </div>
+
+                <div class="checklist-item">
+                    <div class="checklist-box"></div>
+                    <div class="checklist-text"><strong>Length fits platform:</strong> Stories = 15-60 sec max. TikTok = 15-60 sec. Reels = 30-90 sec. Respect platform conventions.</div>
+                </div>
+
+                <div class="checklist-item">
+                    <div class="checklist-box"></div>
+                    <div class="checklist-text"><strong>Branded moment:</strong> McReynolds visible somehow. Logo in corner, your face on-screen, teal text overlay, branded intro/outro. You can't be anonymous.</div>
+                </div>
+
+                <div class="checklist-item">
+                    <div class="checklist-box"></div>
+                    <div class="checklist-text"><strong>No major errors:</strong> Check spelling in overlays. Ensure captions are mostly accurate. Listen for slurred words or awkward pauses.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Do's & Don'ts Section -->
+        <section id="dos-donts">
+            <div class="section-header">
+                <h2>Do's & Don'ts</h2>
+                <p>12 essential rules for every piece of McReynolds content. These are non-negotiable.</p>
+            </div>
+
+            <div class="do-dont-grid">
+                <div class="do-column">
+                    <h3>DO</h3>
+
+                    <div class="do-item">
+                        <strong>Lead with a hook in every video</strong> — First 3 seconds determine if someone stays or scrolls. Make it relatable, urgent, or surprising. "When you get PCS orders..." or "Your BAH just increased..." or "You're moving your family across the country..." Not "Hi, I'm a real estate agent."
+                    </div>
+
+                    <div class="do-item">
+                        <strong>Use "military families" and "PCS" in captions</strong> — These are SEO goldmines for your target audience. YouTube and TikTok algorithms reward these keywords. Every post mentions the military context.
+                    </div>
+
+                    <div class="do-item">
+                        <strong>Show real homes, real neighborhoods, real people</strong> — Authenticity beats polish every time. If you show a home, it should be a home you've actually worked with. If you show a neighborhood, film on-location. Real testimonials from real clients (with permission).
+                    </div>
+
+                    <div class="do-item">
+                        <strong>Include a clear CTA in every single post</strong> — No post without a next action. "DM us", "Book a call", "Save this", "Drop a comment", "Link in bio". Be specific and easy to act on.
+                    </div>
+
+                    <div class="do-item">
+                        <strong>Use teal as the dominant brand color</strong> — Every video should have teal somewhere (text, logo, accent bar, thumbnail). It's your signature. Audiences recognize it in a crowded feed.
+                    </div>
+
+                    <div class="do-item">
+                        <strong>Film in natural California light when possible</strong> — Golden hour, natural window light, outdoor settings. Avoid harsh overhead fluorescents. Light quality makes a massive difference in perceived professionalism and trustworthiness.
+                    </div>
+
+                    <div class="do-item">
+                        <strong>Reference your track record often</strong> — "$28M+ in 2024", "150+ families", "#1 in 3 markets", "4x ICON award". Don't be shy about success. Military families want to work with winners who understand their world.
+                    </div>
+
+                    <div class="do-item">
+                        <strong>Tag location on every post</strong> — Travis AFB, Vacaville, Fairfield, Suisun City, etc. Geotags help algorithm AND help local families find you. Location + military = discovery.
+                    </div>
+
+                    <div class="do-item">
+                        <strong>Use military acronyms your audience knows</strong> — BAH, PCS, VA, TDY, deployment, spouse, active duty, veteran, USAF, Army, etc. Speak the language. Your audience will feel understood.
+                    </div>
+
+                    <div class="do-item">
+                        <strong>Batch film on content day for efficiency</strong> — Dedicate one day per week (or one afternoon) to filming Tier 2 and Tier 3 content. Film 3-4 videos in one session. Same setup, different angles = more content in less time.
+                    </div>
+
+                    <div class="do-item">
+                        <strong>Show both Sarah AND Ben</strong> — Team dynamic is a huge differentiator. Military families connect with the couple. Show you working together, complementing each other. Two veterans, both relevant, both speaking = more credible.
+                    </div>
+
+                    <div class="do-item">
+                        <strong>Respond to DMs/comments within 2 hours</strong> — Military families are watching and responding. If someone asks "How long to close?" or "What's the BAH for O-4?", answer fast. Speed signals you care and are actually checking your account.
+                    </div>
+                </div>
+
+                <div class="dont-column">
+                    <h3>DON'T</h3>
+
+                    <div class="dont-item">
+                        <strong>Post without a hook or opening line</strong> — Dead air. Boring intro. Unclear relevance. These kill engagement instantly. Every post needs the first 3 seconds to work hard.
+                    </div>
+
+                    <div class="dont-item">
+                        <strong>Use stock photos of random houses</strong> — Military families know fake when they see it. Stock photos = we don't actually know the area. Show real homes, real neighborhoods. If you don't have footage, don't post about it yet.
+                    </div>
+
+                    <div class="dont-item">
+                        <strong>Give specific opinions on neighborhoods or schools</strong> — "This neighborhood is the best" or "These schools are terrible" opens you to criticism and potentially offends community members. Instead: "Here's what families love about it..." or "Data shows X, which means Y for your family."
+                    </div>
+
+                    <div class="dont-item">
+                        <strong>Give lending or legal advice</strong> — You're not a lender or attorney. "You can use your VA benefit twice" or "This is the only way to finance this" are dangerous. Always defer to professionals: "Talk to your lender about...", "Consult with a tax attorney about...", "Your loan officer can confirm..."
+                    </div>
+
+                    <div class="dont-item">
+                        <strong>Post the same content identically across all platforms</strong> — TikTok audiences see different things than YouTube audiences. Reels are different from Stories. Tailor each platform: TikTok = trending audio + fast cuts, YouTube = longer storytelling, Stories = quick moments.
+                    </div>
+
+                    <div class="dont-item">
+                        <strong>Use generic real estate hashtags without military-specific ones</strong> — #realestate #homeselling #realtor are too broad. Your hashtags should be: #TravisAFB #MilitaryFamily #PCS #VALoan #MilitaryRealEstate. Hyper-specific wins.
+                    </div>
+
+                    <div class="dont-item">
+                        <strong>Film in bad lighting or with distracting backgrounds</strong> — Poor lighting screams "unprofessional". Distracting backgrounds (clutter, other people, TV) split attention. Invest in light (even a cheap ring light). Clean background. Quality goes up, perceived authority goes up.
+                    </div>
+
+                    <div class="dont-item">
+                        <strong>Forget to add captions/subtitles to videos</strong> — 85% of social video is watched muted. No captions = no message delivery. All video, all platforms, must have captions. This is non-negotiable for engagement and accessibility.
+                    </div>
+
+                    <div class="dont-item">
+                        <strong>Go more than 2 days without posting</strong> — Consistency breeds algorithm favor. Gaps in posting = audiences move on to other accounts. Your schedule might be 1x daily across Stories + main feed, but maintain frequency. 2-day gap is a reset.
+                    </div>
+
+                    <div class="dont-item">
+                        <strong>Ignore comments or DMs</strong> — Every comment is a person raising their hand. Respond to every legitimate comment/DM. No response = you don't care = they unfollow. Response time matters more than perfection of response.
+                    </div>
+
+                    <div class="dont-item">
+                        <strong>Use overly formal/stiff language</strong> — You're veterans talking to veterans. Not corporate. Not salesy. "Let's crush this goal together" not "We facilitate real estate acquisition." "You're PCS'ing? Here's what I've learned" not "Real estate market analytics for military personnel relocation."
+                    </div>
+
+                    <div class="dont-item">
+                        <strong>Share client details without permission</strong> — Even with permission, be respectful. No last names unless approved. No family photos without clearance. No sensitive military details (exact base, deployment status, family situation) beyond what they've shared publicly.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-links">
+                    <div class="footer-section">
+                        <h3>Strategy Documents</h3>
+                        <a href="#">Marketing Strategy (Doc 1)</a>
+                        <a href="#">Platform Strategy (Doc 2)</a>
+                        <a href="#">Content Pillars (Doc 3)</a>
+                        <a href="#">SEO & Discovery (Doc 4)</a>
+                        <a href="#">Visual Style Guide (Doc 5)</a>
+                    </div>
+
+                    <div class="footer-section">
+                        <h3>Quick Links</h3>
+                        <a href="#brand-identity">Brand Identity</a>
+                        <a href="#color-system">Color System</a>
+                        <a href="#thumbnails">Thumbnail Templates</a>
+                        <a href="#typography">Typography</a>
+                        <a href="#story-framework">Story Framework</a>
+                        <a href="#dos-donts">Do's & Don'ts</a>
+                    </div>
+
+                    <div class="footer-section">
+                        <h3>McReynolds</h3>
+                        <a href="#">Instagram</a>
+                        <a href="#">YouTube</a>
+                        <a href="#">TikTok</a>
+                        <a href="#">Facebook</a>
+                    </div>
+
+                    <div class="footer-section">
+                        <h3>About</h3>
+                        <a href="#">$28M+ in 2024</a>
+                        <a href="#">150+ Military Families</a>
+                        <a href="#">34 Years USAF Service</a>
+                        <a href="#">4x ICON Award</a>
+                    </div>
+                </div>
+
+                <div class="footer-bottom">
+                    <p><strong>McReynolds Real Estate — Visual Style Guide</strong></p>
+                    <p>Premium strategy document for Forward Learning Group (FLG)</p>
+                    <p style="margin-top: 1rem; color: var(--text-muted);">Document 5 of 5 in the McReynolds Strategy Suite</p>
+                    <p style="margin-top: 1rem; font-size: 0.8rem;">Last updated: February 2025 | Strategy by Forward Learning Group</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

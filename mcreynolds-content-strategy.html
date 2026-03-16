@@ -1,0 +1,1802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>McReynolds Real Estate - Content Strategy Playbook</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-card: #111111;
+            --bg-card-inner: #0d0d0d;
+            --border: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-body: #e0e0e0;
+            --text-muted: #888888;
+            --text-dim: #666666;
+            --accent-primary: #008080;
+            --accent-secondary: #ff3333;
+            --accent-blue: #3399ff;
+            --accent-green: #33cc66;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            background-color: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--text-body);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent-primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(0, 128, 128, 0.1) 0%, rgba(51, 153, 255, 0.05) 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #008080 0%, #3399ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-body);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero .meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Section Styling */
+        section {
+            margin: 4rem 0;
+        }
+
+        section > h2 {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--accent-primary);
+        }
+
+        section > p {
+            font-size: 15px;
+            color: var(--text-body);
+            margin-bottom: 2rem;
+        }
+
+        /* Card Grid */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            border-color: var(--accent-primary);
+            background-color: var(--bg-card-inner);
+            transform: translateY(-2px);
+        }
+
+        .card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--accent-primary);
+        }
+
+        .card p {
+            font-size: 14px;
+            color: var(--text-body);
+        }
+
+        .card .percentage {
+            display: inline-block;
+            background-color: var(--accent-primary);
+            color: var(--bg-primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        /* Topic List */
+        .topic-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .topic-item {
+            background-color: var(--bg-card-inner);
+            border: 1px solid var(--border);
+            padding: 1rem;
+            border-radius: 6px;
+            font-size: 13px;
+            color: var(--text-body);
+        }
+
+        .topic-item strong {
+            color: var(--accent-primary);
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Cadence Calendar */
+        .cadence-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            font-size: 13px;
+        }
+
+        .day-header {
+            background-color: var(--accent-primary);
+            color: var(--bg-primary);
+            padding: 0.75rem;
+            text-align: center;
+            font-weight: 700;
+            border-radius: 4px;
+        }
+
+        .day-cell {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 1rem;
+            border-radius: 4px;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .day-cell .day-name {
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+            font-size: 12px;
+        }
+
+        .day-cell .content-type {
+            font-size: 12px;
+            color: var(--text-body);
+            margin-bottom: 0.25rem;
+        }
+
+        .day-cell .platforms {
+            font-size: 11px;
+            color: var(--text-muted);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.25rem;
+        }
+
+        .platform-tag {
+            background-color: var(--bg-card-inner);
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            border-left: 2px solid var(--accent-primary);
+        }
+
+        /* Hook Table */
+        .hook-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .hook-table thead {
+            background-color: var(--accent-primary);
+            color: var(--bg-primary);
+        }
+
+        .hook-table th,
+        .hook-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            font-size: 13px;
+        }
+
+        .hook-table tbody tr:hover {
+            background-color: var(--bg-card-inner);
+        }
+
+        .hook-table .hook-type {
+            color: var(--accent-primary);
+            font-weight: 700;
+        }
+
+        .hook-table .formula {
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+        /* Template Cards */
+        .template-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .template-card h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+        }
+
+        .template-card .template-content {
+            background-color: var(--bg-card-inner);
+            padding: 1.5rem;
+            border-radius: 6px;
+            border-left: 3px solid var(--accent-primary);
+            font-size: 13px;
+            line-height: 1.8;
+            color: var(--text-body);
+        }
+
+        .placeholder {
+            background-color: rgba(0, 128, 128, 0.2);
+            color: var(--accent-primary);
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-weight: 600;
+            display: inline-block;
+            font-family: monospace;
+            font-size: 12px;
+        }
+
+        /* Repurpose Diagram */
+        .repurpose-flow {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .flow-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .step-box {
+            background-color: var(--bg-card-inner);
+            border: 1px solid var(--accent-primary);
+            padding: 1rem;
+            border-radius: 6px;
+            min-width: 200px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--accent-primary);
+            font-size: 13px;
+        }
+
+        .step-arrow {
+            margin: 0 1rem;
+            color: var(--accent-primary);
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .step-output {
+            background-color: rgba(0, 128, 128, 0.1);
+            border-left: 3px solid var(--accent-primary);
+            padding: 0.75rem 1rem;
+            border-radius: 4px;
+            font-size: 13px;
+            color: var(--text-body);
+        }
+
+        /* Platform Guide */
+        .platform-guide {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .platform-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            overflow: hidden;
+        }
+
+        .platform-card h4 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .platform-icon {
+            font-size: 24px;
+        }
+
+        .platform-specs {
+            background-color: var(--bg-card-inner);
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            font-size: 12px;
+        }
+
+        .platform-specs strong {
+            color: var(--accent-primary);
+            display: block;
+            margin-top: 0.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .spec-item {
+            color: var(--text-body);
+            margin-bottom: 0.5rem;
+        }
+
+        .best-practices {
+            font-size: 13px;
+        }
+
+        .best-practices li {
+            margin-bottom: 0.75rem;
+            color: var(--text-body);
+            margin-left: 1.25rem;
+        }
+
+        .best-practices li strong {
+            color: var(--accent-primary);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .footer-section a {
+            display: block;
+            font-size: 13px;
+            color: var(--text-body);
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-primary);
+        }
+
+        .footer-divider {
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+            margin-top: 2rem;
+        }
+
+        .footer-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--text-muted);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .document-badge {
+            background-color: var(--accent-primary);
+            color: var(--bg-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            .cadence-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+
+            .step-arrow {
+                margin: 0.5rem 0;
+            }
+        }
+
+        /* Utility Classes */
+        .highlight {
+            color: var(--accent-primary);
+        }
+
+        .success {
+            color: var(--accent-green);
+        }
+
+        .secondary {
+            color: var(--text-muted);
+        }
+
+        .divider {
+            height: 1px;
+            background-color: var(--border);
+            margin: 2rem 0;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="#" class="logo">McReynolds Real Estate</a>
+        <ul>
+            <li><a href="#pillars">Content Pillars</a></li>
+            <li><a href="#cadence">Posting Cadence</a></li>
+            <li><a href="#hooks">Hook Library</a></li>
+            <li><a href="#templates">Templates</a></li>
+            <li><a href="#repurpose">Repurpose Engine</a></li>
+            <li><a href="#platforms">Platform Guides</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>Content Strategy Playbook</h1>
+        <p>McReynolds Real Estate — "Vets Serving Vets"</p>
+        <div class="meta">
+            <span>Sarah & Ben McReynolds </span>
+            <span>$28M+ 2024 | 150+ Military Families</span>
+            <span>Travis AFB & Beale AFB Communities</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+
+        <!-- Section 1: Client Profile & Goals -->
+        <section id="overview">
+            <h2>Executive Overview</h2>
+            <p>The McReynolds Real Estate team specializes in serving military families PCSing to and from Northern California. This playbook outlines a data-driven content strategy designed to generate 45 booked calls per month and $20,000 in monthly revenue through strategic social media presence, educational content, and military-focused messaging.</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Primary Goal</h3>
+                    <p><span class="highlight">45 booked calls per month</span> with qualified military families relocating to or from Travis AFB and Beale AFB regions.</p>
+                </div>
+                <div class="card">
+                    <h3>Monthly Revenue Target</h3>
+                    <p><span class="highlight">$20,000/month</span> through lead generation and conversion from content-qualified prospects.</p>
+                </div>
+                <div class="card">
+                    <h3>Content Capacity</h3>
+                    <p><span class="highlight">C3 High</span> — 2 hours of filming per month, weekly content sessions, robust repurposing strategy.</p>
+                </div>
+                <div class="card">
+                    <h3>Budget Allocation</h3>
+                    <p><span class="highlight">$1,000/month</span> for content production, design, and potential paid promotion on social platforms.</p>
+                </div>
+            </div>
+
+            <h3 style="font-size: 20px; font-weight: 700; margin-top: 2rem; color: var(--accent-primary);">Target Audience Profile</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Who They Are</h3>
+                    <p>Military families (Active Duty, Retired, Veterans) relocating to Northern California for PCS assignments at Travis AFB, Beale AFB, or other installations in Solano, Napa, Yolo, and Sacramento counties.</p>
+                </div>
+                <div class="card">
+                    <h3>Primary Pain Points</h3>
+                    <p><strong>Budget & Affordability:</strong> Not knowing their BAH rate, unable to calculate home affordability, confused about VA loan benefits, worried about down payment requirements.</p>
+                </div>
+                <div class="card">
+                    <h3>Objections & Barriers</h3>
+                    <p><strong>"No money, no credit, no resources."</strong> First-time homebuyers, recent veterans with thin credit, families in financial transition, uncertain about home buying readiness.</p>
+                </div>
+                <div class="card">
+                    <h3>Information Needs</h3>
+                    <p><strong>Top FAQs:</strong> How soon can I sell? Rent or buy? Best neighborhoods? Best schools? Can I afford a house? What's the process? How does a VA loan work?</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+        </section>
+
+        <!-- Section 2: Content Pillars Deep Dive -->
+        <section id="pillars">
+            <h2>Content Pillars Deep Dive</h2>
+            <p>Five strategic pillars drive all content creation. Each pillar addresses specific audience needs and supports the primary goal of lead generation and trust-building with military families.</p>
+
+            <!-- Pillar 1: Mission Ready -->
+            <div class="card">
+                <div class="percentage">35%</div>
+                <h3>Mission Ready: PCS, Military Life & Housing Allowance Mastery</h3>
+                <p>Educational content focused on military-specific relocation challenges, BAH calculations, timing strategies, and base-area integration. This pillar positions McReynolds as the expert guide for military families navigating transitions.</p>
+                
+                <h4 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--accent-primary); font-size: 14px; font-weight: 700;">Core Content Topics (10+)</h4>
+                <div class="topic-list">
+                    <div class="topic-item">
+                        <strong>What to Do 90 Days Before Your PCS</strong>
+                        <span>Timeline, pre-planning checklist, housing search strategy, contact real estate agent by Day 75</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>2026 BAH Rates for Travis AFB — What It Means for Your Mortgage</strong>
+                        <span>Current BAH breakdown, monthly payment capacity, mortgage pre-qualification, financing power analysis</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>The ULTIMATE Travis AFB Area Guide: Neighborhoods Ranked</strong>
+                        <span>Fairfield, Vacaville, Cordelia comparison, commute times, base access, family amenities</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>PCS Checklist: Everything You Need Before House Hunting</strong>
+                        <span>Documentation, military ID, LES statements, credit check, spouse SBP decisions, family preferences survey</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>Renting vs. Buying Near Travis AFB — The Math Nobody Shows You</strong>
+                        <span>Lease vs. purchase costs, BAH comparison, equity building, military discount programs</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>How to House Hunt Remotely When You're Deployed</strong>
+                        <span>Virtual tours, agent representation, family decision-making, video walkthroughs, inspection processes</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>BAH Myths That Cost Military Families Thousands</strong>
+                        <span>Myth: "BAH covers full mortgage" vs reality, local market variations, spouse income considerations, savings strategies</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>DITY Move vs. Military Move: Which Saves More?</strong>
+                        <span>Do-It-Yourself calculations, government move reimbursement, weight limits, storage considerations</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>What Happens to Your VA Loan When You PCS Again?</strong>
+                        <span>Loan assumption, refinancing, selling timing, entitlement reinstatement, rent-vs-sell decisions</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>Your First 72 Hours at Travis AFB — A Local's Survival Guide</strong>
+                        <span>Base access, inprocessing, family resources, spouse networking, newcomer orientation</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>The Hidden Costs of PCSing: What Your Orders Don't Cover</strong>
+                        <span>Closing costs for sellers, double housing during transition, storage fees, utilities setup</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>Timing Your Sale & Purchase: When to List Before You Arrive</strong>
+                        <span>Market windows, back-to-back escrows, contingency periods, TDY timing for viewings</span>
+                    </div>
+                </div>
+
+                <h4 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--accent-primary); font-size: 14px; font-weight: 700;">Hook Examples for Mission Ready</h4>
+                <div class="topic-list">
+                    <div class="topic-item">
+                        <strong>"Stop looking at Zillow if you're PCSing to Travis — here's why"</strong>
+                        <span>PROVOCATION — reveals algorithm limitations for military relocations</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>"The one thing about BAH rates nobody tells you"</strong>
+                        <span>CURIOSITY — creates intrigue about hidden financial truths</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>"After 34 years in the Air Force, here's what we learned about moving"</strong>
+                        <span>AUTHORITY — Sarah & Ben's combined military experience</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>"This colonel just received his PCS orders. Here's his 90-day action plan"</strong>
+                        <span>STORY — specific character arc with tactical steps</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>"We've helped 150+ families avoid this one PCS mistake"</strong>
+                        <span>AUTHORITY + RESULTS — credibility with social proof</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pillar 2: Know Your Market -->
+            <div class="card" style="margin-top: 1.5rem;">
+                <div class="percentage">25%</div>
+                <h3>Know Your Market: Local Insights, Neighborhoods & Market Data</h3>
+                <p>Data-driven content about Solano County neighborhoods, local market trends, school information (without opinions), and area highlights. Establishes McReynolds as the local expert while building trust with area-specific information.</p>
+                
+                <h4 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--accent-primary); font-size: 14px; font-weight: 700;">Core Content Topics (10+)</h4>
+                <div class="topic-list">
+                    <div class="topic-item">
+                        <strong>Fairfield Real Estate 2026: Market Data & Pricing Trends</strong>
+                        <span>Average days on market, price per square foot, inventory levels, buyer types, seasonal patterns</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>Vacaville vs. Fairfield: Where Should Your Family Live?</strong>
+                        <span>Commute comparison, school district info (factual only), neighborhood characteristics, cost differences</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>Top 5 Family-Friendly Neighborhoods Near Travis AFB (No Opinions)</strong>
+                        <span>Cordelia, Napa, Vallejo, school ratings (factual), parks, shopping, healthcare proximity</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>School Information for Military Families: What You Need to Know</strong>
+                        <span>School district contacts, rating systems, military student support, online resources (no personal opinions)</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>February Real Estate Market Snapshot: Solano County Trends</strong>
+                        <span>Monthly market conditions, buyer activity, seasonal factors, what to expect this season</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>The Real Cost of Living in Each Solano County City</strong>
+                        <span>Housing, utilities, taxes, groceries, transportation comparisons</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>Military Housing in the Area: On-Base vs. Off-Base Living</strong>
+                        <span>Family housing availability, BAH coverage, community life, independence trade-offs</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>What's Selling in Solano County This Month (Inventory Report)</strong>
+                        <span>Hot neighborhoods, price ranges, days on market, buyer demographics, inventory levels</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>The Napa Valley Housing Market: Should You Consider It?</strong>
+                        <span>Commute realities, price differentials, lifestyle benefits, wine country living</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>New Listings Alert: 5 Homes Perfect for Military Families This Week</strong>
+                        <span>Feature-specific homes, selling points for families, price points, contact for tours</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>2026 Property Tax Update: How It Affects Your Home Buying Power</strong>
+                        <span>Tax rate changes, proposition updates, impact on monthly costs, refinancing considerations</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>Commute Comparison: Getting to Travis AFB from Every Neighborhood</strong>
+                        <span>Drive times by location, rush hour reality, gas cost impact, quality of life considerations</span>
+                    </div>
+                </div>
+
+                <h4 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--accent-primary); font-size: 14px; font-weight: 700;">Hook Examples for Know Your Market</h4>
+                <div class="topic-list">
+                    <div class="topic-item">
+                        <strong>"Most military families move to the wrong neighborhood"</strong>
+                        <span>PROVOCATION — challenges assumptions about where they should live</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>"The real estate secret about Vacaville nobody talks about"</strong>
+                        <span>CURIOSITY — positions hidden market insight</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>"This Fairfield neighborhood sold 23 homes in January — here's why"</strong>
+                        <span>STORY — data-driven narrative about market trends</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>"Market update: What it means for your home search"</strong>
+                        <span>AUTHORITY — translates data into actionable intelligence</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>"We've lived here 8 moves. Here's what we actually think about schools"</strong>
+                        <span>STORY + AUTHORITY — personal credibility without opinions</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pillar 3: VA Home Buying 101 -->
+            <div class="card" style="margin-top: 1.5rem;">
+                <div class="percentage">20%</div>
+                <h3>VA Home Buying 101: Education, Financing & Affordability</h3>
+                <p>Deep-dive educational content on VA loans, first-time buyer processes, financing options, and affordability calculations. Positions McReynolds as the trusted expert for military-specific financing, addressing the #1 objection ("I can't afford a house") with education and proof of possibility.</p>
+                
+                <h4 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--accent-primary); font-size: 14px; font-weight: 700;">Core Content Topics (10+)</h4>
+                <div class="topic-list">
+                    <div class="topic-item">
+                        <strong>Complete VA Loan Guide: What You Actually Need to Know</strong>
+                        <span>Eligibility, funding fee, entitlement, no down payment, no PMI, interest rates, term options</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>VA Loan vs. FHA vs. Conventional: Which Is Right for You?</strong>
+                        <span>Side-by-side comparison, cost analysis, credit score requirements, timeline differences</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>First-Time Home Buyer Checklist: Military Edition</strong>
+                        <span>Pre-qualification, documentation, credit preparation, savings strategies, process timeline</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>How to Calculate Your Home Buying Power (The Real Numbers)</strong>
+                        <span>BAH + income analysis, debt-to-income ratios, payment calculators, affordability worksheets</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>The Funding Fee Breakdown: What It Is & How to Avoid It</strong>
+                        <span>Funding fee calculation, waiver eligibility, first-time vs. subsequent use, cost impact analysis</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>Pre-Qualification vs. Pre-Approval: What's the Difference?</strong>
+                        <span>Process differences, timeline, documentation, strength of offer, next steps</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>Credit Score Myths: What VA Lenders Really Care About</strong>
+                        <span>Minimum scores, credit building for new homebuyers, recent delinquencies, lender flexibility</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>Closing Costs for VA Loans: What You're Actually Paying</strong>
+                        <span>Typical costs, seller concessions, what vets can and cannot pay for, negotiation strategies</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>Down Payment Alternatives for Military Families (Even with No Savings)</strong>
+                        <span>VA zero-down, grant programs, family assistance, homebuyer assistance programs, community resources</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>Interest Rates Explained: Why Your VA Loan Rate Matters</strong>
+                        <span>Rate factors, current market rates, rate locks, points, adjustable vs. fixed terms</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>VA Home Inspection & Appraisal: What Happens & What It Costs</strong>
+                        <span>VA appraisal standards, inspection importance, common issues, repair requirements, timelines</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>Second Home Buyer? How to Use Your VA Loan Again</strong>
+                        <span>Entitlement restoration, current residency, prior home financing, new certificate of eligibility</span>
+                    </div>
+                </div>
+
+                <h4 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--accent-primary); font-size: 14px; font-weight: 700;">Hook Examples for VA Home Buying 101</h4>
+                <div class="topic-list">
+                    <div class="topic-item">
+                        <strong>"Your VA loan is more powerful than you think"</strong>
+                        <span>AUTHORITY — reveals hidden benefit or capability</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>"Stop believing this VA loan myth (it could cost you thousands)"</strong>
+                        <span>PROVOCATION — challenges common misconception with financial consequence</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>"This E-4 had no savings, bad credit, and just bought a house. Here's how"</strong>
+                        <span>STORY — relatable character overcoming objections with specific path</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>"We ran the numbers: You might be able to afford more than you think"</strong>
+                        <span>RESULTS — addresses "no money" objection with proof of possibility</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>"150+ military families went from renting to owning. Here's the first step"</strong>
+                        <span>AUTHORITY + RESULTS — social proof + actionable guidance</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pillar 4: Proof of Impact -->
+            <div class="card" style="margin-top: 1.5rem;">
+                <div class="percentage">10%</div>
+                <h3>Proof of Impact: Client Stories, Testimonials & Transaction Wins</h3>
+                <p>Real stories from successful clients, emotional impact narratives, transformation arcs, and transaction highlights. Builds trust through social proof and demonstrates McReynolds' ability to solve military family challenges. Addresses objections by showing proof of past success.</p>
+                
+                <h4 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--accent-primary); font-size: 14px; font-weight: 700;">Core Content Topics (10+)</h4>
+                <div class="topic-list">
+                    <div class="topic-item">
+                        <strong>Success Story: From Deployed to Homeowner in 30 Days</strong>
+                        <span>Client arc, timeline, challenges overcome, home details, emotional impact, results</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>Video Testimonial: E-5 Military Family on VA Loan Experience</strong>
+                        <span>Unscripted feedback, before/after perspective, recommendation message, authenticity</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>February Transaction Milestone: 12 Homes Closed This Month</strong>
+                        <span>Team stats, family counts, total volume, average timeline, satisfaction metrics</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>The "No Credit" Client Who Just Got Approved for a VA Loan</strong>
+                        <span>Objection story, creative solutions, lender relationships, closing triumph</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>Client Spotlight: Meet the Family We Helped Relocate 3 Times</strong>
+                        <span>Repeat business proof, loyalty indicator, experience accumulation, trust building</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>150+ Families Strong: Anniversary Reflection on Our Impact</strong>
+                        <span>Milestone moment, appreciation message, journey overview, future vision</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>Before & After: How One Officer Went from Hesitant to Homeowner</strong>
+                        <span>Initial concerns, education process, breakthrough moment, satisfaction outcome</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>Real Talk: What Clients Say About Working with McReynolds</strong>
+                        <span>Compilation testimonials, common praise themes, transformation highlights, authenticity</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>Vet-to-Vet: Why Military Families Trust a Military-Led Team</strong>
+                        <span>Shared experience positioning, credibility through service, cultural understanding benefits</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>Four ICON Awards: What It Means for You as a Client</strong>
+                        <span>Achievement explanation, industry recognition, performance standard, commitment proof</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>$28M in 2024: Breaking Down What That Success Means</strong>
+                        <span>Market context, family count translation, volume leadership, buyer security positioning</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>Client Letter: "Thank You for Getting Us Bought Before Deployment"</strong>
+                        <span>Emotional narrative, time pressure solution, family stability result, gratitude</span>
+                    </div>
+                </div>
+
+                <h4 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--accent-primary); font-size: 14px; font-weight: 700;">Hook Examples for Proof of Impact</h4>
+                <div class="topic-list">
+                    <div class="topic-item">
+                        <strong>"This military family went from 'we can't afford it' to homeowner"</strong>
+                        <span>RESULTS — directly addresses primary objection with proof</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>"Meet the airman who bought his first home in 30 days"</strong>
+                        <span>STORY — character-driven narrative with impressive timeline</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>"150+ families trusted us. Here's what they said"</strong>
+                        <span>AUTHORITY + SOCIAL PROOF — credibility through volume and testimony</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>"We helped a family buy before deployment. Here's their story"</strong>
+                        <span>STORY — emotional arc with military-relevant urgency</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>"From our clients' mouths: Why they chose McReynolds"</strong>
+                        <span>AUTHORITY — unfiltered testimonial credibility</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pillar 5: The McReynolds Story -->
+            <div class="card" style="margin-top: 1.5rem;">
+                <div class="percentage">10%</div>
+                <h3>The McReynolds Story: Behind-the-Scenes, Team Culture & Military Journey</h3>
+                <p>Personal brand content showing Sarah & Ben's military background, family journey, team culture, community involvement, and daily real estate life. Creates emotional connection and positions the team as relatable, experienced, and invested in the military community.</p>
+                
+                <h4 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--accent-primary); font-size: 14px; font-weight: 700;">Core Content Topics (10+)</h4>
+                <div class="topic-list">
+                    <div class="topic-item">
+                        <strong>Our Military Story: 34 Years Combined Service (& 8 PCS Moves)</strong>
+                        <span>Sarah's service, Ben's service, family journey, PCS experiences, why we do this</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>Day in the Life: What We Do Before Sunrise (Real Footage)</strong>
+                        <span>Morning routine, coffee moment, first calls, email triage, team huddle behind-the-scenes</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>The Real Reason We Started McReynolds Real Estate</strong>
+                        <span>Personal catalyst, gap identified, mission-driven origin story, evolution of business</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>Meet Our Team: The Humans Behind the Transactions</strong>
+                        <span>Individual team member profiles, their backgrounds, military connections, specialties</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>Vets Serving Vets: Our $X Cashback-at-Closing Promise Explained</strong>
+                        <span>Program details, how it works, eligibility, application process, community impact</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>Community Moment: When We Helped a Fellow Veteran Family in Crisis</strong>
+                        <span>Real story of service beyond real estate, empathy in action, team values demonstrated</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>Behind the ICON Awards: What It Takes to Win Four Years Running</strong>
+                        <span>Achievement context, effort required, team contribution, client focus, industry standing</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>Why We Don't Do This for Money (And Why It Matters)</strong>
+                        <span>Mission alignment, family-first values, long-term sustainability, legacy thinking</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>Our Military Home: How We Practice What We Preach</strong>
+                        <span>Personal home journey, neighborhood choice, school decision, community integration</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>Lessons from 8 PCS Moves: What We Learned (So You Don't Have To)</strong>
+                        <span>Mistakes made, insights gained, strategic decisions, family adjustment learnings</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>Sarah & Ben Q&A: Your Questions About Us, Answered</strong>
+                        <span>Unfiltered responses, personal details, team chemistry, authentic conversations</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>From Military to Real Estate: How Our Service Translates to Client Care</strong>
+                        <span>Leadership philosophy, accountability culture, mission execution, teamwork benefits</span>
+                    </div>
+                </div>
+
+                <h4 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--accent-primary); font-size: 14px; font-weight: 700;">Hook Examples for The McReynolds Story</h4>
+                <div class="topic-list">
+                    <div class="topic-item">
+                        <strong>"We've moved 8 times. Here's what we learned"</strong>
+                        <span>AUTHORITY — personal credential through lived experience</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>"The unexpected reason two vets became real estate agents"</strong>
+                        <span>CURIOSITY — draws attention to mission-driven origin</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>"Meet the team behind 150+ family transactions"</strong>
+                        <span>STORY — humanizes the business with team introduction</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>"We turned our military experience into a real estate empire"</strong>
+                        <span>RESULTS — frames service as foundation for success</span>
+                    </div>
+                    <div class="topic-item">
+                        <strong>"Why we offer cashback at closing (and what it says about us)"</strong>
+                        <span>AUTHORITY + VALUES — positioning differentiator rooted in mission</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+        </section>
+
+        <!-- Section 3: Weekly Posting Cadence -->
+        <section id="cadence">
+            <h2>Weekly Posting Cadence</h2>
+            <p>A systematic content calendar ensures consistent presence across platforms with strategically distributed content types. This weekly schedule maximizes algorithm performance, maintains audience engagement, and systematically advances all five content pillars. Total output: 7 primary posts per week plus stories/engagement.</p>
+
+            <h3 style="margin-bottom: 1.5rem; color: var(--text-body); font-size: 16px;">Monday through Sunday — Multi-Platform Distribution Strategy</h3>
+
+            <div class="cadence-grid">
+                <div class="day-header">Monday</div>
+                <div class="day-header">Tuesday</div>
+                <div class="day-header">Wednesday</div>
+                <div class="day-header">Thursday</div>
+                <div class="day-header">Friday</div>
+                <div class="day-header">Saturday</div>
+                <div class="day-header">Sunday</div>
+
+                <div class="day-cell">
+                    <div class="day-name">MONDAY</div>
+                    <div class="content-type"><strong>Educational Reel</strong></div>
+                    <p style="font-size: 12px; color: var(--text-body); margin: 0.5rem 0;">Quick-hit education on Mission Ready or VA 101 topics. 30-45 seconds, punchy, hooks viewers immediately.</p>
+                    <div class="platforms">
+                        <span class="platform-tag">Instagram Reels</span>
+                        <span class="platform-tag">TikTok</span>
+                    </div>
+                </div>
+
+                <div class="day-cell">
+                    <div class="day-name">TUESDAY</div>
+                    <div class="content-type"><strong>Market Update / Listing Post</strong></div>
+                    <p style="font-size: 12px; color: var(--text-body); margin: 0.5rem 0;">Real estate market snapshot or featured listing highlight. Know Your Market pillar. Carousel or carousel + caption.</p>
+                    <div class="platforms">
+                        <span class="platform-tag">Instagram Feed</span>
+                        <span class="platform-tag">Facebook</span>
+                    </div>
+                </div>
+
+                <div class="day-cell">
+                    <div class="day-name">WEDNESDAY</div>
+                    <div class="content-type"><strong>YouTube Long-Form + Shorts</strong></div>
+                    <p style="font-size: 12px; color: var(--text-body); margin: 0.5rem 0;">Primary filming day output. 10-15min long-form, cut into 3-4 YouTube Shorts, repurposed to other platforms.</p>
+                    <div class="platforms">
+                        <span class="platform-tag">YouTube (Primary)</span>
+                        <span class="platform-tag">YouTube Shorts</span>
+                        <span class="platform-tag">Shorts Everywhere</span>
+                    </div>
+                </div>
+
+                <div class="day-cell">
+                    <div class="day-name">THURSDAY</div>
+                    <div class="content-type"><strong>Story Post / Testimonial</strong></div>
+                    <p style="font-size: 12px; color: var(--text-body); margin: 0.5rem 0;">Client success story, transformation narrative, or Proof of Impact content. 60-90 seconds, emotional arc.</p>
+                    <div class="platforms">
+                        <span class="platform-tag">Instagram Reels</span>
+                        <span class="platform-tag">TikTok</span>
+                    </div>
+                </div>
+
+                <div class="day-cell">
+                    <div class="day-name">FRIDAY</div>
+                    <div class="content-type"><strong>Engagement Post</strong></div>
+                    <p style="font-size: 12px; color: var(--text-body); margin: 0.5rem 0;">Poll, quiz, myth-buster, or question post. Drives comments, shares, saves. High algorithm value.</p>
+                    <div class="platforms">
+                        <span class="platform-tag">Instagram Feed</span>
+                        <span class="platform-tag">Facebook</span>
+                    </div>
+                </div>
+
+                <div class="day-cell">
+                    <div class="day-name">SATURDAY</div>
+                    <div class="content-type"><strong>Local Spotlight</strong></div>
+                    <p style="font-size: 12px; color: var(--text-body); margin: 0.5rem 0;">Neighborhood feature, local business highlight, community event. Know Your Market pillar, lifestyle content.</p>
+                    <div class="platforms">
+                        <span class="platform-tag">Instagram Feed</span>
+                    </div>
+                </div>
+
+                <div class="day-cell">
+                    <div class="day-name">SUNDAY</div>
+                    <div class="content-type"><strong>Planning & Batch Prep</strong></div>
+                    <p style="font-size: 12px; color: var(--text-body); margin: 0.5rem 0;">No posting day. Batch create captions, prepare next week's content, plan stories, respond to week's messages.</p>
+                    <div class="platforms">
+                        <span class="platform-tag">Internal Planning</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: var(--text-body); font-size: 16px;">Story Strategy (Daily, Throughout Week)</h3>
+            <div class="card">
+                <p><strong>Instagram & TikTok Stories:</strong> 2-3 daily stories showcasing behind-the-scenes, team moments, client features, polls, questions, and swipe-ups to website. Stories are ephemeral but high-engagement, driving daily active user connection. Use story stickers (polls, questions, sliders) to encourage interaction.</p>
+                <p style="margin-top: 1rem;"><strong>Content Focus:</strong> Behind-the-scenes of team activities, individual team member spotlights, office culture, industry moments, celebration announcements, timely tips, client feature highlights.</p>
+            </div>
+
+            <div class="divider"></div>
+        </section>
+
+        <!-- Section 4: Hook Formula Library -->
+        <section id="hooks">
+            <h2>Hook Formula Library</h2>
+            <p>The first 3 seconds determine if your video is watched. These formulas create immediate curiosity, authority, provocation, or emotional connection. Use these templates for captions, video intros, and thumbnail copy.</p>
+
+            <table class="hook-table">
+                <thead>
+                    <tr>
+                        <th>Hook Type</th>
+                        <th>Formula Template</th>
+                        <th>McReynolds Example</th>
+                        <th>Best For</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="hook-type">PROVOCATION</td>
+                        <td class="formula">"Stop [common action] if you [audience qualifier]"</td>
+                        <td>"Stop looking at Zillow if you're PCSing to Travis — here's why"</td>
+                        <td>Reels, TikTok, educational content challenging beliefs</td>
+                    </tr>
+                    <tr>
+                        <td class="hook-type">CURIOSITY</td>
+                        <td class="formula">"The one thing about [topic] nobody tells you"</td>
+                        <td>"The one thing about BAH rates nobody tells you about Northern California"</td>
+                        <td>Shorts, educational videos, mystery-building content</td>
+                    </tr>
+                    <tr>
+                        <td class="hook-type">AUTHORITY</td>
+                        <td class="formula">"We've helped [number] [audience] [result]"</td>
+                        <td>"We've helped 150+ military families find homes near Travis — here's our #1 tip"</td>
+                        <td>Testimonials, tips, educational, lead generation</td>
+                    </tr>
+                    <tr>
+                        <td class="hook-type">STORY</td>
+                        <td class="formula">"When [character] [situation], we learned..."</td>
+                        <td>"When this E-5's deployment orders arrived, we had 30 days to get him into a home"</td>
+                        <td>Client stories, testimonials, narrative-driven content</td>
+                    </tr>
+                    <tr>
+                        <td class="hook-type">RESULTS</td>
+                        <td class="formula">"[Client] went from [before] to [after]"</td>
+                        <td>"This airman went from deployed to homeowner in 30 days"</td>
+                        <td>Testimonials, success stories, proof of impact</td>
+                    </tr>
+                    <tr>
+                        <td class="hook-type">PERSONAL</td>
+                        <td class="formula">"I made a mistake when PCSing. Here's what I learned"</td>
+                        <td>"I made a mistake during our 3rd PCS. Here's what we learned (so you don't have to)"</td>
+                        <td>Behind-the-scenes, personal brand, relatability</td>
+                    </tr>
+                    <tr>
+                        <td class="hook-type">MYTH-BUST</td>
+                        <td class="formula">"You've been told [myth]. Here's the truth"</td>
+                        <td>"You've been told you need 20% down. Here's why that's false for VA loans"</td>
+                        <td>Educational reels, correction content, authority building</td>
+                    </tr>
+                    <tr>
+                        <td class="hook-type">QUESTION</td>
+                        <td class="formula">"How would you [situation]? [Most people answer wrong]"</td>
+                        <td>"How would you house hunt if you were deployed right now? Most military families answer this wrong"</td>
+                        <td>Engagement hooks, polls, community posts</td>
+                    </tr>
+                    <tr>
+                        <td class="hook-type">STAT-BASED</td>
+                        <td class="formula">"[Surprising number] of military families [outcome]"</td>
+                        <td>"23 homes sold in Vacaville in January. Here's why that matters"</td>
+                        <td>Market updates, data-driven content, authority positioning</td>
+                    </tr>
+                    <tr>
+                        <td class="hook-type">URGENCY</td>
+                        <td class="formula">"If you're [audience qualifier], this matters [timeframe]"</td>
+                        <td>"If you're PCSing within 90 days, this matters NOW"</td>
+                        <td>Action-oriented content, lead generation, CTA posts</td>
+                    </tr>
+                    <tr>
+                        <td class="hook-type">CONTRAST</td>
+                        <td class="formula">"Most people think [common belief]. We think [opposite]"</td>
+                        <td>"Most people think you should buy in the cheapest neighborhood. We think location beats price"</td>
+                        <td>Opinion content, market takes, positioning</td>
+                    </tr>
+                    <tr>
+                        <td class="hook-type">OBJECTION-FLIP</td>
+                        <td class="formula">"You think [objection]. Actually, [truth]"</td>
+                        <td>"You think 'I have no credit.' Actually, a VA loan is your secret weapon"</td>
+                        <td>Objection handling, lead generation, confidence building</td>
+                    </tr>
+                    <tr>
+                        <td class="hook-type">VISUAL SHOCK</td>
+                        <td class="formula">"This [asset class/number/change] just happened"</td>
+                        <td>"This Fairfield home just sold for $50K over asking — here's why"</td>
+                        <td>Real estate wins, market moments, listing highlights</td>
+                    </tr>
+                    <tr>
+                        <td class="hook-type">IDENTITY</td>
+                        <td class="formula">"If you [identity qualifier], you need to know this"</td>
+                        <td>"If you're a military family PCSing, you need to know this about BAH"</td>
+                        <td>Targeted content, military-specific education, community building</td>
+                    </tr>
+                    <tr>
+                        <td class="hook-type">TIMELINE</td>
+                        <td class="formula">"[Character] did [X] in [timeframe]"</td>
+                        <td>"This officer went from deployed to homeowner in 30 days"</td>
+                        <td>Success stories, proof of possibility, testimonials</td>
+                    </tr>
+                    <tr>
+                        <td class="hook-type">COMPARISON</td>
+                        <td class="formula">"Renting: [cost]. Buying: [cost]. The difference [result]"</td>
+                        <td>"Renting in Fairfield: $2,000/month. Buying: $1,800/month with equity. The difference: $30K in 5 years"</td>
+                        <td>Educational content, decision-making guides, market analysis</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: var(--text-body); font-size: 16px;">Advanced Hook Combinations</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Provocation + Curiosity</h3>
+                    <p>"Stop believing this about PCS moves (it's costing you thousands)"</p>
+                    <p style="font-size: 12px; color: var(--text-muted); margin-top: 0.5rem;">Combines challenge with mystery for maximum engagement</p>
+                </div>
+                <div class="card">
+                    <h3>Authority + Objection-Flip</h3>
+                    <p>"You think you can't afford a house. We've proven 150+ families wrong"</p>
+                    <p style="font-size: 12px; color: var(--text-muted); margin-top: 0.5rem;">Builds credibility while directly addressing fear</p>
+                </div>
+                <div class="card">
+                    <h3>Story + Urgency</h3>
+                    <p>"When this airman got deployed, we had 30 days. Here's what we did"</p>
+                    <p style="font-size: 12px; color: var(--text-muted); margin-top: 0.5rem;">Character-driven with time-sensitive relevance</p>
+                </div>
+                <div class="card">
+                    <h3>Stat-Based + Myth-Bust</h3>
+                    <p>"23 homes sold in 30 days (and why your Zillow estimate is wrong)"</p>
+                    <p style="font-size: 12px; color: var(--text-muted); margin-top: 0.5rem;">Data credibility + challenge to audience belief</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+        </section>
+
+        <!-- Section 5: Caption Templates -->
+        <section id="templates">
+            <h2>Caption Templates</h2>
+            <p>Pre-written templates for each content type, with highlighted placeholders for quick customization. Copy-paste ready, mission-aligned, and proven to drive engagement and CTAs.</p>
+
+            <!-- Template 1 -->
+            <div class="template-card">
+                <h4>Educational Post Template</h4>
+                <div class="template-content">
+<strong>[HOOK - Use library above]</strong><br><br>
+
+Here's what you need to know about <span class="placeholder">[TOPIC]</span>:<br><br>
+
+<span class="placeholder">[POINT 1]</span><br>
+→ Why it matters: <span class="placeholder">[BENEFIT/CONSEQUENCE]</span><br><br>
+
+<span class="placeholder">[POINT 2]</span><br>
+→ Why it matters: <span class="placeholder">[BENEFIT/CONSEQUENCE]</span><br><br>
+
+<span class="placeholder">[POINT 3]</span><br>
+→ Why it matters: <span class="placeholder">[BENEFIT/CONSEQUENCE]</span><br><br>
+
+Bottom line: <span class="placeholder">[ONE-SENTENCE SUMMARY]</span><br><br>
+
+Questions? Drop them in the comments. 👇 We're here to help military families like yours understand the real numbers.<br><br>
+
+#TravisAFB #PCSMove #VALoan #MilitaryFamily #RealEstateEducation
+                </div>
+            </div>
+
+            <!-- Template 2 -->
+            <div class="template-card">
+                <h4>Client Story / Testimonial Template</h4>
+                <div class="template-content">
+Meet <span class="placeholder">[CLIENT NAME/RANK]</span>.<br><br>
+
+Situation: <span class="placeholder">[THEIR CHALLENGE - deployed, no credit, tight timeline, etc.]</span><br>
+Objection: <span class="placeholder">[WHAT THEY THOUGHT WAS IMPOSSIBLE]</span><br>
+Timeline: <span class="placeholder">[HOW FAST WE WORKED]</span><br>
+Result: <span class="placeholder">[OUTCOME - HOMEOWNER, TIMELINE, EMOTION]</span><br><br>
+
+"<span class="placeholder">[DIRECT QUOTE FROM CLIENT]</span>"<br><br>
+
+This is why we do this. Military families deserve to have a home. We're here to make it happen, even when the odds look tough.<br><br>
+
+Your story could be next. DM us to start the conversation. 🔑<br><br>
+
+#ProofOfImpact #MilitaryFamily #VeteransServeVets #HomeownerStory #TravisAFB
+                </div>
+            </div>
+
+            <!-- Template 3 -->
+            <div class="template-card">
+                <h4>Market Update / Data Template</h4>
+                <div class="template-content">
+<strong>Market Snapshot: <span class="placeholder">[MONTH/AREA]</span></strong><br><br>
+
+Here's what happened in real estate this week:<br><br>
+
+<span class="placeholder">[NEIGHBORHOOD/CITY NAME]</span><br>
+📊 Average price: $<span class="placeholder">[NUMBER]</span><br>
+⏱️ Days on market: <span class="placeholder">[DAYS]</span><br>
+📈 Trend: <span class="placeholder">[UP/DOWN/STABLE]</span><br><br>
+
+<span class="placeholder">[NEIGHBORHOOD/CITY NAME]</span><br>
+📊 Average price: $<span class="placeholder">[NUMBER]</span><br>
+⏱️ Days on market: <span class="placeholder">[DAYS]</span><br>
+📈 Trend: <span class="placeholder">[UP/DOWN/STABLE]</span><br><br>
+
+What this means for YOU:<br>
+→ <span class="placeholder">[INSIGHT 1]</span><br>
+→ <span class="placeholder">[INSIGHT 2]</span><br><br>
+
+In <span class="placeholder">[INVENTORY TYPE]</span> market, <span class="placeholder">[STRATEGIC ACTION]</span><br><br>
+
+Ready to understand your options? Let's talk. Comment "MARKET" below or DM us. 💜<br><br>
+
+#RealEstateMarket #SolanoCounty #TravisAFB #MilitaryRealEstate #MarketTrends
+                </div>
+            </div>
+
+            <!-- Template 4 -->
+            <div class="template-card">
+                <h4>Engagement / Question Post Template</h4>
+                <div class="template-content">
+Quick question for the military family community: 👇<br><br>
+
+<span class="placeholder">[THE QUESTION - POLL STYLE OR OPEN-ENDED]</span><br><br>
+
+We ask because <span class="placeholder">[WHY THIS MATTERS/CONTEXT]</span>.<br><br>
+
+Drop your answer in the comments. We read every single one and might feature your story next week. 🙌<br><br>
+
+And if you want the full breakdown on <span class="placeholder">[RELATED TOPIC]</span>, check out <span class="placeholder">[PREVIOUS POST/VIDEO]</span> in our feed.<br><br>
+
+#TravisAFB #MilitaryFamily #AskUs #RealEstateQuestionsAnswered
+                </div>
+            </div>
+
+            <!-- Template 5 -->
+            <div class="template-card">
+                <h4>Promotional / CTA Template</h4>
+                <div class="template-content">
+<strong>Before Your PCS Move, You Need This 📋</strong><br><br>
+
+If you're getting orders to Travis AFB, Beale AFB, or anywhere in Northern California, save this post. Here's the <span class="placeholder">[RESOURCE TYPE - checklist, guide, calculator, etc.]</span> we give every military family who comes through our door:<br><br>
+
+✅ <span class="placeholder">[ITEM 1]</span><br>
+✅ <span class="placeholder">[ITEM 2]</span><br>
+✅ <span class="placeholder">[ITEM 3]</span><br>
+✅ <span class="placeholder">[ITEM 4]</span><br><br>
+
+<span class="placeholder">[OFFER - Free download, PDF, phone call, etc.]</span><br><br>
+
+DM "READY" or click the link in bio. No pressure. Just resources to make your move smoother. 🙏<br><br>
+
+Vets serving vets. That's what we do.<br><br>
+
+#MilitaryFamily #PCSMove #VeteransServeVets #TravisAFB #FreeResources
+                </div>
+            </div>
+
+            <div class="divider"></div>
+        </section>
+
+        <!-- Section 6: Repurpose Engine -->
+        <section id="repurpose">
+            <h2>Repurpose Engine: 1 Hour of Filming = 20+ Content Pieces</h2>
+            <p>McReynolds films 2 hours per month (approximately 4 hours annually when distributed). Each session produces 20+ pieces of usable content through systematic repurposing. This multiplies content ROI and maintains consistent posting without constant filming.</p>
+
+            <div class="repurpose-flow">
+                <h4 style="margin-bottom: 1.5rem; color: var(--accent-primary);">Step-by-Step Repurposing Flow</h4>
+
+                <div class="flow-step">
+                    <div class="step-box">1. Film 15-Minute Master Video</div>
+                    <div class="step-arrow">→</div>
+                    <div class="step-output">Primary long-form content covering one deep topic (e.g., "Complete VA Loan Guide")</div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="step-box">2. Cut Into 3-4 YouTube Shorts</div>
+                    <div class="step-arrow">→</div>
+                    <div class="step-output">9:16 vertical, 30-60 seconds each, with hooks, captions, graphics</div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="step-box">3. Repurpose to Instagram Reels</div>
+                    <div class="step-arrow">→</div>
+                    <div class="step-output">Same as YouTube Shorts, native upload for Instagram algorithm boost</div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="step-box">4. Repurpose to TikTok</div>
+                    <div class="step-arrow">→</div>
+                    <div class="step-output">Same video, TikTok-specific captions with trending sounds, hashtags, FYP optimization</div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="step-box">5. Extract Key Moments into Stories</div>
+                    <div class="step-arrow">→</div>
+                    <div class="step-output">5-7 ephemeral stories pulled from the longer video, teasers, highlights, quote graphics</div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="step-box">6. Create Static Carousel Post</div>
+                    <div class="step-arrow">→</div>
+                    <div class="step-output">5-7 slide carousel with key takeaways, graphics, text overlays, educational break-down</div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="step-box">7. Transcribe & Blog Post</div>
+                    <div class="step-arrow">→</div>
+                    <div class="step-output">300-500 word blog article with SEO optimization, internal links, CTA</div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="step-box">8. Extract Quote Graphics</div>
+                    <div class="step-arrow">→</div>
+                    <div class="step-output">5-8 quote graphics from video transcript, shareable, branded, story-ready</div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: var(--text-body); font-size: 16px;">Repurposing Math</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>1 Master Video</h3>
+                    <p>15 minutes of filming covering one comprehensive topic (e.g., "Complete VA Loan Process")</p>
+                </div>
+                <div class="card">
+                    <h3>Becomes 3-4 YouTube Shorts</h3>
+                    <p>30-60 second cuts targeting specific aspects of the topic for platform-specific audiences</p>
+                </div>
+                <div class="card">
+                    <h3>3-4 Instagram Reels</h3>
+                    <p>Identical to YouTube Shorts for cross-platform strategy and algorithm favor</p>
+                </div>
+                <div class="card">
+                    <h3>3-4 TikToks</h3>
+                    <p>Optimized for TikTok trends, sounds, and FYP algorithm with platform-specific captions</p>
+                </div>
+                <div class="card">
+                    <h3>5-7 Instagram Stories</h3>
+                    <p>Key moments, quote graphics, behind-the-scenes pulls throughout the week</p>
+                </div>
+                <div class="card">
+                    <h3>1 Static Carousel</h3>
+                    <p>Educational breakdown in 5-7 slides for feed presence and text-based learners</p>
+                </div>
+                <div class="card">
+                    <h3>1 Blog Post</h3>
+                    <p>300-500 word transcription with SEO, internal links, CTA, and searchability</p>
+                </div>
+                <div class="card">
+                    <h3>5-8 Quote Graphics</h3>
+                    <p>Branded quote images for story sharing, Pinterest, and repeated social distribution</p>
+                </div>
+            </div>
+
+            <h4 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--accent-primary); font-size: 14px; font-weight: 700;">Monthly Output Formula</h4>
+            <div class="card">
+                <p><strong>2 Hours of Filming Per Month:</strong></p>
+                <p style="margin-top: 0.75rem;">2 hours = ~120 minutes = 8 master videos (15 minutes each)</p>
+                <p style="margin-top: 0.5rem;">8 master videos × 20 pieces per video = <span class="highlight">160+ content pieces per month</span></p>
+                <p style="margin-top: 0.5rem;"><strong>Distribution:</strong> 32+ Reels/TikToks, 8+ carousel posts, 8+ blog articles, 40+ quote graphics, 35+ story sets, plus captions and variations.</p>
+                <p style="margin-top: 1rem; color: var(--text-muted); font-size: 13px;">Result: Consistent daily content without daily filming burden. One production day feeds the entire month of distribution.</p>
+            </div>
+
+            <div class="divider"></div>
+        </section>
+
+        <!-- Section 7: Platform-Specific Guides -->
+        <section id="platforms">
+            <h2>Platform-Specific Guides</h2>
+            <p>Each platform operates differently algorithmically, culturally, and functionally. These guides optimize McReynolds' presence on each major platform with specific tactics, specs, and best practices.</p>
+
+            <div class="platform-guide">
+
+                <!-- Instagram -->
+                <div class="platform-card">
+                    <h4><span class="platform-icon">📷</span> Instagram</h4>
+                    
+                    <div class="platform-specs">
+                        <strong>Audience Profile:</strong>
+                        <div class="spec-item">929 followers (@travisafb_homefinder), primarily military families, spouses, military community</div>
+                        <strong>Primary Content:</strong>
+                        <div class="spec-item">Reels (60%), Feed posts (25%), Stories (daily)</div>
+                    </div>
+
+                    <div class="platform-specs">
+                        <strong>Video Specs:</strong>
+                        <div class="spec-item">Reels: 9:16 vertical, 15-60 seconds, maximum 180MB</div>
+                        <div class="spec-item">Feed: 1:1 (square) or 4:5 (vertical), minimum 1080x1350px</div>
+                        <div class="spec-item">Stories: 1080x1920px, maximum 15 seconds per story</div>
+                    </div>
+
+                    <div class="platform-specs">
+                        <strong>Upload Schedule:</strong>
+                        <div class="spec-item">Reels: 4x per week (Mon, Wed, Thu, Fri)</div>
+                        <div class="spec-item">Feed: 3x per week (Tue, Fri, Sat)</div>
+                        <div class="spec-item">Stories: 2-3x daily throughout the week</div>
+                    </div>
+
+                    <h4 style="margin-top: 1rem; color: var(--accent-primary); font-size: 14px; font-weight: 700;">Best Practices</h4>
+                    <ul class="best-practices">
+                        <li><strong>Hook in first 1 second:</strong> Use text overlay, pattern interrupt, or bold movement. Algorithm counts early stops.</li>
+                        <li><strong>Maximize Reels:</strong> Instagram's algorithm heavily favors short-form video. 60% of content should be Reels.</li>
+                        <li><strong>Use captions on all videos:</strong> 80% of users watch without sound. Burned-in captions improve retention.</li>
+                        <li><strong>Call-to-action in every post:</strong> "Save this," "Share," "Comment your answer," "DM us," or "Click the link in bio."</li>
+                        <li><strong>Story stickers:</strong> Use polls, questions, sliders, and countdown stickers daily. High engagement = algorithm favor.</li>
+                        <li><strong>Hashtag strategy:</strong> 25-30 hashtags per post. Mix 5-10 high-volume (#realestate, #travisafb) with 15-20 niche (#travisafbhousing).</li>
+                        <li><strong>Optimal posting times:</strong> 7-8 AM, 12-1 PM, 6-7 PM. Military families check social during breaks.</li>
+                        <li><strong>Engagement within 1 hour:</strong> Respond to comments immediately (first hour is critical for algorithm). Reply to 30-50 comments per post.</li>
+                        <li><strong>Stories linking:</strong> Use link stickers in Stories to drive to website or lead capture pages (swipe-ups not available unless 10K+ followers, so use sticker strategy).</li>
+                        <li><strong>Collaborate with military influencers:</strong> Partner with base-adjacent creators for Reel duets, stitches, and cross-promotion.</li>
+                    </ul>
+
+                    <div class="platform-specs" style="margin-top: 1rem;">
+                        <strong>Hashtag Strategy (Sample Set):</strong>
+                        <div class="spec-item">High Volume: #RealEstate #TravisAFB #MilitaryFamily #PCSMove #VeteransServeVets</div>
+                        <div class="spec-item">Mid Volume: #TravisAFBHousing #BealeAFB #VACalifornia #MilitaryRealEstate #HomeBuying</div>
+                        <div class="spec-item">Niche: #SolanoCountyRealEstate #FairfieldCA #VacavilleCA #MilitaryVeterans #AirForceFamily</div>
+                    </div>
+                </div>
+
+                <!-- YouTube -->
+                <div class="platform-card">
+                    <h4><span class="platform-icon">▶️</span> YouTube</h4>
+                    
+                    <div class="platform-specs">
+                        <strong>Channel Profile:</strong>
+                        <div class="spec-item">@pcscalifornia channel (existing), growth potential for "real estate + military + PCS" niche</div>
+                        <strong>Content Strategy:</strong>
+                        <div class="spec-item">Long-form education (primary), Shorts (secondary), playlist organization</div>
+                    </div>
+
+                    <div class="platform-specs">
+                        <strong>Video Specs:</strong>
+                        <div class="spec-item">Long-form: 10-15 minutes, 1920x1080px (16:9), H.264 codec, MP4 format, under 256GB file size</div>
+                        <div class="spec-item">Shorts: 9:16 vertical, 15-60 seconds, minimum 1080x1920px</div>
+                        <div class="spec-item">Thumbnails: 1280x720px, under 2MB, high contrast, readable at small size</div>
+                    </div>
+
+                    <div class="platform-specs">
+                        <strong>Upload Schedule:</strong>
+                        <div class="spec-item">Long-form: 1x per week (Wednesday, primary production day)</div>
+                        <div class="spec-item">Shorts: 3-4x per week, pulled from long-form content</div>
+                    </div>
+
+                    <h4 style="margin-top: 1rem; color: var(--accent-primary); font-size: 14px; font-weight: 700;">Best Practices</h4>
+                    <ul class="best-practices">
+                        <li><strong>SEO Title (60 characters max):</strong> Front-load with keyword. Example: "VA Loan Guide for Travis AFB Military Families 2026"</li>
+                        <li><strong>Description (2000 character limit):</strong> First 100 characters visible before "more." Hook viewers. Include keywords naturally. Add timestamps, links, and chapter markers.</li>
+                        <li><strong>Keywords & Tags:</strong> Primary keyword in title, description first sentence. Add 10-15 tags, mix high and low competition. Use YouTube autocomplete for tag ideas.</li>
+                        <li><strong>Thumbnails matter:</strong> Create custom thumbnails for every video. Use contrasting colors (teal + white), text overlay with emotion, face if featured. Test A/B thumbnails.</li>
+                        <li><strong>First 10 seconds critical:</strong> Hook immediately with question, story setup, or bold statement. Average viewer decides within 10 seconds whether to continue.</li>
+                        <li><strong>Chapters & Timestamps:</strong> Add chapter markers (0:00 Intro, 1:23 First Topic, etc.). Improves user experience and time-on-page metrics.</li>
+                        <li><strong>Captions/Subtitles:</strong> Auto-captions work, but manually edit for accuracy (military terms, names, jargon). Improves accessibility and engagement.</li>
+                        <li><strong>Cards & End Screens:</strong> Add cards promoting other videos at 50%, 75%, 100% through video. Use end screen to promote playlist or channel subscription.</li>
+                        <li><strong>Playlist organization:</strong> Create playlists by content pillar (Mission Ready, VA Loans, Market Updates, Stories). Improves binge-watch and session duration.</li>
+                        <li><strong>Shorts strategy:</strong> Extract 30-60 second clips from long-form videos, add captions, hooks. Promote long-form video in description for click-through.</li>
+                        <li><strong>Optimal upload day/time:</strong> Tuesday-Thursday, 2-4 PM PST (when military families are active). YouTube rewards consistency and timeliness.</li>
+                        <li><strong>Community engagement:</strong> Respond to comments within 24 hours. Pin top comments. Post community posts (polls, behind-the-scenes) to keep audience active between videos.</li>
+                    </ul>
+
+                    <div class="platform-specs" style="margin-top: 1rem;">
+                        <strong>Title Formula:</strong>
+                        <div class="spec-item">[Keyword] + [Audience] + [Benefit/Urgency]</div>
+                        <div class="spec-item">Example: "VA Loan Approval in 30 Days: Complete Military Home Buying Guide 2026"</div>
+                    </div>
+                </div>
+
+                <!-- TikTok -->
+                <div class="platform-card">
+                    <h4><span class="platform-icon">🎵</span> TikTok</h4>
+                    
+                    <div class="platform-specs">
+                        <strong>Channel Profile:</strong>
+                        <div class="spec-item">@travisafb_homefinder, younger military demographic (Gen Z to Millennial), short-form preference</div>
+                        <strong>Content Strategy:</strong>
+                        <div class="spec-item">Repurposed Reels, trend-following, viral positioning, entertainment + education balance</div>
+                    </div>
+
+                    <div class="platform-specs">
+                        <strong>Video Specs:</strong>
+                        <div class="spec-item">Vertical 9:16, 15-60 seconds optimal (algorithm favors 20-35 second range), 1080x1920px minimum, MP4 format</div>
+                        <div class="spec-item">File size: Under 287.6 MB. Frame rate: 24-60 fps. Aspect ratio strictly 9:16.</div>
+                    </div>
+
+                    <div class="platform-specs">
+                        <strong>Upload Schedule:</strong>
+                        <div class="spec-item">4-5x per week, optimal times: 6-9 AM, 12-1 PM, 7-11 PM (when military families scroll)</div>
+                        <div class="spec-item">Post at different times throughout week to test audience activity patterns.</div>
+                    </div>
+
+                    <h4 style="margin-top: 1rem; color: var(--accent-primary); font-size: 14px; font-weight: 700;">Best Practices</h4>
+                    <ul class="best-practices">
+                        <li><strong>Hook in first 3 frames:</strong> TikTok algorithm measures if users immediately skip. Visual shock, question, or bold text overlay critical.</li>
+                        <li><strong>Trending sounds & music:</strong> Use trending audio (even if off-topic) to boost discoverability. TikTok algorithm prioritizes audio trends. Brands + trending sounds = viral potential.</li>
+                        <li><strong>Hashtag strategy:</strong> 3-5 hashtags maximum. Mix trending (#PCS, #MilitaryFamily) with evergreen (#TravisAFB, #VALoan). Avoid hashtag stuffing.</li>
+                        <li><strong>Captions on screen:</strong> 80% watch muted. Burned-in text hooks viewers immediately. Use bold fonts, color contrast.</li>
+                        <li><strong>Duet & Stitch strategy:</strong> Engage with military creators by stitching their content or duetting with trends. Increases visibility and community.</li>
+                        <li><strong>FYP (For You Page) optimization:</strong> Completion rate = algorithm priority. Target 20-35 second videos for optimal watch time before swipe.</li>
+                        <li><strong>Call-to-action varies:</strong> "Follow for more," "Comment below," "DM us," "Link in bio" — test different CTAs weekly to measure engagement types.</li>
+                        <li><strong>Consistency over virality:</strong> Post 4-5x weekly. Algorithm favors consistent creators more than sporadic viral attempts. Build audience organically.</li>
+                        <li><strong>Engage with military community:</strong> Follow other military TikTokers, comment genuinely, collaborate on content. TikTok community drives growth more than ads.</li>
+                        <li><strong>Avoid overly polished look:</strong> TikTok audience prefers authentic, slightly rough content over perfect production. Behind-the-scenes beats overly edited.</li>
+                        <li><strong>Video format variety:</strong> Mix talking head, on-location, team moments, graphics, polls. Variety keeps audience engaged and prevents algorithm fatigue.</li>
+                        <li><strong>Cross-post strategy:</strong> Reels → TikTok with native caption re-optimization. Saves production time but customize for TikTok trends weekly.</li>
+                    </ul>
+
+                    <div class="platform-specs" style="margin-top: 1rem;">
+                        <strong>Caption Strategy:</strong>
+                        <div class="spec-item">Hook + Trend relation + Value prop + CTA. Example: "POV: You didn't know this about BAH rates (game changer 🔑) | #TravisAFB #MilitaryFamily"</div>
+                    </div>
+                </div>
+
+                <!-- Facebook -->
+                <div class="platform-card">
+                    <h4><span class="platform-icon">f</span> Facebook</h4>
+                    
+                    <div class="platform-specs">
+                        <strong>Presence Strategy:</strong>
+                        <div class="spec-item">facebook.com/travisafbhomefinder — Primary for older military demographic (milspouses, mid-career families)</div>
+                        <strong>Content Focus:</strong>
+                        <div class="spec-item">Community building, longer-form education, group engagement, marketplace integration</div>
+                    </div>
+
+                    <div class="platform-specs">
+                        <strong>Content Distribution:</strong>
+                        <div class="spec-item">Business Page posts: 3x per week (Tue, Fri, Sat — market updates, engagement, stories)</div>
+                        <div class="spec-item">Community Group (if applicable): Daily engagement, answering questions, resource sharing</div>
+                        <div class="spec-item">Facebook Marketplace: List new properties weekly with military-family-friendly descriptions</div>
+                    </div>
+
+                    <div class="platform-specs">
+                        <strong>Video Specs (if using):</strong>
+                        <div class="spec-item">Native upload: 1200x628px minimum (link preview), or 1080x1920px (feed native video), auto-plays in feed</div>
+                    </div>
+
+                    <h4 style="margin-top: 1rem; color: var(--accent-primary); font-size: 14px; font-weight: 700;">Best Practices</h4>
+                    <ul class="best-practices">
+                        <li><strong>Create Facebook Community Group:</strong> "Travis AFB Military Home Buyers" group for intimate community, Q&A, networking, exclusive tips. Groups drive loyalty and repeat engagement.</li>
+                        <li><strong>Post captions long-form:</strong> Facebook audience reads longer captions than Instagram. Use full paragraph format with line breaks for readability.</li>
+                        <li><strong>Facebook Marketplace optimization:</strong> List every property with military-family focus. "Perfect for BAH," "Walk to base," "Great for families with kids."</li>
+                        <li><strong>Use Facebook Ads strategically:</strong> Promote lead-generation ads to military audiences. Target "Military + Interested in Real Estate + Travis AFB."</li>
+                        <li><strong>Stories on Facebook:</strong> Less competitive algorithm. Stories perform better for brand awareness on Facebook than Instagram Stories.</li>
+                        <li><strong>Comment engagement:</strong> Facebook algorithm rewards comment density more than Instagram. Aim for 50+ comments per post (ask questions, create engagement).</li>
+                        <li><strong>Live videos:</strong> Go live monthly for Q&A, market updates, or team introductions. Live videos get 5x more reach on Facebook.</li>
+                        <li><strong>Pinned post strategy:</strong> Pin most recent CTA (lead magnet, consultation offer) to ensure prominence. Refresh monthly.</li>
+                        <li><strong>Conversion tracking:</strong> Install Facebook Pixel on website to track leads and sales from Facebook campaigns. Retarget engaged users.</li>
+                        <li><strong>Community moderation:</strong> Active group requires moderation. Remove spam, answer questions quickly, maintain professional tone. Bad moderation kills group growth.</li>
+                    </ul>
+
+                    <div class="platform-specs" style="margin-top: 1rem;">
+                        <strong>Recommended Facebook Group Rules:</strong>
+                        <div class="spec-item">✓ Positive, respectful community — no drama, no politics beyond base policy</div>
+                        <div class="spec-item">✓ Questions about military life, real estate, PCS logistics encouraged</div>
+                        <div class="spec-item">✓ Share resources, recommendations, personal experiences</div>
+                        <div class="spec-item">✗ No spam, sales pitches, or self-promotion outside established channels</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="divider"></div>
+        </section>
+
+        <!-- Section 8: Content Calendar Overview -->
+        <section id="calendar">
+            <h2>Next Steps & Implementation</h2>
+            <p>This playbook provides the strategic framework and tactical templates. Implementation requires consistent execution, team alignment, and weekly batch production sessions. Below is the implementation roadmap.</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Week 1: Setup & Batching</h3>
+                    <p>Finalize content themes for Month 1. Schedule 2-hour filming session. Create caption templates in shared doc. Brief team on brand tone and hook formulas.</p>
+                </div>
+                <div class="card">
+                    <h3>Week 2-4: First Month Batch</h3>
+                    <p>Execute first filming session. Repurpose into 4 weeks of content. Populate content calendar. Begin posting schedule. Monitor engagement and early response metrics.</p>
+                </div>
+                <div class="card">
+                    <h3>Month 2-3: Optimize & Refine</h3>
+                    <p>Analyze which content pillars drive most engagement. Adjust topic mix. Refine hooks based on comments and saves. Scale winning formats. Maintain 2x/month filming.</p>
+                </div>
+                <div class="card">
+                    <h3>Month 4+: Systematize & Scale</h3>
+                    <p>Achieve content automation. Establish weekly batch process. Build library of 60+ repurposed pieces. Maintain consistent posting. Track monthly goal progress (45 calls, $20K).</p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: var(--text-body); font-size: 16px;">Success Metrics & Tracking</h3>
+            <div class="card">
+                <p><strong>Leading Indicators (Weekly):</strong> Engagement rate (comments, saves, shares), video completion rate, click-through rate to website, new followers, DM inquiries</p>
+                <p style="margin-top: 1rem;"><strong>Lagging Indicators (Monthly):</strong> Booked consultations (target: 45), conversion rate, cost per lead, revenue generated, repeat clients referrals</p>
+                <p style="margin-top: 1rem;"><strong>Tool Stack:</strong> Meta Business Suite (Instagram/Facebook analytics), YouTube Analytics, TikTok Analytics, HubSpot or similar for lead tracking, Google Analytics for website traffic</p>
+            </div>
+
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <div class="footer-section">
+                    <h4>Content Playbook</h4>
+                    <a href="#overview">Executive Overview</a>
+                    <a href="#pillars">Content Pillars</a>
+                    <a href="#cadence">Posting Cadence</a>
+                    <a href="#hooks">Hook Library</a>
+                    <a href="#templates">Caption Templates</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Strategy Guides</h4>
+                    <a href="#repurpose">Repurpose Engine</a>
+                    <a href="#platforms">Platform Guides</a>
+                    <a href="#calendar">Implementation</a>
+                    <a href="#">Video Scripts</a>
+                    <a href="#">Lead Capture</a>
+                </div>
+                <div class="footer-section">
+                    <h4>McReynolds Team</h4>
+                    <a href="#">Website: mcreynoldsrealestate.com</a>
+                    <a href="#">Instagram: @travisafb_homefinder</a>
+                    <a href="#">YouTube: @pcscalifornia</a>
+                    <a href="#">TikTok: @travisafb_homefinder</a>
+                    <a href="#">Facebook: /travisafbhomefinder</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Brand Guidelines</h4>
+                    <a href="#">Color Palette (Teal #008080)</a>
+                    <a href="#">Tone & Voice</a>
+                    <a href="#">Logo Usage</a>
+                    <a href="#">Design System</a>
+                    <a href="#">Contact</a>
+                </div>
+            </div>
+
+            <div class="footer-divider"></div>
+
+            <div class="footer-meta">
+                <div>
+                    <strong>McReynolds Real Estate</strong> | "Vets Serving Vets"<br>
+                    <span class="secondary">34 Years Combined Air Force Service | $28M+ 2024 | 150+ Military Families</span>
+                </div>
+                <div class="document-badge">Document 3 of 5</div>
+            </div>
+
+            <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-muted); text-align: center;">
+                <p>This Content Strategy Playbook is a premium strategic document created for Forward Learning Group (FLG).</p>
+                <p style="margin-top: 0.5rem;">For questions, updates, or implementation support, contact FLG directly.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
